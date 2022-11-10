@@ -2,7 +2,7 @@
 {
     public class ProductoFotos
     {
-        public string? propducto { get; set; }
+        public string? producto { get; set; }
         public string? foto { get; set; }
     }
 }

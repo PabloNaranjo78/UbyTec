@@ -3,6 +3,7 @@
     public class Comercio
     {
         public int idComercio { get; set; }
+        public string? pass { get; set; }
         public int idAdmin { get; set; }
         public string? tipo { get; set; }
         public string? nombre { get; set; }
