@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UbyTECAPI.Models;
-
+using Npgsql;
+using UbyTECAPI.Connection;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace UbyTECAPI.Controllers
@@ -9,7 +10,7 @@ namespace UbyTECAPI.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-
+        NpgsqlConnection _connection = new NpgsqlConnection(Connection.Connection.ConnectionString);
         // GET api/<LoginController>/5
         //EMPLADO
         [HttpGet("administrador/{id}/{pass}")]
