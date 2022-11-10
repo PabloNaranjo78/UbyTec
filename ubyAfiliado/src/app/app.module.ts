@@ -5,18 +5,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { LogComponent } from './log/log.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LogComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      {path: "", component:LogComponent}
+      {path: "", component:LoginComponent}
     ]),
     HttpClientModule,
     FormsModule
