@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+body, html {
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #d0f0d2;
+    opacity: 1;
+    background-image: radial-gradient(circle at center center, #ffffff, #d0f0d2), repeating-radial-gradient(circle at center center, #ffffff, #ffffff, 14px, transparent 28px, transparent 14px);
+    background-blend-mode: multiply;
+  }
+* {
+    font-family: 'Montserrat';
+}
+
+
+
+btn{
+  /*border-radius: 0%;*/
+  background-color: black;
+  border: 2px solid black;
+  color: #FFFFFF;
+  border-radius: 0PX;
+  margin-top: 2%;
+}
+
+
+btn:hover{
+  background-color: #FFFFFF;
+  color: black;
+  border: 2px solid black;
+}
+
