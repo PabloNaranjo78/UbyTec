@@ -1,4 +1,4 @@
-export interface gestion
+export interface Gestion
 {
     nombre: string,
     id: number,

@@ -22,17 +22,15 @@ export abstract class ConexionService<T> {
  abstract getResourceURL(): string;
  abstract getHomePage(id?: string|number, id2?: string|number): string;
  abstract getNombre(): string;
-  
- lista:T[]=[]
- temp:T[]=[]
  
+ temp:T[]=[]
  listaAll:T[]=[]
   getList(){
     return this.httpClient.get<T[]>(this.RUTA_API);
   }
   
-
   get(id: string | number, marca?:string | number){
+    console.log(this.RUTA_API+"/"+id)
     if (marca){
       return this.httpClient.get<T[]>(this.RUTA_API+"/"+id+ "/"+ marca);
     }
@@ -50,6 +48,7 @@ export abstract class ConexionService<T> {
   private delete(id: string | number){
     return this.httpClient.delete<T[]>(this.RUTA_API+"/"+id);
   }
+
 
   onEliminar(id:string | number, id2?: string|number){
     if (id2){
@@ -98,24 +97,6 @@ export abstract class ConexionService<T> {
     })
   }
 
-  onGet(id:string | number, id2?: string|number) : T[]{
-    this.temp = []
-    if (id2){
-      id = id + "/" + id2
-    } 
-
-    this.get(id).subscribe({
-      next: (data)=>{
-        this.temp =  data
-      }, 
-      error: (err) => {
-        this.avisoError(err.error)
-      }
-    })
-
-    return this.temp
-  }
-
   onCancelar(){
     this.route.navigate([this.getHomePage()])
   }
@@ -135,34 +116,5 @@ export abstract class ConexionService<T> {
     })
   } 
 
-    /*Crea filas de 5 unidades a partir de índice
-  valor:number 
-  return: boolean*/
-  crearFila(valor:number){
-    if (valor%5==0){
-      return true;
-    }
-    return false;
-  }
-  /*Rellena la lista con elementos nulos para conservar el espaciado
-  valor:number
-  return: list*/
-  subLista(valor:number){
-    var sub=[];
-    if(valor+5 > this.lista.length){
-      sub = this.lista.slice(valor)
-    } else {
-      sub = this.lista.slice(valor, valor+5);
-    }
-    return sub;
-  }
-
-  completar(valor:number){
-    var sub=[1,2,3,4,5];
-    if(valor+5 > this.lista.length){
-       return sub.slice(0,valor+5-this.lista.length)
-    } else {
-      return []
-    }
-  }
+  
 }
