@@ -1,0 +1,148 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestiones</title>
+</head>
+<body>
+  <!-- Solicitud de Afiliacion-->
+
+  <div class="row">
+    <div class="col-1"> </div>
+    <div class="col">
+      <div class="row mt-3">
+          <a class="btn btn-primary" style= "width: 100%; font-size:x-large;" href="" role="button">Solicitar Afiliacion</a>
+      </div>
+        <div *ngFor="let n of lista; let i=index">
+            <div *ngIf="crearFila(i)">
+                <div class="row mt-4">
+                    <ng-template ngFor let-afiliacion [ngForOf] = "subLista(i)">
+                        <div class="col">
+                            <div class="container gy-1">
+                                Solicitud de Afiliacion
+                                <div class="row m t-1"><h2><!--{{cliente.nombre}}--></h2></div>
+                                <!-- [routerLink]="['/actualizar-cliente',cliente.idCliente]"-->
+                                <button type="submit" class="btn btn-outline-primary"> EDITAR </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template ngFor let-afiliacion [ngForOf] = "completar(i)">
+                      <div class="col">
+                          <div class="container gy-1" style="visibility: hidden;">
+                          </div>
+                      </div>
+                  </ng-template>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-1"> </div>
+  </div>
+
+        <!-- Gestion de Productos-->
+
+        <div class="row">
+        <div class="col-1"> </div>
+        <div class="col">
+          <div class="row mt-3">
+              <a class="btn btn-primary" style= "width: 100%; font-size:x-large;" href="" role="button">Añadir Nuevo Producto</a>
+          </div>
+            <div *ngFor="let n of lista; let i=index">
+                <div *ngIf="crearFila(i)">
+                    <div class="row mt-4">
+                        <ng-template ngFor let-producto [ngForOf] = "subLista(i)">
+                            <div class="col">
+                                <div class="container gy-1">
+                                    Producto
+                                    <div class="row m t-1"><h2><!--{{cliente.nombre}}--></h2></div>
+                                    <!-- [routerLink]="['/actualizar-cliente',cliente.idCliente]"-->
+                                    <button type="submit" class="btn btn-outline-primary"> EDITAR </button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template ngFor let-producto [ngForOf] = "completar(i)">
+                          <div class="col">
+                              <div class="container gy-1" style="visibility: hidden;">
+                              </div>
+                          </div>
+                      </ng-template>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-1"> </div>
+      </div>
+
+
+      <!-- Gestion de Pedidos-->
+
+      <div class="row">
+        <div class="col-1"> </div>
+        <div class="col">
+          <div class="row mt-3">
+              <a class="btn btn-primary" style= "width: 100%; font-size:x-large;" href="" role="button">Añadir Nuevo Pedido</a>
+          </div>
+            <div *ngFor="let n of lista; let i=index">
+                <div *ngIf="crearFila(i)">
+                    <div class="row mt-4">
+                        <ng-template ngFor let-pedido [ngForOf] = "subLista(i)">
+                            <div class="col">
+                                <div class="container gy-1">
+                                    Pedido
+                                    <div class="row mt-1"><h2><!--{{insumo.nombrePro}}-->Afiliado</h2></div>
+                                    <!--[routerLink]="['/actualizar-insumo',insumo.marcaPro,insumo.nombrePro]"-->
+                                    <button type="submit" class="btn btn-outline-primary"> EDITAR </button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template ngFor let-afiliado [ngForOf] = "completar(i)">
+                          <div class="col">
+                              <div class="container gy-1" style="visibility: hidden;">
+                              </div>
+                          </div>
+                      </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"> </div>
+      </div>
+
+      <!-- Gestion de Repartidores-->
+
+      <div class="row">
+        <div class="col-1"> </div>
+        <div class="col">
+          <div class="row mt-3">
+              <a class="btn btn-primary" style= "width: 100%; font-size:x-large;" href="" role="button">Añadir Nuevo Repartidor</a>
+          </div>
+            <div *ngFor="let n of lista; let i=index">
+                <div *ngIf="crearFila(i)">
+                    <div class="row mt-4">
+                        <ng-template ngFor let-repartidor [ngForOf] = "subLista(i)">
+                            <div class="col">
+                                <div class="container gy-1">
+                                    Cliente
+                                    <div class="row m t-1"><h2><!--{{cliente.nombre}}--> Repartidor</h2></div>
+                                    <!--[routerLink]="['/actualizar-cliente',cliente.idCliente]"-->
+                                    <button type="submit" class="btn btn-outline-primary"> EDITAR </button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template ngFor let-repartidor [ngForOf] = "completar(i)">
+                          <div class="col">
+                              <div class="container gy-1" style="visibility: hidden;">
+                              </div>
+                          </div>
+                      </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"> </div>
+      </div>
+</body>
+</html>
