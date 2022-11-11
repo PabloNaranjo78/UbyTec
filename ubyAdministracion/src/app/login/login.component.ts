@@ -1,4 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,15 +14,29 @@ CrearCuenta() {
 throw new Error('Method not implemented.');
 }
 
-  id!:string
+  id!:number
   password!:string 
-  constructor() { }
+  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient) { 
+    if (cookie.get("tokenAdministrador")!=""){
+      this.route.navigate(["gestion/empleado"])
+    }
+  }
 
   ngOnInit(): void {
   }
 
   onSubmit(){
-
+    this.aoth.get(this.id,this.password).subscribe({
+      next:(data) => {
+        if(data){
+          this.cookie.set("tokenAdministrador", this.id.toString(), 4, "/");
+          window.location.reload()
+        }
+      },
+      error:(err) => {
+        this.aoth.avisoError("Credenciales inválidas")
+      }
+      })
   }
 
 }
