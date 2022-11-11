@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { GestionesComponent } from './gestiones/gestiones.component';
 import { HeaderComponent } from './header/header.component';
 import { VigilanteGuard } from './vigilante.guard';
+import { NuevoEmpleadoComponent } from './nuevo-empleado/nuevo-empleado.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { VigilanteGuard } from './vigilante.guard';
     LoginComponent,
     GestionesComponent,
     HeaderComponent,
+    NuevoEmpleadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,6 +25,7 @@ import { VigilanteGuard } from './vigilante.guard';
       {path: "", component:LoginComponent, canActivate: [VigilanteGuard]},
       {path: "gestion/:Tipo", component:GestionesComponent, canActivate: [VigilanteGuard]},
       {path: "login", component:LoginComponent},
+      {path: "nuevo/empleado", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
     ]),
     FormsModule,
     HttpClientModule

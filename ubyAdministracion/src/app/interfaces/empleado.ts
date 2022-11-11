@@ -4,7 +4,7 @@ export interface EmpleadoInterface extends PersonalInterface {
     idEmpleado:number
 }
 
-class Empleado implements EmpleadoInterface{
+export class Empleado implements EmpleadoInterface{
     idEmpleado!: number;
     usuario!: string;
     pass!: string;
