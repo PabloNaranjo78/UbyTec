@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Comercio} from '../interfaces/comercio';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,11 @@ throw new Error('Method not implemented.');
 }
 
   id!:string
-  password!:string 
+  password!:string
+  editMode:boolean = false; 
+
+  comercio:Comercio = new Comercio();
+
   constructor() { }
 
   ngOnInit(): void {
@@ -19,6 +24,21 @@ throw new Error('Method not implemented.');
 
   onSubmit(){
 
+  }
+  onEliminar(){
+    console.log("Eliminar")
+
+  }
+
+  onCancelar(){
+    console.log("Cancelar")
+  }
+
+  prueba(){
+    console.log(this.comercio)
+  }
+  onGuardar(){
+    console.log("Guardar")
   }
 
 }

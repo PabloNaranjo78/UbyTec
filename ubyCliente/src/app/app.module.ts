@@ -6,12 +6,14 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { GestionesComponent } from './gestiones/gestiones.component';
+import { CrearcuentaComponent } from './crearcuenta/crearcuenta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     GestionesComponent,
+    CrearcuentaComponent
   ],
   imports: [
     BrowserModule,RouterModule.forRoot([

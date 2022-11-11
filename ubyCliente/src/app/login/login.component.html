@@ -11,7 +11,7 @@
             <form #form="ngForm" (ngSubmit)="onSubmit()" >
                 <div class="mb-4">
                     <label for = "email" class="form-label">Identificación</label>
-                    <input type = "email" class="form-control" name = "email" [(ngModel)] = "id">
+                    <input type = "email" class="form-control" name = "email" [(ngModel)] = "cliente.idCliente">
                 </div>
                 <div class="mb-4">
                     <label for = "password" class="form-label">Contraseña</label>
@@ -20,7 +20,8 @@
                 <div class="row">
                     <div class="col"><button type="submit" class="btn btn-outline-primary"> ENTRAR </button></div>
                     <div class="col"><button type="submit" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#crearCuenta"> Crear Cuenta </button></div>
-                </div>
+                    <!-- <div class="col"><button (click)=prueba() style= "width: 100%;" >Añadir Dirección</button></div> -->
+                  </div>
                 <div class = "row my-3">
   
                 </div>
@@ -36,28 +37,76 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Direcciones de Usuario</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Crear Cuenta</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body mx-3">
-          <div class="container">
-            <div class="row text-center">
-              <div class="col"><label for = "provincia" class="form-label">Provincia</label></div>
-              <div class="col"><label for = "canton" class="form-label">Cantón</label></div>
-              <div class="col"><label for = "provincia" class="form-label">Distrito</label></div>
-            </div>
-            <div class="row">
-              <div class="col"><input type = "text" class="form-control" name = "provincia" ></div>
-              <div class="col"><input type = "text" class="form-control" name = "canton" ></div>
-              <div class="col"><input type = "tex" class="form-control" name = "distrito" ></div>
-            </div>
-            
-            <div class="row my-3 text-center">
-              <div class="col-1"></div>
-              <div class="col"><button class="btn btn-default" data-bs-dismiss="modal" style= "width: 100%;" >Añadir Dirección</button></div>
-              <div class="col-1"></div>
+
+          <div class="container-fluid">
+            <div class="row my-3">
+              
+              <div class="col-1">
               </div>
+              <div class="col"> 
+                <form #form="ngForm" (ngSubmit)="onGuardar()">
+                    <div class="row">
+          
+                      <div class="col text-center">
+                        <div class="row mt-4 right"><label for = "nombre" class="form-label">Nombre</label></div>
+                        <div class="row mt-4 right"><label for = "apellidos" class="form-label">Apellidos</label></div>
+                        <div class="row mt-4 right"><label for = "fechaNac" class="form-label">Fecha Nacaimiento</label></div>
+
+                        <div class="row mt-4 right"><label for = "provincia" class="form-label">Provincia</label></div>
+                        <div class="row mt-4 right"><label for = "canton" class="form-label">Cantón</label></div>
+                        <div class="row mt-4 right"><label for = "distrito" class="form-label">Distrito</label></div>
+
+                        <div class="row mt-4 right"><label for = "cedula" class="form-label">Cédula</label></div>
+                        <div class="row mt-4 right"><label for = "usuario" class="form-label">Usuario</label></div>
+                        <div class="row mt-4 right"><label for = "pass" class="form-label">Contraseña</label></div>
+                      </div>
+                      <div class="col">  
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "nombre" [(ngModel)] = "cliente.nombre" ></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "apellidos" [(ngModel)] = "cliente.apellidos" ></div>
+                        <div class="row mt-4"><input type = "date" class="form-control" name = "fechaNac" [(ngModel)] = "cliente.fechaNac" ></div>
+
+
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "provincia" [(ngModel)] = "cliente.provincia" ></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "canton" [(ngModel)] = "cliente.canton" ></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "distrito" [(ngModel)] = "cliente.distrito" ></div>
+
+                        <div class="row mt-4"><input type = "number" class="form-control" name = "cedula" [(ngModel)] = "cliente.idCliente"></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "usuario" [(ngModel)] = "cliente.usuario"></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "pass" [(ngModel)] = "cliente.pass" ></div>
+                      </div>
+                      
+          
+                    </div>
+                    <div *ngIf="editMode; else newMode">
+                      <div class="row my-5">
+                        <div class="col"></div>
+                        
+                        <div class="col text-center offset-md-1"> <button type="submit" class="btn btn-outline-primary"> Actualizar </button> </div>
+                        <div class="col text-center"> <a role="button" type="button" (click) = onEliminar() class="btn can btn-primary"> Eliminar </a></div>
+                        <div class="col text-center"> <a role="button" type="button" (click) = onCancelar() class="btn can btn-primary"> Cancelar </a></div>
+                        <div class="col"></div>
+                      </div>                                                                      
+                    </div>
+                    
+                    <ng-template #newMode>
+                      <div class="row my-5">
+                        <div class="col"></div>
+                        <div class="col text-center offset-md-1"> <button (click)=prueba() type="submit" class="btn2 btn-outline-primary"> Añadir </button> </div>
+                        <div class="col text-center"> <a role="button" type="button" (click) = onCancelar() class="btn2 can btn-primary"> Cancelar </a></div>
+                        <div class="col"></div>
+                      </div>
+                    </ng-template>
+                  </form>
+              </div>
+              <div class="col-2">
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

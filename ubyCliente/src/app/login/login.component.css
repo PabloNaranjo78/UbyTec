@@ -29,3 +29,22 @@
     background: #FFFFFF;
     box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.2);
 }
+
+.prueba{
+    background: #FFFFFF;
+    box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.2);
+    border: solid 4px red;
+}
+
+.btn2{
+    /*border-radius: 0%;*/
+    background-color: black;
+    border: 2px solid black;
+    color: #FFFFFF;
+    height: 100%;
+    border-radius: 0PX;
+}
+
+.form-label{
+    border: 2px solid #FFFFFF;
+}

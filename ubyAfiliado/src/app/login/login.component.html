@@ -36,28 +36,77 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Direcciones de Usuario</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Crear Cuenta</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body mx-3">
-          <div class="container">
-            <div class="row text-center">
-              <div class="col"><label for = "provincia" class="form-label">Provincia</label></div>
-              <div class="col"><label for = "canton" class="form-label">Cantón</label></div>
-              <div class="col"><label for = "provincia" class="form-label">Distrito</label></div>
-            </div>
-            <div class="row">
-              <div class="col"><input type = "text" class="form-control" name = "provincia" ></div>
-              <div class="col"><input type = "text" class="form-control" name = "canton" ></div>
-              <div class="col"><input type = "tex" class="form-control" name = "distrito" ></div>
-            </div>
-            
-            <div class="row my-3 text-center">
-              <div class="col-1"></div>
-              <div class="col"><button class="btn btn-default" data-bs-dismiss="modal" style= "width: 100%;" >Añadir Dirección</button></div>
-              <div class="col-1"></div>
+
+          <div class="container-fluid">
+            <div class="row my-3">
+              
+              <div class="col-1">
               </div>
+              <div class="col"> 
+                <form #form="ngForm" (ngSubmit)="onGuardar()">
+                    <div class="row">
+          
+                      <div class="col text-center">
+                        <div class="row mt-4 right"><label for = "nombre" class="form-label">Nombre</label></div>
+                        <div class="row mt-4 right"><label for = "correo" class="form-label">Correo</label></div>
+                        <div class="row mt-4 right"><label for = "sinpe" class="form-label">Sinpe</label></div>
+                        <div class="row mt-4 right"><label for = "tipo" class="form-label">Tipo</label></div>
+
+                        <div class="row mt-4 right"><label for = "provincia" class="form-label">Provincia</label></div>
+                        <div class="row mt-4 right"><label for = "canton" class="form-label">Cantón</label></div>
+                        <div class="row mt-4 right"><label for = "distrito" class="form-label">Distrito</label></div>
+
+                        <div class="row mt-4 right"><label for = "idComercio" class="form-label">ID</label></div>
+                        <div class="row mt-4 right"><label for = "pass" class="form-label">Contraseña</label></div>
+                      </div>
+                      <div class="col">  
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "nombre" [(ngModel)] = "comercio.nombre" ></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "correo" [(ngModel)] = "comercio.correo" ></div>
+                        <div class="row mt-4"><input type = "number" class="form-control" name = "sinpe" [(ngModel)] = "comercio.sinpe" ></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "tipo" [(ngModel)] = "comercio.tipo"></div>
+
+
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "provincia" [(ngModel)] = "comercio.provincia" ></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "canton" [(ngModel)] = "comercio.canton" ></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "distrito" [(ngModel)] = "comercio.distrito" ></div>
+
+                        <div class="row mt-4"><input type = "number" class="form-control" name = "idComercio" [(ngModel)] = "comercio.idComercio"></div>
+                        <div class="row mt-4"><input type = "text" class="form-control" name = "pass" [(ngModel)] = "comercio.pass" ></div>
+                      </div>
+                      
+          
+                    </div>
+                    <div *ngIf="editMode; else newMode">
+                      <div class="row my-5">
+                        <div class="col"></div>
+                        
+                        <div class="col text-center offset-md-1"> <button type="submit" class="btn btn-outline-primary"> Actualizar </button> </div>
+                        <div class="col text-center"> <a role="button" type="button" (click) = onEliminar() class="btn can btn-primary"> Eliminar </a></div>
+                        <div class="col text-center"> <a role="button" type="button" (click) = onCancelar() class="btn can btn-primary"> Cancelar </a></div>
+                        <div class="col"></div>
+                      </div>                                                                      
+                    </div>
+                    
+                    <ng-template #newMode>
+                      <div class="row my-5">
+                        <div class="col"></div>
+                        <div class="col text-center offset-md-1"> <button (click)=prueba() type="submit" class="btn2 btn-outline-primary"> Añadir </button> </div>
+                        <div class="col text-center"> <a role="button" type="button" (click) = onCancelar() class="btn2 can btn-primary"> Cancelar </a></div>
+                        <div class="col"></div>
+                      </div>
+                    </ng-template>
+                  </form>
+              </div>
+              <div class="col-2">
+              </div>
+            </div>
           </div>
+
+          
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ export interface ClienteInterface extends PersonalInterface {
 }
 
 
-class Cliente implements ClienteInterface{
+export class Cliente implements ClienteInterface{
     idCliente!: number;
     fechaNac!: string;
     usuario!: string;
