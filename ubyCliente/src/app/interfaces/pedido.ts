@@ -15,7 +15,7 @@ export interface ProductoPedidoInterface {
 export class Pedido implements PedidoInterface{
     idPedido!: number;
     direccion!: string;
-    finalizado!: boolean;
+    finalizado = false;
     repartidor!: string;
     idCliente!: number;
 }
