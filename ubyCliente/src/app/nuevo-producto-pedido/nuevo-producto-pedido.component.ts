@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {Comercio} from '../interfaces/comercio'
+import { ProductoPedido } from '../interfaces/pedido';
 
 @Component({
-  selector: 'app-nuevo-afiliado',
-  templateUrl: './nuevo-afiliado.component.html',
-  styleUrls: ['./nuevo-afiliado.component.css']
+  selector: 'app-nuevo-producto-pedido',
+  templateUrl: './nuevo-producto-pedido.component.html',
+  styleUrls: ['./nuevo-producto-pedido.component.css']
 })
-export class NuevoAfiliadoComponent implements OnInit {
+export class NuevoProductoPedidoComponent implements OnInit {
 
-  comercio:Comercio = new Comercio();
+  productoPedido:ProductoPedido = new ProductoPedido();
   editMode:boolean = false;
 
   constructor() { }

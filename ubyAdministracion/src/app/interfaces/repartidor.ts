@@ -5,7 +5,7 @@ export interface RepartidorInterface extends PersonalInterface{
 }
 
 export class Repartidor implements RepartidorInterface{
-    disponible: boolean = false;
+    disponible: boolean = true;
     usuario!: string;
     pass!: string;
     nombre!: string;

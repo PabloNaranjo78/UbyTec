@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import {Comercio} from '../interfaces/comercio'
+import { Pedido } from '../interfaces/pedido';
 
 @Component({
-  selector: 'app-nuevo-afiliado',
-  templateUrl: './nuevo-afiliado.component.html',
-  styleUrls: ['./nuevo-afiliado.component.css']
+  selector: 'app-nuevo-pedidio',
+  templateUrl: './nuevo-pedidio.component.html',
+  styleUrls: ['./nuevo-pedidio.component.css']
 })
-export class NuevoAfiliadoComponent implements OnInit {
+export class NuevoPedidioComponent implements OnInit {
 
-  comercio:Comercio = new Comercio();
+ 
+  pedido:Pedido = new Pedido();
   editMode:boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  
   onGuardar(){
     console.log("Guardar");
   }
@@ -36,5 +37,6 @@ export class NuevoAfiliadoComponent implements OnInit {
   onEliminar(){
     console.log("Eliminar");
   }
+
 
 }

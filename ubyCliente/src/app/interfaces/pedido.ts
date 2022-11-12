@@ -12,7 +12,7 @@ export interface ProductoPedidoInterface {
     cantidad:number
 }
 
-class Pedido implements PedidoInterface{
+export class Pedido implements PedidoInterface{
     idPedido!: number;
     direccion!: string;
     finalizado!: boolean;
@@ -20,7 +20,7 @@ class Pedido implements PedidoInterface{
     idCliente!: number;
 }
 
-class ProductoPedido implements ProductoPedidoInterface{
+export class ProductoPedido implements ProductoPedidoInterface{
     idPedido!: number;
     producto!: string;
     cantidad!: number;
