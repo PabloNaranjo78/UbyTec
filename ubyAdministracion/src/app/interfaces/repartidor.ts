@@ -4,7 +4,7 @@ export interface RepartidorInterface extends PersonalInterface{
     disponible: boolean;
 }
 
-class Repartidor implements RepartidorInterface{
+export class Repartidor implements RepartidorInterface{
     disponible: boolean = false;
     usuario!: string;
     pass!: string;

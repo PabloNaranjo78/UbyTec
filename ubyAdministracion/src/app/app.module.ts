@@ -27,6 +27,7 @@ import { NuevoEmpleadoComponent } from './nuevo-empleado/nuevo-empleado.componen
       {path: "login", component:LoginComponent},
       {path: "nuevo/empleado", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/empleado/:id", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
+      {path: "actualizar/repartidores/:id", component:NuevoRepartidorComponent, canActivate: [VigilanteGuard]},
     ]),
     FormsModule,
     HttpClientModule

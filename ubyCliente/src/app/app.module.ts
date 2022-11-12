@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { GestionesComponent } from './gestiones/gestiones.component';
 import { CrearcuentaComponent } from './crearcuenta/crearcuenta.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     GestionesComponent,
-    CrearcuentaComponent
+    CrearcuentaComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,RouterModule.forRoot([
