@@ -2,10 +2,21 @@
 
 namespace UbyTECAPI.Models
 {
-    public class Empleado:Entity<Empleado>
+    public class Empleado : Entity<Empleado>
     {
-        protected override string? atributes { get => "*" ; set => base.atributes = "*"; }
-        protected override string? entity { get => "empleado"; set => base.entity = "empleado"; }
+        protected override string? atributes
+        {
+            get => "idEmpleado,usuario,pass,nombre,apellidos,provincia,canton,distrito";
+        }
+
+        protected override string? entity
+        {
+            get => "empleado";
+        }
+        protected override string? searchAtribute
+        {
+            get => "idEmpleado";
+        }
         public int idEmpleado { get; set; }
         public string? usuario { get; set; }
         public string? pass { get; set; }
@@ -30,6 +41,20 @@ namespace UbyTECAPI.Models
             };
         }
 
+        protected override string paramsToString()
+        {
+            return $"{idEmpleado},'{usuario}','{pass}','{nombre}','{apellidos}','{provincia}','{canton}','{distrito}'";
+        }
+
+        protected override string putParams()
+        {
+            return $"usuario='{usuario}',pass='{pass}',nombre='{nombre}',apellidos='{apellidos}',provincia='{provincia}',canton='{canton}',distrito='{distrito}'";
+        }
+
+        protected override string getID()
+        {
+            return idEmpleado.ToString();
+        }
 
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { gestion } from '../interfaces/gestion';
+import { Gestion } from '../interfaces/gestion';
+import { EmpleadosService } from '../services/empleados.service';
 
 @Component({
   selector: 'app-gestiones',
@@ -9,31 +10,13 @@ import { gestion } from '../interfaces/gestion';
 })
 export class GestionesComponent implements OnInit {
   Tipo:string="";
-  lista:gestion[]=[]
-  constructor(private route:Router, private rou:ActivatedRoute) {
+  lista:Gestion[]=[]
+  constructor(empleadoService:EmpleadosService, private route:Router, private rou:ActivatedRoute) {
     this.Tipo = this.rou.snapshot.params['Tipo']
     console.log(this.Tipo)
-
-    if(this.rou.snapshot.params['Tipo'] == "empleado")
-
-    {
-      this.lista=[{
-        nombre: "Juan",
-        id: 123,
-        route: "empleados"
-    },
-    {
-      nombre: "KFC",
-      id: 321,
-      route: "afiliados"
-    },
-    {
-      nombre: "Axel",
-      id: 12,
-      route: "repartidores"
-    }]
+    if(this.rou.snapshot.params['Tipo'] == "empleado"){
+      this.lista = empleadoService.getAsInterface()
     }
-    console.log(this.lista)
    }
 
 

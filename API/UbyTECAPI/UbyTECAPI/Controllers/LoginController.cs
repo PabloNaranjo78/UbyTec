@@ -13,7 +13,7 @@ namespace UbyTECAPI.Controllers
         NpgsqlConnection _connection = new NpgsqlConnection(Connection.Connection.ConnectionString);
         // GET api/<LoginController>/5
         //EMPLADO
-        [HttpGet("administrador/{id}/{pass}")]
+        [HttpGet("empleado/{id}/{pass}")]
         public async Task<ActionResult<bool>> LoginAdmin(int id,string pass)
         {
             return Ok(true);
