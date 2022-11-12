@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Gestion } from '../interfaces/gestion';
+import { ComerciosService } from '../services/comercios.service';
 import { EmpleadosService } from '../services/empleados.service';
 import { RepartidoresService } from '../services/repartidores.service';
 
@@ -12,7 +13,7 @@ import { RepartidoresService } from '../services/repartidores.service';
 export class GestionesComponent implements OnInit {
   Tipo:string="";
   lista:Gestion[]=[]
-  constructor(empleadoService:EmpleadosService, repartidorService:RepartidoresService, private route:Router, private rou:ActivatedRoute) {
+  constructor(private empleadoService:EmpleadosService, private repartidorService:RepartidoresService, private comercioService:ComerciosService,private route:Router, private rou:ActivatedRoute) {
     this.Tipo = this.rou.snapshot.params['Tipo']
     console.log(this.Tipo)
     if(this.rou.snapshot.params['Tipo'] == "empleado"){
@@ -20,6 +21,10 @@ export class GestionesComponent implements OnInit {
     }
     else if(this.rou.snapshot.params['Tipo'] == "repartidores"){
       this.lista = repartidorService.getAsInterface()
+    }
+    
+    else if(this.rou.snapshot.params['Tipo'] == "afiliados"){
+      this.lista = comercioService.getAsInterface()
     }
    }
 
