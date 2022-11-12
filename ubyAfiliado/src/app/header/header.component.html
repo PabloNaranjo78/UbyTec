@@ -1,29 +1,14 @@
-<div class="container">
+<div class="container" *ngIf="logged">
   <ul class="nav flex-column">
 
       <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-citas" routerLinkActive="tab-active">Citas</a>
+          <a class = "tab"  routerLink="/{{id}}/gestion-productos" routerLinkActive="tab-active">Productos</a>
       </li>
       <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-clientes" routerLinkActive="tab-active">Clientes</a>
+          <a class = "tab"  routerLink="/{{id}}/nuevo-admin" routerLinkActive="tab-active">Administrador</a>
       </li>
       <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-trabajadores" routerLinkActive="tab-active">Trabajadores</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-proveedores" routerLinkActive="tab-active">Proveedores</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-insumos" routerLinkActive="tab-active">Insumos</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-lavados" routerLinkActive="tab-active">Lavados</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-sucursales" routerLinkActive="tab-active">Sucursales</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-reportes" routerLinkActive="tab-active">Reportes</a>
+          <a class = "tab"  routerLink="/{{id}}/gestion/pedidos" routerLinkActive="tab-active">Pedidos</a>
       </li>
     </ul>
   </div>
