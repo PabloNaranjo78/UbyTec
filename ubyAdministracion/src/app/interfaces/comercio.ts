@@ -20,7 +20,7 @@ export interface AdminComercioInterface extends PersonalInterface {
     correo:string
 }
 
-class Comercio implements ComercioInterface{
+export class Comercio implements ComercioInterface{
     pass!: string
     idComercio!: number
     idAdmin!: number
@@ -34,7 +34,7 @@ class Comercio implements ComercioInterface{
     distrito!: string
 }
 
-class AdminComercio implements AdminComercioInterface{
+export  class AdminComercio implements AdminComercioInterface{
     idAdmin!: number
     correo!: string
     usuario!: string
