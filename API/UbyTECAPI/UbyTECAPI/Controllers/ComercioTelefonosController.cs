@@ -7,16 +7,16 @@ namespace UbyTECAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RepartidorTelefonosController : ControllerBase
+    public class ComercioTelefonosController : ControllerBase
     {
-        private RepartidorTelefonos repartidorTelefonos = new();
-        // GET: api/<RepartidorTelefonosController>
+        private ComercioTelefonos comercioTelefonos = new();
+        // GET: api/<ComercioTelefonosController>
         [HttpGet]
-        public async Task<ActionResult<List<RepartidorTelefonos>>> Get()
+        public async Task<ActionResult<List<ComercioTelefonos>>> Get()
         {
             try
             {
-                var entityList = repartidorTelefonos.get();
+                var entityList = comercioTelefonos.get();
                 return Ok(entityList);
             }
             catch (Exception)
@@ -25,13 +25,13 @@ namespace UbyTECAPI.Controllers
             }
         }
 
-        // GET api/<RepartidorTelefonosController>/5
-        [HttpGet("{usuarioRep}")]
-        public async Task<ActionResult<List<RepartidorTelefonos>>> Get(string usuarioRep)
+        // GET api/<ComercioTelefonosController>/5
+        [HttpGet("{idComercio}")]
+        public async Task<ActionResult<List<ComercioTelefonos>>> Get(int idComercio)
         {
             try
             {
-                var entityList = repartidorTelefonos.get($"'{usuarioRep}'");
+                var entityList = comercioTelefonos.get(idComercio.ToString());
                 return Ok(entityList);
             }
             catch (Exception)
@@ -40,11 +40,11 @@ namespace UbyTECAPI.Controllers
             }
         }
 
-        // POST api/<RepartidorTelefonosController>
+        // POST api/<ComercioTelefonosController>
         [HttpPost]
-        public async Task<ActionResult<List<RepartidorTelefonos>>> Post(RepartidorTelefonos entity)
+        public async Task<ActionResult<List<ComercioTelefonos>>> Post(ComercioTelefonos entity)
         {
-            List<RepartidorTelefonos> entityList = new();
+            List<ComercioTelefonos> entityList = new();
             entityList.Add(entity);
 
             var result = entity.post(entity);
@@ -52,13 +52,13 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.telefono}");
         }
 
-        // DELETE api/<RepartidorTelefonosController>/5
-        [HttpDelete("{usuarioRep}/{telefono}")]
-        public async Task<ActionResult<List<RepartidorTelefonos>>> Delete(string usuarioRep,int telefono)
+        // DELETE api/<ComercioTelefonosController>/5
+        [HttpDelete("{idComercio}/{telefono}")]
+        public async Task<ActionResult<List<RepartidorTelefonos>>> Delete(int idComercio, int telefono)
         {
             List<RepartidorTelefonos> entityList = new();
 
-            var result = repartidorTelefonos.delete($"'{usuarioRep}' AND telefono = {telefono}");
+            var result = comercioTelefonos.delete($"{idComercio} AND telefono = {telefono}");
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado eliminar a {telefono}");
         }

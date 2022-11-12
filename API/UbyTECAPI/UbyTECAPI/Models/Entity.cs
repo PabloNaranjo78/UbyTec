@@ -86,8 +86,6 @@ namespace UbyTECAPI.Models
         }
 
 
-
-
         private List<T> createEntityList(NpgsqlDataReader rd)
         {
             List<T> entityList = new();
@@ -119,7 +117,6 @@ namespace UbyTECAPI.Models
         {
             return getID();
         }
-
 
     }
 }

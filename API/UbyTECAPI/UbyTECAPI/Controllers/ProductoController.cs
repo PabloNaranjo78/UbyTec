@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UbyTECAPI.Models;
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace UbyTECAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmpleadoController : ControllerBase
+    public class ProductoController : ControllerBase
     {
-        private Empleado empleado = new();
-        // GET: api/<EmpleadoController>
+        private Producto producto = new();
+        // GET: api/<ProductoController>
         [HttpGet]
-        public async Task<ActionResult<List<Empleado>>> Get()
+        public async Task<ActionResult<List<Producto>>> Get()
         {
             try
             {
-                var entityList = empleado.get();
+                var entityList = producto.get();
                 return Ok(entityList);
             }
             catch (Exception)
@@ -24,13 +25,13 @@ namespace UbyTECAPI.Controllers
             }
         }
 
-        // GET api/<EmpleadoController>/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<Empleado>>> Get(int id)
+        // GET api/<ProductoController>/5
+        [HttpGet("{nombre}")]
+        public async Task<ActionResult<List<Producto>>> Get(string nombre)
         {
             try
             {
-                var entityList = empleado.get(id.ToString());
+                var entityList = producto.get($"'{nombre}'");
                 return Ok(entityList);
             }
             catch (Exception)
@@ -39,11 +40,11 @@ namespace UbyTECAPI.Controllers
             }
         }
 
-        // POST api/<EmpleadoController>
+        // POST api/<ProductoController>
         [HttpPost]
-        public async Task<ActionResult<List<Empleado>>> Post(Empleado entity)
+        public async Task<ActionResult<List<Producto>>> Post(Producto entity)
         {
-            List<Empleado> entityList = new();
+            List<Producto> entityList = new();
             entityList.Add(entity);
 
             var result = entity.post(entity);
@@ -51,27 +52,26 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.nombre}");
         }
 
-        // PUT api/<EmpleadoController>/5
+        // PUT api/<ProductoController>/5
         [HttpPut]
-        public async Task<ActionResult<List<Empleado>>> Put(Empleado entity)
+        public async Task<ActionResult<List<Producto>>> Put(Producto entity)
         {
-            List<Empleado> entityList = new();
+            List<Producto> entityList = new();
             entityList.Add(entity);
 
             var result = entity.put(entity);
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado actualizar a {entity.nombre}");
         }
-
-        // DELETE api/<EmpleadoController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<List<Empleado>>> Delete(int id)
+        // DELETE api/<ProductoController>/5
+        [HttpDelete("{nombre}")]
+        public async Task<ActionResult<List<Comercio>>> Delete(string nombre)
         {
             List<Empleado> entityList = new();
 
-            var result = empleado.delete(id.ToString());
+            var result = producto.delete($"'{nombre}'");
 
-            return result ? Ok(entityList) : BadRequest($"No se ha logrado eliminar a {id}");
+            return result ? Ok(entityList) : BadRequest($"No se ha logrado eliminar a {nombre}");
         }
     }
 }

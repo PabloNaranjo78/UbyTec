@@ -34,10 +34,6 @@ namespace UbyTECAPI.Models
             return $"'{usuarioRep}',{telefono}";
         }
 
-        protected override string putParams()
-        {
-            return $"usuarioRep='{usuarioRep}',telefono={telefono}";
-        }
         protected override string getID()
         {
             return $"'{usuarioRep}'";
