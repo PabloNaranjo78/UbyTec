@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Gestion } from '../interfaces/gestion';
 import { EmpleadosService } from '../services/empleados.service';
+import { RepartidoresService } from '../services/repartidores.service';
 
 @Component({
   selector: 'app-gestiones',
@@ -11,15 +12,16 @@ import { EmpleadosService } from '../services/empleados.service';
 export class GestionesComponent implements OnInit {
   Tipo:string="";
   lista:Gestion[]=[]
-  constructor(empleadoService:EmpleadosService, private route:Router, private rou:ActivatedRoute) {
+  constructor(empleadoService:EmpleadosService, repartidorService:RepartidoresService, private route:Router, private rou:ActivatedRoute) {
     this.Tipo = this.rou.snapshot.params['Tipo']
     console.log(this.Tipo)
     if(this.rou.snapshot.params['Tipo'] == "empleado"){
       this.lista = empleadoService.getAsInterface()
     }
+    else if(this.rou.snapshot.params['Tipo'] == "repartidores"){
+      this.lista = repartidorService.getAsInterface()
+    }
    }
-
-
 
     /*Crea filas de 5 unidades a partir de índice
   valor:number

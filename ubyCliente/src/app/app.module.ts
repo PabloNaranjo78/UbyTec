@@ -10,6 +10,7 @@ import { CrearcuentaComponent } from './crearcuenta/crearcuenta.component';
 import { NuevoPedidioComponent } from './nuevo-pedidio/nuevo-pedidio.component';
 import { VigilanteGuard } from './vigilante.guard';
 import { NuevoProductoPedidoComponent } from './nuevo-producto-pedido/nuevo-producto-pedido.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { NuevoProductoPedidoComponent } from './nuevo-producto-pedido/nuevo-prod
     CrearcuentaComponent,
     NuevoPedidioComponent,
     NuevoProductoPedidoComponent
+    
   ],
   imports: [
     BrowserModule,RouterModule.forRoot([

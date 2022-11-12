@@ -36,6 +36,7 @@ import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afilia
       {path: "nuevo/afiliado", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/afiliadoAdmin", component:NuevoAfiliadoAdminComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/empleado/:id", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
+      {path: "actualizar/repartidores/:id", component:NuevoRepartidorComponent, canActivate: [VigilanteGuard]},
     ]),
     FormsModule,
     HttpClientModule

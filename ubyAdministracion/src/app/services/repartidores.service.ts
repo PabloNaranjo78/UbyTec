@@ -1,34 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Empleado, EmpleadoInterface } from '../interfaces/empleado';
-import { ConexionService } from './conexion.service';
 import { Gestion } from '../interfaces/gestion';
+import { Repartidor, RepartidorInterface } from '../interfaces/repartidor';
+import { ConexionService } from './conexion.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmpleadosService extends ConexionService<EmpleadoInterface> {
+export class RepartidoresService extends ConexionService<RepartidorInterface>{
   listaG:Gestion[]=[]
-  listaA:Empleado[]=[]
-  objeto:Empleado[]=[];
+  listaA:Repartidor[]=[]
+  objeto:Repartidor[]=[];
   getResourceURL(): string {
-    return "/Empleado"
+    return "/Repartidor"
+    //api repartidor
   }
   getHomePage(): string {
-    return 'gestion/empleado'
+    return 'gestion/repartidores'
   }
   getNombre(): string {
-    return "Empleado"
+    return "Repartidor"
   }
 
   getAsInterface(): Gestion[]{
-    this.listaG = []
     this.getList().subscribe((data) =>{
       for (let i =0; i<data.length;i++){
         this.listaG.push(
           {nombre: data[i].nombre,
-            id: data[i].idEmpleado,
+            id: data[i].usuario,
             route:data[i].nombre}
           )
       }
@@ -36,7 +36,7 @@ export class EmpleadosService extends ConexionService<EmpleadoInterface> {
     return this.listaG;
   }
 
-  onGetList(): Empleado[]{
+  onGetList(): Repartidor[]{
     this.getList().subscribe((data) =>{
       for (let i =0; i<data.length;i++){
         this.listaA.push(data[i])
@@ -45,7 +45,7 @@ export class EmpleadosService extends ConexionService<EmpleadoInterface> {
     return this.listaA
   }
 
-  onGet(id: string | number, marca?:string | number):Empleado{
+  onGet(id: string | number, marca?:string | number):Repartidor{
     if (marca){
       this.get(id, marca).subscribe((data) =>{
         console.log(data)
@@ -62,4 +62,5 @@ export class EmpleadosService extends ConexionService<EmpleadoInterface> {
   constructor(protected override httpClient: HttpClient, protected override route:Router) {
     super(httpClient, route);
   }
+
 }
