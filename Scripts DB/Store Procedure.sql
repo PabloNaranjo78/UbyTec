@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION GetRepartidores()
+CREATE OR REPLACE FUNCTION GetRepartidor()
 RETURNS setof repartidor
 language sql
 AS
@@ -7,8 +7,8 @@ $$
 	ORDER BY usuario ASC;
 $$;
 
---drop function GetRepartidoresByID(usuario varchar)
-CREATE OR REPLACE FUNCTION GetRepartidoresByID(
+--drop function GetRepartidores()
+CREATE OR REPLACE FUNCTION GetRepartidorByID(
 	usuario_ varchar
 )
 RETURNS setof repartidor
@@ -72,5 +72,5 @@ $$;
 CALL AddRepartidor('usuario','pass','nombre','apellidos','true','provincia','canton','distrito');
 CALL UpdateRepartidor('usuario','pass2','nomb2re','a2pellidos','true','pro2vincia','can2ton','dis2trito');
 CALL DeleteRepartidor('usuario');
-SELECT * FROM GetRepartidores();
-SELECT * from GetRepartidoresByID('usuario');
+SELECT * FROM getrepartidor();
+SELECT * from GetRepartidorByID('jpablo');
