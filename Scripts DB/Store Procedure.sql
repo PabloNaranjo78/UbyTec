@@ -1,3 +1,73 @@
+-- REPARTIDOR TELEFONOS
+CREATE OR REPLACE PROCEDURE AddRepartidor_Telefonos(
+	usuarioRep_ VARCHAR,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO repartidor_telefonos(usuarioRep,telefono)
+	VALUES (usuarioRep_,telefono_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetRepartidor_Telefonos()
+RETURNS setof repartidor_telefonos
+language sql
+AS
+$$
+	select usuarioRep,telefono from public.repartidor_telefonos
+	ORDER BY usuarioRep ASC;
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetRepartidor_TelefonosByID(
+	usuarioRep_ varchar
+)
+RETURNS setof repartidor_telefonos
+language sql
+AS $$
+	select usuarioRep,telefono from public.repartidor_telefonos
+	where repartidor_telefonos.usuarioRep = usuarioRep_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteRepartidor_Telefonos(
+	usuarioRep_ VARCHAR,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM repartidor_telefonos WHERE usuarioRep=usuarioRep_ and telefono = telefono_;
+	commit;
+END
+$$;
+
+
+-- REPARTIDOR
+CREATE OR REPLACE PROCEDURE AddRepartidor(
+	usuario_ VARCHAR,
+	pass_ VARCHAR,
+	nombre_ VARCHAR,
+	apellidos_ VARCHAR,
+	disponible_ BOOLEAN,
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO repartidor(usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito)
+	VALUES (usuario_,pass_,nombre_,apellidos_,disponible_,provincia_,canton_,distrito_);
+	commit;
+END
+$$;
+
+
 CREATE OR REPLACE FUNCTION GetRepartidor()
 RETURNS setof repartidor
 language sql
@@ -18,24 +88,6 @@ AS $$
 	where repartidor.usuario = usuario_;
 $$;
 
-CREATE OR REPLACE PROCEDURE AddRepartidor(
-	usuario_ VARCHAR,
-	pass_ VARCHAR,
-	nombre_ VARCHAR,
-	apellidos_ VARCHAR,
-	disponible_ BOOLEAN,
-	provincia_ VARCHAR,
-	canton_ VARCHAR,
-	distrito_ VARCHAR
-)
-language plpgsql
-AS $$
-BEGIN
-	INSERT INTO repartidor(usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito)
-	VALUES (usuario_,pass_,nombre_,apellidos_,disponible_,provincia_,canton_,distrito_);
-	commit;
-END
-$$;
 
 CREATE OR REPLACE PROCEDURE UpdateRepartidor(
 	usuario_ VARCHAR,
@@ -56,6 +108,7 @@ BEGIN
 END
 $$;
 
+
 CREATE OR REPLACE PROCEDURE DeleteRepartidor(
 	usuario_ VARCHAR
 )
@@ -68,9 +121,667 @@ END
 $$;
 
 
+-- EMPLEADO TELEFONOS
+CREATE OR REPLACE PROCEDURE AddEmpleado_Telefonos(
+	idEmpleado_ int,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO empleado_telefonos(idEmpleado,telefono)
+	VALUES (idEmpleado_,telefono_);
+	commit;
+END
+$$;
 
-CALL AddRepartidor('usuario','pass','nombre','apellidos','true','provincia','canton','distrito');
-CALL UpdateRepartidor('usuario','pass2','nomb2re','a2pellidos','true','pro2vincia','can2ton','dis2trito');
-CALL DeleteRepartidor('usuario');
-SELECT * FROM getrepartidor();
-SELECT * from GetRepartidorByID('jpablo');
+
+CREATE OR REPLACE FUNCTION GetEmpleado_Telefonos()
+RETURNS setof empleado_telefonos
+language sql
+AS
+$$
+	select idEmpleado,telefono from public.empleado_telefonos
+	ORDER BY idEmpleado ASC;
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetEmpleado_TelefonosByID(
+	idEmpleado_ int
+)
+RETURNS setof empleado_telefonos
+language sql
+AS $$
+	select idEmpleado,telefono from public.empleado_telefonos
+	where empleado_telefonos.idEmpleado = idEmpleado_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteEmpleado_Telefonos(
+	idEmpleado_ int,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM empleado_telefonos WHERE idEmpleado=idEmpleado_ and telefono = telefono_;
+	commit;
+END
+$$;
+
+
+
+--EMPLEADO
+
+CREATE OR REPLACE PROCEDURE AddEmpleado(
+	idEmpleado_ int,
+	usuario_ VARCHAR,
+	pass_ VARCHAR,
+	nombre_ VARCHAR,
+	apellidos_ VARCHAR,
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO empleado(idEmpleado,usuario,pass,nombre,apellidos,provincia,canton,distrito)
+	VALUES (idEmpleado_,usuario_,pass_,nombre_,apellidos_,provincia_,canton_,distrito_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetEmpleado()
+RETURNS setof empleado
+language sql
+AS
+$$
+	select idEmpleado,usuario,pass,nombre,apellidos,provincia,canton,distrito from public.empleado
+	ORDER BY idEmpleado ASC;
+$$;
+
+CREATE OR REPLACE FUNCTION GetEmpleadoByID(
+	idEmpleado_ int
+)
+RETURNS setof empleado
+language sql
+AS $$
+	select idEmpleado,usuario,pass,nombre,apellidos,provincia,canton,distrito from empleado
+	where empleado.idEmpleado = idEmpleado_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE UpdateEmpleado(
+	idEmpleado_ int,
+	usuario_ VARCHAR,
+	pass_ VARCHAR,
+	nombre_ VARCHAR,
+	apellidos_ VARCHAR,
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	UPDATE empleado SET usuario=usuario_, pass=pass_,nombre=nombre_,apellidos=apellidos_,
+	provincia=provincia_,canton=canton_,distrito=distrito_ WHERE idEmpleado=idEmpleado_;
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteEmpleado(
+	idEmpleado_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM empleado WHERE idEmpleado=idEmpleado_;
+	commit;
+END
+$$;
+
+
+-- ADMIN COMER TELEFONOS
+CREATE OR REPLACE PROCEDURE AddAdmin_Comer_Telefonos(
+	idAdmin_ int,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO admin_comer_telefonos(idAdmin,telefono)
+	VALUES (idAdmin_,telefono_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetAdmin_Comer_Telefonos()
+RETURNS setof admin_comer_telefonos
+language sql
+AS
+$$
+	select idAdmin,telefono from public.admin_comer_telefonos
+	ORDER BY idAdmin ASC;
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetAdmin_Comer_TelefonosByID(
+	idAdmin_ int
+)
+RETURNS setof admin_comer_telefonos
+language sql
+AS $$
+	select idAdmin,telefono from public.admin_comer_telefonos
+	where admin_comer_telefonos.idAdmin = idAdmin_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteAdmin_Comer_Telefonos(
+	idAdmin_ int,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM admin_comer_telefonos WHERE idAdmin=idAdmin_ and telefono = telefono_;
+	commit;
+END
+$$;
+
+
+
+--ADMIN COMERCIO
+
+CREATE OR REPLACE PROCEDURE AddAdmin_Comercio(
+	idAdmin_ int,
+	idComercio_ int,
+	usuario_ VARCHAR,
+	pass_ VARCHAR,
+	nombre_ VARCHAR,
+	apellidos_ VARCHAR,
+	correo_ VARCHAR,
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO admin_comercio(idAdmin,idComercio,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito)
+	VALUES (idAdmin_,idComercio_,usuario_,pass_,nombre_,apellidos_,correo_,provincia_,canton_,distrito_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetAdmin_Comercio()
+RETURNS setof admin_comercio
+language sql
+AS
+$$
+	select idAdmin,idComercio,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito from public.admin_comercio
+	ORDER BY idAdmin ASC;
+$$;
+
+CREATE OR REPLACE FUNCTION GetAdmin_ComercioByID(
+	idAdmin_ int
+)
+RETURNS setof admin_comercio
+language sql
+AS $$
+	select idAdmin,idComercio,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito from admin_comercio
+	where admin_comercio.idAdmin = idAdmin_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE UpdateAdmin_Comercio(
+	idAdmin_ int,
+	idComercio_ int,
+	usuario_ VARCHAR,
+	pass_ VARCHAR,
+	nombre_ VARCHAR,
+	apellidos_ VARCHAR,
+	correo_ VARCHAR,
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	UPDATE admin_comercio SET idComercio=idComercio_,usuario=usuario_, pass=pass_,nombre=nombre_,apellidos=apellidos_,
+	correo=correo_,provincia=provincia_,canton=canton_,distrito=distrito_ WHERE idAdmin=idAdmin_;
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteAdmin_Comercio(
+	idAdmin_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM admin_comercio WHERE idAdmin=idAdmin_;
+	commit;
+END
+$$;
+
+
+--COMERCIO
+
+CREATE OR REPLACE PROCEDURE AddComercio(
+	idComercio_ int,
+	pass_ VARCHAR,
+	tipo_ VARCHAR,
+	nombre_ VARCHAR,
+	correo_ VARCHAR,
+	sinpe_ int,
+	solicitud_ BOOLEAN
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO comercio(idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito)
+	VALUES (idComercio_,pass,tipo_,nombre_,correo_,sinpe_,solicitud_,provincia_,canton_,distrito_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetComercio()
+RETURNS setof comercio
+language sql
+AS
+$$
+	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from public.comercio
+	ORDER BY idComercio ASC;
+$$;
+
+CREATE OR REPLACE FUNCTION GetComercioByID(
+	idComercio_ int
+)
+RETURNS setof comercio
+language sql
+AS $$
+	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from comercio
+	where comercio.idComercio = idComercio_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE UpdateComercio(
+	idComercio_ int,
+	pass_ VARCHAR,
+	tipo_ VARCHAR,
+	nombre_ VARCHAR,
+	correo_ VARCHAR,
+	sinpe_ int,
+	solicitud_ BOOLEAN
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	UPDATE comercio SET pass=pass_,tipo=tipo_,nombre=nombre_,correo=correo_,sinpe=sinpe_,solicitud=solicitud_,
+	provincia=provincia_,canton=canton_,distrito=distrito_ WHERE idComercio = idComercio_;
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteComercio(
+	idComercio_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM comercio WHERE idComercio=idComercio_;
+	commit;
+END
+$$;
+
+
+
+-- COMERCIO TELEFONOS
+CREATE OR REPLACE PROCEDURE AddComercio_Telefonos(
+	idComercio_ int,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO comercio_telefonos(idComercio,telefono)
+	VALUES (idComercio_,telefono_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetComercio_Telefonos()
+RETURNS setof comercio_telefonos
+language sql
+AS
+$$
+	select idComercio,telefono from public.comercio_telefonos
+	ORDER BY idComercio ASC;
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetComercio_TelefonosByID(
+	idComercio_ int
+)
+RETURNS setof comercio_telefonos
+language sql
+AS $$
+	select idComercio,telefono from public.comercio_telefonos
+	where comercio_telefonos.idComercio = idComercio_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteComercio_Telefonos(
+	idComercio_ int,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM comercio_telefonos WHERE idComercio=idComercio_ and telefono = telefono_;
+	commit;
+END
+$$;
+
+
+-- PRODUCTO FOTOS
+CREATE OR REPLACE PROCEDURE AddProducto_Fotos(
+	producto_ VARCHAR,
+	foto_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO producto_fotos(producto,foto)
+	VALUES (producto_,foto_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetProducto_Fotos()
+RETURNS setof producto_fotos
+language sql
+AS
+$$
+	select producto,foto from public.producto_fotos
+	ORDER BY producto ASC;
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetProducto_FotosByID(
+	producto_ VARCHAR
+)
+RETURNS setof producto_fotos
+language sql
+AS $$
+	select producto,foto from public.producto_fotos
+	where producto_fotos.producto = producto_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteProducto_Fotos(
+	producto_ VARCHAR,
+	foto_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM producto_fotos WHERE producto=producto_ and foto = foto_;
+	commit;
+END
+$$;
+
+
+
+--PRODUCTO
+
+CREATE OR REPLACE PROCEDURE AddProducto(
+	nombre_ VARCHAR,
+	precio_ int,
+	categoria_ VARCHAR,
+	idComercio_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO producto(nombre,precio,categoria,idComercio)
+	VALUES (nombre_,precio_,categoria_,idComercio_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetProducto()
+RETURNS setof producto
+language sql
+AS
+$$
+	select nombre,precio,categoria,idComercio from public.producto
+	ORDER BY nombre ASC;
+$$;
+
+CREATE OR REPLACE FUNCTION GetProductoByID(
+	nombre_ int
+)
+RETURNS setof producto
+language sql
+AS $$
+	select nombre,precio,categoria,idComercio from producto
+	where producto.nombre = nombre_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE UpdateProducto(
+	nombre_ VARCHAR,
+	precio_ int,
+	categoria_ VARCHAR,
+	idComercio_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	UPDATE producto SET precio=precio_,categoria=categoria_,idComercio=idComercio_
+	WHERE nombre = nombre_;
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteProducto(
+	nombre_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM producto WHERE nombre=nombre_;
+	commit;
+END
+$$;
+
+
+
+--PRODUCTOS PEDIDOS
+
+CREATE OR REPLACE PROCEDURE AddProductos_Pedido(
+	idPedido_ int,
+	producto_ VARCHAR,
+	cantidad_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO productos_pedido(idPedido,producto,cantidad)
+	VALUES (idPedido_,producto_,cantidad_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetProductos_Pedido()
+RETURNS setof productos_pedido
+language sql
+AS
+$$
+	select idPedido,producto,cantidad from public.productos_pedido
+	ORDER BY idPedido ASC;
+$$;
+
+CREATE OR REPLACE FUNCTION GetProductos_PedidoByID(
+	idPedido_ int,
+	producto_ VARCHAR
+)
+RETURNS setof productos_pedido
+language sql
+AS $$
+	select idPedido,producto,cantidad from productos_pedido
+	where productos_pedido.idPedido = idPedido_ and productos_pedido.producto = producto_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE UpdateProductos_Pedido(
+	idPedido_ int,
+	producto_ VARCHAR,
+	cantidad_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	UPDATE productos_pedido SET cantidad=cantidad_
+	WHERE idPedido=idPedido_ and producto=producto_;
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteProductos_Pedido(
+	idPedido_ int,
+	producto_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM productos_pedido WHERE idPedido=idPedido_ and producto=producto_;
+	commit;
+END
+$$;
+
+
+--PEDIDO
+
+CREATE OR REPLACE PROCEDURE AddPedido(
+	
+	idPedido_ int,
+	direccion_ VARCHAR,
+	finalizado_ BOOLEAN
+	repartidor_ VARCHAR,
+	idCliente_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO pedido(idPedido,direccion,finalizado,repartidor,idCliente)
+	VALUES (idPedido_,direccion_,finalizado_,repartidor_,idCliente_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetPedido()
+RETURNS setof pedido
+language sql
+AS
+$$
+	select idPedido,direccion,finalizado,repartidor,idCliente from public.pedido
+	ORDER BY idPedido ASC;
+$$;
+
+CREATE OR REPLACE FUNCTION GetPedidoByID(
+	idPedido_ int
+)
+RETURNS setof pedido
+language sql
+AS $$
+	select idPedido,direccion,finalizado,repartidor,idCliente from pedido
+	where producto.idPedido = idPedido_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE UpdatePedido(
+	idPedido_ int,
+	direccion_ VARCHAR,
+	finalizado_ BOOLEAN
+	repartidor_ VARCHAR,
+	idCliente_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	UPDATE pedido SET direccion=direccion_,finalizado=finalizado_,repartidor=repartidor_,idCliente=idCliente_
+	WHERE idPedido = idPedido_;
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeletePedido(
+	idPedido_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM pedido WHERE idPedido = idPedido_;
+	commit;
+END
+$$;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- CALL AddRepartidor('usuario','pass','nombre','apellidos','true','provincia','canton','distrito');
+-- CALL UpdateRepartidor('usuario','pass2','nomb2re','a2pellidos','true','pro2vincia','can2ton','dis2trito');
+-- CALL DeleteRepartidor('usuario');
+-- SELECT * FROM getrepartidor();
+-- SELECT * from GetRepartidorByID('jpablo');
