@@ -324,8 +324,7 @@ RETURNS setof admin_comercio
 language sql
 AS
 $$
-	select idAdmin,idComercio,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito from public.admin_comercio
-	ORDER BY idAdmin ASC;
+	select idAdmin,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito,idComercio from public.admin_comercio
 $$;
 
 CREATE OR REPLACE FUNCTION GetAdmin_ComercioByID(
@@ -334,7 +333,7 @@ CREATE OR REPLACE FUNCTION GetAdmin_ComercioByID(
 RETURNS setof admin_comercio
 language sql
 AS $$
-	select idAdmin,idComercio,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito from admin_comercio
+	select idAdmin,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito,idComercio from admin_comercio
 	where admin_comercio.idAdmin = idAdmin_;
 $$;
 
@@ -382,7 +381,7 @@ CREATE OR REPLACE PROCEDURE AddComercio(
 	nombre_ VARCHAR,
 	correo_ VARCHAR,
 	sinpe_ int,
-	solicitud_ BOOLEAN
+	solicitud_ BOOLEAN,
 	provincia_ VARCHAR,
 	canton_ VARCHAR,
 	distrito_ VARCHAR
@@ -424,7 +423,7 @@ CREATE OR REPLACE PROCEDURE UpdateComercio(
 	nombre_ VARCHAR,
 	correo_ VARCHAR,
 	sinpe_ int,
-	solicitud_ BOOLEAN
+	solicitud_ BOOLEAN,
 	provincia_ VARCHAR,
 	canton_ VARCHAR,
 	distrito_ VARCHAR
@@ -579,7 +578,7 @@ $$
 $$;
 
 CREATE OR REPLACE FUNCTION GetProductoByID(
-	nombre_ int
+	nombre_ varchar
 )
 RETURNS setof producto
 language sql
@@ -620,7 +619,7 @@ $$;
 
 --PRODUCTOS PEDIDOS
 
-CREATE OR REPLACE PROCEDURE AddProductos_Pedido(
+CREATE OR REPLACE PROCEDURE AddProducto_Pedido(
 	idPedido_ int,
 	producto_ VARCHAR,
 	cantidad_ int
@@ -628,35 +627,34 @@ CREATE OR REPLACE PROCEDURE AddProductos_Pedido(
 language plpgsql
 AS $$
 BEGIN
-	INSERT INTO productos_pedido(idPedido,producto,cantidad)
+	INSERT INTO producto_pedido(idPedido,producto,cantidad)
 	VALUES (idPedido_,producto_,cantidad_);
 	commit;
 END
 $$;
 
 
-CREATE OR REPLACE FUNCTION GetProductos_Pedido()
-RETURNS setof productos_pedido
+CREATE OR REPLACE FUNCTION GetProducto_Pedido()
+RETURNS setof producto_pedido
 language sql
 AS
 $$
-	select idPedido,producto,cantidad from public.productos_pedido
+	select idPedido,producto,cantidad from public.producto_pedido
 	ORDER BY idPedido ASC;
 $$;
 
-CREATE OR REPLACE FUNCTION GetProductos_PedidoByID(
-	idPedido_ int,
-	producto_ VARCHAR
+CREATE OR REPLACE FUNCTION GetProducto_PedidoByID(
+	idPedido_ int
 )
-RETURNS setof productos_pedido
+RETURNS setof producto_pedido
 language sql
 AS $$
-	select idPedido,producto,cantidad from productos_pedido
-	where productos_pedido.idPedido = idPedido_ and productos_pedido.producto = producto_;
+	select idPedido,producto,cantidad from producto_pedido
+	where producto_pedido.idPedido = idPedido_;
 $$;
 
 
-CREATE OR REPLACE PROCEDURE UpdateProductos_Pedido(
+CREATE OR REPLACE PROCEDURE UpdateProducto_Pedido(
 	idPedido_ int,
 	producto_ VARCHAR,
 	cantidad_ int
@@ -664,21 +662,21 @@ CREATE OR REPLACE PROCEDURE UpdateProductos_Pedido(
 language plpgsql
 AS $$
 BEGIN
-	UPDATE productos_pedido SET cantidad=cantidad_
+	UPDATE producto_pedido SET cantidad=cantidad_
 	WHERE idPedido=idPedido_ and producto=producto_;
 	commit;
 END
 $$;
 
 
-CREATE OR REPLACE PROCEDURE DeleteProductos_Pedido(
+CREATE OR REPLACE PROCEDURE DeleteProducto_Pedido(
 	idPedido_ int,
 	producto_ VARCHAR
 )
 language plpgsql
 AS $$
 BEGIN
-	DELETE FROM productos_pedido WHERE idPedido=idPedido_ and producto=producto_;
+	DELETE FROM producto_pedido WHERE idPedido=idPedido_ and producto=producto_;
 	commit;
 END
 $$;
@@ -690,7 +688,7 @@ CREATE OR REPLACE PROCEDURE AddPedido(
 	
 	idPedido_ int,
 	direccion_ VARCHAR,
-	finalizado_ BOOLEAN
+	finalizado_ BOOLEAN,
 	repartidor_ VARCHAR,
 	idCliente_ int
 )
@@ -720,14 +718,13 @@ RETURNS setof pedido
 language sql
 AS $$
 	select idPedido,direccion,finalizado,repartidor,idCliente from pedido
-	where producto.idPedido = idPedido_;
+	where pedido.idPedido = idPedido_;
 $$;
-
 
 CREATE OR REPLACE PROCEDURE UpdatePedido(
 	idPedido_ int,
 	direccion_ VARCHAR,
-	finalizado_ BOOLEAN
+	finalizado_ BOOLEAN,
 	repartidor_ VARCHAR,
 	idCliente_ int
 )
