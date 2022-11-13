@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { EmpleadoInterface } from '../interfaces/empleado';
 import { ConexionService } from './conexion.service';
 import { Gestion } from '../interfaces/gestion';
+import { TelefonoInterface } from '../interfaces/genericas';
 
 @Injectable({
   providedIn: 'root'
@@ -37,3 +38,4 @@ export class EmpleadosService extends ConexionService<EmpleadoInterface> {
     super(httpClient, route);
   }
 }
+
