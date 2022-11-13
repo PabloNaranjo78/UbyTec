@@ -12,7 +12,7 @@ namespace UbyTECAPI.Models
         {
 
             con.Open();
-            NpgsqlCommand command = new($"SELECT {atributes} FROM {entity}", con);
+            NpgsqlCommand command = new($"SELECT {atributes} FROM get{entity}()", con);
             NpgsqlDataReader rd = command.ExecuteReader();
             List<T> entityList = createEntityList(rd);
             con.Close();
@@ -23,7 +23,7 @@ namespace UbyTECAPI.Models
         public List<T> get(string id)
         {
             con.Open();
-            NpgsqlCommand command = new($"SELECT {atributes} FROM {entity} WHERE {searchAtribute} = {id}", con);
+            NpgsqlCommand command = new($"SELECT {atributes} FROM get{entity}byid({id})", con);
             NpgsqlDataReader rd = command.ExecuteReader();
             List<T> entityList = createEntityList(rd);
             con.Close();
@@ -32,8 +32,7 @@ namespace UbyTECAPI.Models
 
         public bool post(Entity<T> newEntity)
         {
-
-            NpgsqlCommand command = new($"INSERT INTO {entity}({atributes}) VALUES ({newEntity.paramsToString()})", con);
+            NpgsqlCommand command = new($"CALL add{entity}({newEntity.paramsToString()})", con);
 
             try
             {
@@ -52,7 +51,7 @@ namespace UbyTECAPI.Models
         public bool put(Entity<T> newEntity)
         {
 
-            NpgsqlCommand command = new($"UPDATE {entity} SET {newEntity.putParams()} WHERE {searchAtribute} = {newEntity.getID()}", con);
+            NpgsqlCommand command = new($"CALL update{entity}({newEntity.paramsToString()})", con);
 
             try
             {
@@ -70,7 +69,7 @@ namespace UbyTECAPI.Models
 
         public bool delete(string id)
         {
-            NpgsqlCommand command = new($"DELETE FROM {entity} WHERE {searchAtribute} = {id}", con);
+            NpgsqlCommand command = new($"CALL delete{entity}({id})", con);
 
             try
             {
