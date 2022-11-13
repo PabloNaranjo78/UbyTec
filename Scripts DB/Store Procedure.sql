@@ -852,6 +852,7 @@ CREATE OR REPLACE PROCEDURE UpdateCliente(
 	provincia_ VARCHAR,
 	canton_ VARCHAR,
 	distrito_ VARCHAR
+	)
 language plpgsql
 AS $$
 BEGIN
@@ -875,30 +876,3 @@ END
 $$;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- CALL AddRepartidor('usuario','pass','nombre','apellidos','true','provincia','canton','distrito');
--- CALL UpdateRepartidor('usuario','pass2','nomb2re','a2pellidos','true','pro2vincia','can2ton','dis2trito');
--- CALL DeleteRepartidor('usuario');
--- SELECT * FROM getrepartidor();
--- SELECT * from GetRepartidorByID('jpablo');
