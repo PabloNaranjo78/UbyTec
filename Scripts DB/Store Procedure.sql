@@ -750,9 +750,129 @@ END
 $$;
 
 
+-- CLIENTE TELEFONOS
+CREATE OR REPLACE PROCEDURE AddCliente_Telefonos(
+	idCliente_ int,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO cliente_telefonos(idCliente,telefono)
+	VALUES (idCliente_,telefono_);
+	commit;
+END
+$$;
 
 
+CREATE OR REPLACE FUNCTION GetCliente_Telefonos()
+RETURNS setof cliente_telefonos
+language sql
+AS
+$$
+	select idCliente,telefono from public.cliente_telefonos
+	ORDER BY idCliente ASC;
+$$;
 
+
+CREATE OR REPLACE FUNCTION GetCliente_TelefonosByID(
+	idCliente_ int
+)
+RETURNS setof cliente_telefonos
+language sql
+AS $$
+	select idCliente,telefono from public.cliente_telefonos
+	where cliente_telefonos.idCliente = idCliente_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteCliente_Telefonos(
+	idCliente_ int,
+	telefono_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM cliente_telefonos WHERE idCliente=idCliente_ and telefono = telefono_;
+	commit;
+END
+$$;
+
+
+--CLIENTE
+
+CREATE OR REPLACE PROCEDURE AddCliente(
+	idCliente_ int,
+	usuario_ VARCHAR,
+	pass_ VARCHAR,
+	nombre_ VARCHAR,
+	apellidos_ VARCHAR,
+	fechaNac_ VARCHAR,
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+)
+language plpgsql
+AS $$
+BEGIN
+	INSERT INTO cliente(idCliente,usuario,pass,nombre,apellidos,fechaNac,provincia,canton,distrito)
+	VALUES (idCliente_,usuario_,pass_,nombre_,apellidos_,fechaNac_,provincia_,canton_,distrito_);
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE FUNCTION GetCliente()
+RETURNS setof cliente
+language sql
+AS
+$$
+	select idCliente,usuario,pass,nombre,apellidos,fechaNac,provincia,canton,distrito from public.cliente
+	ORDER BY idCliente ASC;
+$$;
+
+CREATE OR REPLACE FUNCTION GetClienteByID(
+	idCliente_ int
+)
+RETURNS setof cliente
+language sql
+AS $$
+	select idCliente,usuario,pass,nombre,apellidos,fechaNac,provincia,canton,distrito from cliente
+	where cliente.idCliente = idCliente_;
+$$;
+
+
+CREATE OR REPLACE PROCEDURE UpdateCliente(
+	idCliente_ int,
+	usuario_ VARCHAR,
+	pass_ VARCHAR,
+	nombre_ VARCHAR,
+	apellidos_ VARCHAR,
+	fechaNac_ VARCHAR,
+	provincia_ VARCHAR,
+	canton_ VARCHAR,
+	distrito_ VARCHAR
+language plpgsql
+AS $$
+BEGIN
+	UPDATE cliente SET usuario=usuario_,pass=pass_,nombre=nombre_,apellidos=apellidos_,fechaNac=fechaNac_,
+	provincia=provincia_,canton=canton_,distrito=distrito_ 
+	WHERE idCliente=idCliente_;
+	commit;
+END
+$$;
+
+
+CREATE OR REPLACE PROCEDURE DeleteCliente(
+	idCliente_ int
+)
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM cliente WHERE idCliente=idCliente_;
+	commit;
+END
+$$;
 
 
 
