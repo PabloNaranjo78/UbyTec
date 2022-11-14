@@ -390,7 +390,7 @@ language plpgsql
 AS $$
 BEGIN
 	INSERT INTO comercio(idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito)
-	VALUES (idComercio_,pass,tipo_,nombre_,correo_,sinpe_,solicitud_,provincia_,canton_,distrito_);
+	VALUES (idComercio_,pass_,tipo_,nombre_,correo_,sinpe_,solicitud_,provincia_,canton_,distrito_);
 	commit;
 END
 $$;
@@ -876,3 +876,42 @@ END
 $$;
 
 
+--Valida empleado
+
+CREATE OR REPLACE FUNCTION ValidaEmpleado(
+	idEmpleado_ int,
+	pass_ VARCHAR
+)
+RETURNS setof empleado
+language sql
+AS $$
+	select idEmpleado,usuario,pass,nombre,apellidos,provincia,canton,distrito from empleado
+	where empleado.idEmpleado = idEmpleado_ and empleado.pass = pass_;
+$$;
+
+
+--Valida comercio
+
+CREATE OR REPLACE FUNCTION ValidaComercio(
+	idComercio_ int,
+	pass_ VARCHAR
+)
+RETURNS setof comercio
+language sql
+AS $$
+	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from comercio
+	where comercio.idComercio = idComercio_ and comercio.pass = pass_;
+$$;
+
+
+--Valida cliente
+CREATE OR REPLACE FUNCTION ValidaCliente(
+	idCliente_ int,
+	pass_ VARCHAR
+)
+RETURNS setof cliente
+language sql
+AS $$
+	select idCliente,usuario,pass,nombre,apellidos,fechaNac,provincia,canton,distrito from cliente
+	where cliente.idCliente = idCliente_ and cliente.pass = pass_;
+$$;
