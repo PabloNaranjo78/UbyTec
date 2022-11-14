@@ -312,8 +312,8 @@ CREATE OR REPLACE PROCEDURE AddAdmin_Comercio(
 language plpgsql
 AS $$
 BEGIN
-	INSERT INTO admin_comercio(idAdmin,idComercio,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito)
-	VALUES (idAdmin_,idComercio_,usuario_,pass_,nombre_,apellidos_,correo_,provincia_,canton_,distrito_);
+	INSERT INTO admin_comercio(idAdmin,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito,idComercio)
+	VALUES (idAdmin_,usuario_,pass_,nombre_,apellidos_,correo_,provincia_,canton_,distrito_,idComercio_);
 	commit;
 END
 $$;
@@ -328,13 +328,13 @@ $$
 $$;
 
 CREATE OR REPLACE FUNCTION GetAdmin_ComercioByID(
-	idComercio_ int
+	idAdmin_ int
 )
 RETURNS setof admin_comercio
 language sql
 AS $$
 	select idAdmin,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito,idComercio from admin_comercio
-	where admin_comercio.idComercio = idComercio_;
+	where admin_comercio.idAdmin = idAdmin_;
 $$;
 
 
@@ -353,8 +353,9 @@ CREATE OR REPLACE PROCEDURE UpdateAdmin_Comercio(
 language plpgsql
 AS $$
 BEGIN
-	UPDATE admin_comercio SET idComercio=idComercio_,usuario=usuario_, pass=pass_,nombre=nombre_,apellidos=apellidos_,
-	correo=correo_,provincia=provincia_,canton=canton_,distrito=distrito_ WHERE idAdmin=idAdmin_;
+	UPDATE admin_comercio SET usuario=usuario_, pass=pass_,nombre=nombre_,apellidos=apellidos_,
+	correo=correo_,provincia=provincia_,canton=canton_,distrito=distrito_,idComercio=idComercio_
+	WHERE idAdmin=idAdmin_;
 	commit;
 END
 $$;
@@ -401,8 +402,7 @@ RETURNS setof comercio
 language sql
 AS
 $$
-	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito 
-	from public.comercio where solicitud=false
+	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from public.comercio
 	ORDER BY idComercio ASC;
 $$;
 
@@ -883,10 +883,10 @@ CREATE OR REPLACE FUNCTION ValidaEmpleado(
 	idEmpleado_ int,
 	pass_ VARCHAR
 )
-RETURNS int
+RETURNS setof empleado
 language sql
 AS $$
-Select count(idEmpleado) from empleado
+	select idEmpleado,usuario,pass,nombre,apellidos,provincia,canton,distrito from empleado
 	where empleado.idEmpleado = idEmpleado_ and empleado.pass = pass_;
 $$;
 
@@ -897,22 +897,23 @@ CREATE OR REPLACE FUNCTION ValidaComercio(
 	idComercio_ int,
 	pass_ VARCHAR
 )
-RETURNS int
+RETURNS setof comercio
 language sql
 AS $$
-Select count(idComercio) from comercio
+	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from comercio
 	where comercio.idComercio = idComercio_ and comercio.pass = pass_;
 $$;
+
 
 --Valida cliente
 CREATE OR REPLACE FUNCTION ValidaCliente(
 	idCliente_ int,
 	pass_ VARCHAR
 )
-RETURNS int
+RETURNS setof cliente
 language sql
 AS $$
-	Select count(idCliente) from cliente
+	select idCliente,usuario,pass,nombre,apellidos,fechaNac,provincia,canton,distrito from cliente
 	where cliente.idCliente = idCliente_ and cliente.pass = pass_;
 $$;
 
@@ -921,12 +922,13 @@ $$;
 --
 
 
--- SELECT * FROM getCliente_Telefonos();
--- CALL DeleteCliente(333);
+-- SELECT * FROM getCliente_telefonos();
+-- SELECT * FROM getCliente();
+-- CALL DeleteCliente(4555);
 
--- CALL AddCliente(333,'MongeF','123','Fernando','MR','2001-12-13','Cartago','Guarco','Tobosi');
+-- CALL AddCliente(4555,'MongeF','123','Fernando','MR','2001-12-13','Cartago','Guarco','Tobosi');
 
--- CALL AddCliente_Telefonos(333,88836309);
+-- CALL AddCliente_Telefonos(4555,7777);
 
 
 

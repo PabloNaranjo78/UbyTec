@@ -5,7 +5,7 @@ language plpgsql
 AS $$
 BEGIN
 	DELETE FROM repartidor_telefonos WHERE usuarioRep=OLD.usuario;
-	RETURN NULL;
+	RETURN OLD;
 END
 $$;
 
@@ -20,7 +20,7 @@ language plpgsql
 AS $$
 BEGIN
 	DELETE FROM empleado_telefonos WHERE idEmpleado=OLD.idEmpleado;
-	RETURN NULL;
+	RETURN OLD;
 END
 $$;
 
@@ -34,7 +34,7 @@ language plpgsql
 AS $$
 BEGIN
 	DELETE FROM admin_comer_telefonos WHERE idAdmin=OLD.idAdmin;
-	RETURN NULL;
+	RETURN OLD;
 END
 $$;
 
@@ -49,15 +49,12 @@ language plpgsql
 AS $$
 BEGIN
 	DELETE FROM comercio_telefonos WHERE idComercio=OLD.idComercio;
-	RETURN NULL;
+	RETURN OLD;
 END
 $$;
 
 CREATE TRIGGER trigger_comercio BEFORE DELETE ON comercio
 FOR EACH ROW EXECUTE PROCEDURE tr_comercio();
-
-
-
 
 
 --TRIGGER CLIENTE TELEFONOS
@@ -67,12 +64,9 @@ language plpgsql
 AS $$
 BEGIN
 	DELETE FROM cliente_telefonos WHERE idCliente=OLD.idCliente;
-	RETURN NULL;
+	RETURN OLD;
 	
 END
-$$
-
+$$;
 CREATE TRIGGER trigger_cliente BEFORE DELETE ON Cliente
 FOR EACH ROW EXECUTE PROCEDURE tr_cliente();
-
-
