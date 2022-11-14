@@ -30,7 +30,7 @@ import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afilia
     RouterModule.forRoot([
       {path: "", component:LoginComponent, canActivate: [VigilanteGuard]},
       {path: "gestion/:Tipo", component:GestionesComponent, canActivate: [VigilanteGuard]},
-      {path: "login", component:LoginComponent},
+      {path: "login", component:LoginComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/empleado", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/repartidores", component:NuevoRepartidorComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/afiliados", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
