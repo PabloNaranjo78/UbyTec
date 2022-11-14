@@ -65,12 +65,12 @@ namespace UbyTECAPI.Controllers
         }
 
         // DELETE api/<ProductosPedidoController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<List<ProductosPedido>>> Delete(int id)
+        [HttpDelete("{id}/{producto}")]
+        public async Task<ActionResult<List<ProductosPedido>>> Delete(int id,string producto)
         {
             List<ProductosPedido> entityList = new();
 
-            var result = productosPedido.delete(id.ToString());
+            var result = productosPedido.delete($"{id},'{producto}'");
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado eliminar a {id}");
         }

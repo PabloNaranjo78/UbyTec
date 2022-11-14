@@ -34,9 +34,8 @@ namespace UbyTECAPI.Controllers
             try
             {
                 con.Open();
-                NpgsqlCommand command = new($"SELECT idComercio,pass,idAdmin,tipo,nombre," +
-                    $"correo,sinpe,solicitud,provincia,canton,distrito FROM comercio" +
-                    $" WHERE solicitud = true", con);
+                NpgsqlCommand command = new($"SELECT idComercio,pass,tipo,nombre,correo,sinpe,solicitud," +
+                    $"provincia,canton,distrito FROM getsolicitudes()", con);
                 NpgsqlDataReader rd = command.ExecuteReader();
                 List<Comercio> entityList = new();
                 while (rd.Read())
