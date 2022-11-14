@@ -401,7 +401,8 @@ RETURNS setof comercio
 language sql
 AS
 $$
-	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from public.comercio
+	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito 
+	from public.comercio where solicitud=false
 	ORDER BY idComercio ASC;
 $$;
 
