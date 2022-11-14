@@ -947,4 +947,12 @@ $$;
 -- SELECT * FROM getAdmin_Comercio();
 -- CALL AddAdmin_Comercio(333,'fer','13','monge','fer','@', 'c','c','t',58);
 
+-- CALL AddProducto('arroz',1000,'a',123);
+-- CALL AddProducto_Fotos('arroz','aaaa');
+-- CALL AddProducto_Pedido(1111,'arroz',15);
 
+-- CALL DeleteProducto('arroz');
+
+-- SELECT * FROM GetProducto();
+-- SELECT * FROM GetProducto_Pedido();
+-- SELECT * FROM GetProducto_Fotos();

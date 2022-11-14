@@ -56,6 +56,21 @@ $$;
 CREATE TRIGGER trigger_comercio BEFORE DELETE ON comercio
 FOR EACH ROW EXECUTE PROCEDURE tr_comercio();
 
+--TRIGGER PRODUCTO FOTOS Y PRODUCTO PEDIDO
+CREATE OR REPLACE FUNCTION tr_producto()
+RETURNS TRIGGER
+language plpgsql
+AS $$
+BEGIN
+	DELETE FROM producto_fotos WHERE producto=OLD.nombre;
+	DELETE FROM producto_pedido WHERE producto=OLD.nombre;
+	RETURN OLD;
+	
+END
+$$;
+
+CREATE TRIGGER trigger_producto BEFORE DELETE ON Producto
+FOR EACH ROW EXECUTE PROCEDURE tr_producto();
 
 --TRIGGER CLIENTE TELEFONOS
 CREATE OR REPLACE FUNCTION tr_cliente()
