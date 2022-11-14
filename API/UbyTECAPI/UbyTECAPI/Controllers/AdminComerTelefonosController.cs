@@ -58,7 +58,7 @@ namespace UbyTECAPI.Controllers
         {
             List<AdminComerTelefonos> entityList = new();
 
-            var result = adminComerTelefonos.delete($"{idAdmin} AND telefono = {telefono}");
+            var result = adminComerTelefonos.delete($"{idAdmin}, {telefono}");
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado eliminar a {telefono}");
         }

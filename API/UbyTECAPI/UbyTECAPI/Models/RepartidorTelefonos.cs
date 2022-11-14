@@ -18,25 +18,25 @@ namespace UbyTECAPI.Models
         {
             get => "usuarioRep";
         }
-        public string? usuarioRep { get; set; }
+        public string? id { get; set; }
         public int telefono { get; set; }
 
         protected override RepartidorTelefonos createEntity(NpgsqlDataReader rd)
         {
             return new RepartidorTelefonos
             {
-                usuarioRep = rd["usuarioRep"].ToString(),
+                id = rd["usuarioRep"].ToString(),
                 telefono = Convert.ToInt32(rd["telefono"])
             };
         }
         protected override string paramsToString()
         {
-            return $"'{usuarioRep}',{telefono}";
+            return $"'{id}',{telefono}";
         }
 
         protected override string getID()
         {
-            return $"'{usuarioRep}'";
+            return $"'{id}'";
         }
     }
 }

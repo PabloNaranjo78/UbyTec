@@ -10,7 +10,7 @@ namespace UbyTECAPI.Models
         }
         protected override string? entity
         {
-            get => "productos_pedido";
+            get => "producto_pedido";
         }
         protected override string? searchAtribute
         {
@@ -18,7 +18,7 @@ namespace UbyTECAPI.Models
         }
 
         public int idPedido { get; set; }
-        public int producto { get; set; }
+        public string? producto { get; set; }
         public int cantidad { get; set; }
 
         protected override ProductosPedido createEntity(NpgsqlDataReader rd)
@@ -26,19 +26,19 @@ namespace UbyTECAPI.Models
             return new ProductosPedido
             {
                 idPedido = Convert.ToInt32(rd["idPedido"]),
-                producto = Convert.ToInt32(rd["producto"]),
+                producto = rd["producto"].ToString(),
                 cantidad = Convert.ToInt32(rd["cantidad"])
             };
         }
 
         protected override string paramsToString()
         {
-            return $"{idPedido},{producto},{cantidad}";
+            return $"{idPedido},'{producto}',{cantidad}";
         }
 
         protected override string putParams()
         {
-            return $"idPedido={idPedido},producto={producto},cantidad={cantidad}";
+            return $"idPedido={idPedido},producto='{producto}',cantidad={cantidad}";
         }
         protected override string getID()
         {

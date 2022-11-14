@@ -16,31 +16,31 @@ namespace UbyTECAPI.Models
         {
             get => "idCliente";
         }
-        public int idCliente { get; set; }
+        public int id { get; set; }
         public int telefono { get; set; }
 
         protected override ClienteTelefonos createEntity(NpgsqlDataReader rd)
         {
             return new ClienteTelefonos
             {
-                idCliente = Convert.ToInt32(rd["idCliente"]),
+                id = Convert.ToInt32(rd["idCliente"]),
                 telefono = Convert.ToInt32(rd["telefono"])
             };
         }
 
         protected override string paramsToString()
         {
-            return $"{idCliente},{telefono}";
+            return $"{id},{telefono}";
         }
 
         protected override string putParams()
         {
-            return $"idCliente={idCliente},telefono={telefono}"; ;
+            return $"idCliente={id},telefono={telefono}"; ;
         }
 
         protected override string getID()
         {
-            return idCliente.ToString();
+            return id.ToString();
         }
     }
 }
