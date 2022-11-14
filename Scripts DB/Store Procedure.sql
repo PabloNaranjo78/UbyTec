@@ -915,3 +915,34 @@ AS $$
 	select idCliente,usuario,pass,nombre,apellidos,fechaNac,provincia,canton,distrito from cliente
 	where cliente.idCliente = idCliente_ and cliente.pass = pass_;
 $$;
+
+
+--AUX
+--
+
+
+-- SELECT * FROM getCliente_Telefonos();
+-- CALL DeleteCliente(333);
+
+-- CALL AddCliente(333,'MongeF','123','Fernando','MR','2001-12-13','Cartago','Guarco','Tobosi');
+
+-- CALL AddCliente_Telefonos(333,88836309);
+
+
+
+-- SELECT * FROM getRepartidor_telefonos();
+
+-- CALL AddRepartidor('fmonge','123','fer','monge',TRUE, 'c','c','t');
+-- CALL AddRepartidor_Telefonos('fmonge', 133548);
+-- CALL DeleteRepartidor('fmonge');
+
+-- CALL AddEmpleado(333,'123','fer','monge','fer', 'c','c','t');
+-- CALL AddEmpleado_Telefonos(333, 505050);
+-- SELECT * FROM getEmpleado_telefonos();
+-- CALL DeleteEmpleado(333);
+
+
+-- SELECT * FROM getAdmin_Comercio();
+-- CALL AddAdmin_Comercio(333,'fer','13','monge','fer','@', 'c','c','t',58);
+
+
