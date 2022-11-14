@@ -26,12 +26,12 @@ namespace UbyTECAPI.Controllers
         }
 
         // GET api/<AdminComercioController>/5
-        [HttpGet("{idAdmin}")]
-        public async Task<ActionResult<List<AdminComercio>>> Get(int idAdmin)
+        [HttpGet("{idComercio}")]
+        public async Task<ActionResult<List<AdminComercio>>> Get(int idComercio)
         {
             try
             {
-                var entityList = adminComercio.get(idAdmin.ToString());
+                var entityList = adminComercio.get(idComercio.ToString());
                 return Ok(entityList);
             }
             catch (Exception)

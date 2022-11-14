@@ -85,7 +85,7 @@ namespace UbyTECAPI.Models
         }
 
 
-        private List<T> createEntityList(NpgsqlDataReader rd)
+        protected List<T> createEntityList(NpgsqlDataReader rd)
         {
             List<T> entityList = new();
             while (rd.Read())

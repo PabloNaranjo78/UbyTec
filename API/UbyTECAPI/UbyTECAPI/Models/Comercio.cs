@@ -59,5 +59,10 @@ namespace UbyTECAPI.Models
         {
             return idComercio.ToString();
         }
+
+        public List<Comercio> createEntityP(NpgsqlDataReader rd)
+        {
+            return createEntityList(rd);
+        }
     }
 }
