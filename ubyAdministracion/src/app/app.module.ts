@@ -28,9 +28,9 @@ import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afilia
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      {path: "", component:LoginComponent, canActivate: [VigilanteGuard]},
+      {path: "", component:LoginComponent},
       {path: "gestion/:Tipo", component:GestionesComponent, canActivate: [VigilanteGuard]},
-      {path: "login", component:LoginComponent, canActivate: [VigilanteGuard]},
+      {path: "login", component:LoginComponent},
       {path: "nuevo/empleado", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/repartidores", component:NuevoRepartidorComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/afiliados", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
