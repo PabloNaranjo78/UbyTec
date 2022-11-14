@@ -14,18 +14,6 @@ export class TelefonosService extends ConexionService<TelefonoInterface> {
   homePage:string  = ""
   nombre:string  = ""
 
-  setNombre(nombre:string){
-    this.nombre = nombre
-  }
-
-  setUrl(url:string){
-    this.url = url
-  }
-
-  setHomePage(homePage:string)  {
-    this.homePage = homePage
-  }
-
   getResourceURL(): string {
     return "/"+this.url
   }

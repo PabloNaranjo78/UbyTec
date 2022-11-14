@@ -13,6 +13,7 @@ import { NuevoEmpleadoComponent } from './nuevo-empleado/nuevo-empleado.componen
 import { NuevoRepartidorComponent } from './nuevo-repartidor/nuevo-repartidor.component';
 import { NuevoAfiliadoComponent } from './nuevo-afiliado/nuevo-afiliado.component';
 import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afiliado-admin.component';
+import { SolicitudComponent } from './solicitud/solicitud.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afilia
     NuevoRepartidorComponent,
     NuevoAfiliadoComponent,
     NuevoAfiliadoAdminComponent,
+    SolicitudComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,10 +36,12 @@ import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afilia
       {path: "nuevo/empleado", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/repartidores", component:NuevoRepartidorComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/afiliados", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
-      {path: "nuevo/afiliadoAdmin", component:NuevoAfiliadoAdminComponent, canActivate: [VigilanteGuard]},
+      {path: "nuevo/solicitudes", component:SolicitudComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/empleado/:id", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/repartidores/:id", component:NuevoRepartidorComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/afiliados/:id", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
+      {path: "actualizar/solicitudes/:id", component:SolicitudComponent, canActivate: [VigilanteGuard]},
+      {path: "actualizar/administrador/:id", component:NuevoAfiliadoAdminComponent, canActivate: [VigilanteGuard]},
     ]),
     FormsModule,
     HttpClientModule

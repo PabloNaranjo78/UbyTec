@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Empleado} from '../interfaces/empleado';
-import { TelefonoInterface } from '../interfaces/genericas';
+import { Telefono, TelefonoInterface } from '../interfaces/genericas';
 import {Repartidor} from '../interfaces/repartidor';
 import { RepartidoresService } from '../services/repartidores.service';
+import { TelefonosService } from '../services/telefonos.service';
 
 @Component({
   selector: 'app-nuevo-repartidor',
@@ -15,13 +16,22 @@ export class NuevoRepartidorComponent implements OnInit {
   objeto: Repartidor = new Repartidor();
   editMode:boolean = true;
 
-  constructor(private service:RepartidoresService, private route:Router, private rou:ActivatedRoute) { 
+  telefonoNuevo:Telefono = new Telefono();
+  listaTelefonos:Telefono[] = [];
+
+  constructor(private service:RepartidoresService, private telefonosService:TelefonosService ,private route:Router, private rou:ActivatedRoute) { 
+    this.telefonosService.url = "RepartidorTelefonos";
+    this.telefonosService.nombre = "Telefono de Repartidor";
   }
 
   ngOnInit(): void {
+    this.telefonosService.url = "RepartidorTelefonos";
+    this.telefonosService.nombre = "Telefono de Repartidor";
     if(this.rou.snapshot.params['id']==undefined){
       this.editMode = false;
+      this.telefonosService.homePage = "nuevo/repartidores";
     } else {
+      this.telefonosService.homePage = "actualizar/repartidores/"+this.rou.snapshot.params['id'];
       this.service.get(this.rou.snapshot.params['id']).subscribe({
         /*Mensaje emergente de exito*/
         next: (data) => {
@@ -42,18 +52,6 @@ export class NuevoRepartidorComponent implements OnInit {
     }
   }
 
-  onAddTelefono(){
-    console.log("Agregar telefono");
-  }
-
-  onDeleteTelefono(tel:TelefonoInterface){
-    console.log("Eliminar telefono");
-  }
-
-  onTelefonos(){
-    console.log("Telefonos");
-  }
-
   onCancelar(){
     this.service.onCancelar()
   }
@@ -61,6 +59,32 @@ export class NuevoRepartidorComponent implements OnInit {
   onEliminar(){
     this.service.onEliminar(this.objeto.usuario)
   }
+
+  
+
+  onTelefonos(){
+    this.telefonosService.get(this.objeto.usuario).subscribe({
+      /*Mensaje emergente de exito*/
+      next: (data) => {
+        this.listaTelefonos = data;
+      },
+      /*Mensaje emergente de error*/
+      error: (err) =>{
+        this.service.avisoError(err.error)}
+    })
+  }
+
+  onAddTelefono(){
+    this.telefonoNuevo.id = this.objeto.usuario
+    this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
+    // kcnsjcf
+  }
+
+  onDeleteTelefono(tel:TelefonoInterface){
+    this.telefonosService.onEliminar(tel.id, tel.telefono)
+    //mcsjhfnjednf
+  }
+  
 
 }
 

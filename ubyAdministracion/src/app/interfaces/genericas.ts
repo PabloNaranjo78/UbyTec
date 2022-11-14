@@ -19,5 +19,4 @@ export interface TelefonoInterface{
 export class Telefono implements TelefonoInterface{
     id!: string | number
     telefono!: number
-
 }

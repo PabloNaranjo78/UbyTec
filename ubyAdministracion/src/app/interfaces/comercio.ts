@@ -17,6 +17,7 @@ export interface ComercioInterface {
 
 export interface AdminComercioInterface extends PersonalInterface {
     idAdmin:number,
+    idComercio:number,
     correo:string
 }
 
@@ -35,6 +36,7 @@ export class Comercio implements ComercioInterface{
 }
 
 export  class AdminComercio implements AdminComercioInterface{
+    idComercio!: number
     idAdmin!: number
     correo!: string
     usuario!: string

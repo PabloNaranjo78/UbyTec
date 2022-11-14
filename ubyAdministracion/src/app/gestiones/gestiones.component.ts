@@ -13,6 +13,7 @@ import { RepartidoresService } from '../services/repartidores.service';
 export class GestionesComponent implements OnInit {
   Tipo:string="";
   lista:Gestion[]=[]
+  crear:boolean =true;
   constructor(private empleadoService:EmpleadosService, private repartidorService:RepartidoresService, private comercioService:ComerciosService,private route:Router, private rou:ActivatedRoute) {
     this.Tipo = this.rou.snapshot.params['Tipo']
     console.log(this.Tipo)
@@ -24,7 +25,11 @@ export class GestionesComponent implements OnInit {
     }
     
     else if(this.rou.snapshot.params['Tipo'] == "afiliados"){
+      this.crear= false;
       this.lista = comercioService.getAsInterface()
+    }
+    else if(this.rou.snapshot.params['Tipo'] == "solicitudes"){
+      this.lista = comercioService.getAsInterface(true)
     }
    }
 

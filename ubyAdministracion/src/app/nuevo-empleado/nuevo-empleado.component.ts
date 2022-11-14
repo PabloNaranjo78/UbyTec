@@ -12,23 +12,22 @@ import { TelefonosService } from '../services/telefonos.service';
 })
 export class NuevoEmpleadoComponent implements OnInit {
 
-  telefonoNuevo:Telefono = new Telefono();
+  
   objeto:Empleado = new Empleado();
   editMode:boolean = true;
   
-
+  telefonoNuevo:Telefono = new Telefono();
   listaTelefonos:Telefono[] = [];
 
 
-  constructor(private service:EmpleadosService, private route:Router, private rou:ActivatedRoute, private telefonosService:TelefonosService) { 
-  
+  constructor(private service:EmpleadosService, private route:Router, private rou:ActivatedRoute, protected telefonosService:TelefonosService) { 
+    this.telefonosService.url = "EmpleadoTelefonos";
+    this.telefonosService.nombre = "Telefono de Empleado";
   }
 
   ngOnInit(): void {
-    this.telefonosService.setUrl("EmpleadoTelefonos");
-    this.telefonosService.setNombre("Telefono de Empleado");
-    console.log(this.telefonosService.getNombre());
-    console.log(this.telefonosService.getResourceURL);
+    this.telefonosService.url = "EmpleadoTelefonos";
+    this.telefonosService.nombre = "Telefono de Empleado";
     if(this.rou.snapshot.params['id']==undefined){
       this.editMode = false;
       this.telefonosService.homePage = "nuevo/empleado";
@@ -55,12 +54,13 @@ export class NuevoEmpleadoComponent implements OnInit {
   }
 
   onAddTelefono(){
+    this.telefonoNuevo.id = this.objeto.idEmpleado
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
     // kcnsjcf
   }
 
   onDeleteTelefono(tel:TelefonoInterface){
-    this.service.onEliminar(this.objeto.idEmpleado, tel.telefono)
+    this.telefonosService.onEliminar(this.objeto.idEmpleado, tel.telefono)
     //mcsjhfnjednf
   }
 

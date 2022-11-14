@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ComercioInterface, Comercio} from '../interfaces/comercio';
+import { ComercioInterface, Comercio, AdminComercio} from '../interfaces/comercio';
 import { Gestion } from '../interfaces/gestion';
 import { ConexionService} from './conexion.service';
 
@@ -20,8 +20,20 @@ export class ComerciosService extends ConexionService<ComercioInterface>{
     return "Comercio"
   }
 
-  getAsInterface(): Gestion[]{
+  getAsInterface(solicitud?:boolean): Gestion[]{
     this.listaG = []
+    console.log(solicitud)
+    if (solicitud){
+      this.get("solicitudes").subscribe((data) =>{
+        for (let i =0; i<data.length;i++){
+          this.listaG.push(
+            {nombre: data[i].nombre,
+              id: data[i].idComercio,
+              route:data[i].nombre}
+            )
+        }
+      })
+    } else {
     this.getList().subscribe((data) =>{
       for (let i =0; i<data.length;i++){
         this.listaG.push(
@@ -30,7 +42,7 @@ export class ComerciosService extends ConexionService<ComercioInterface>{
             route:data[i].nombre}
           )
       }
-    })
+    })}
     return this.listaG;
   }
 
@@ -43,16 +55,17 @@ export class ComerciosService extends ConexionService<ComercioInterface>{
 @Injectable({
   providedIn: 'root'
 })
-export class ComerciosAdminService extends ConexionService<ComercioInterface>{
+export class ComerciosAdminService extends ConexionService<AdminComercio>{
   listaG:Gestion[]=[]
+  id!:string
   getResourceURL(): string {
-    return "/Solicitudes"
+    return "/AdminComercio"
   }
   getHomePage(): string {
-    return 'gestion/afiliados'
+    return "actualizar/afiliados/" + this.id
   }
   getNombre(): string {
-    return "Comercio"
+    return "Administrador"
   }
 
   getAsInterface(): Gestion[]{
@@ -61,7 +74,7 @@ export class ComerciosAdminService extends ConexionService<ComercioInterface>{
       for (let i =0; i<data.length;i++){
         this.listaG.push(
           {nombre: data[i].nombre,
-            id: data[i].idComercio,
+            id: data[i].idAdmin,
             route:data[i].nombre}
           )
       }
