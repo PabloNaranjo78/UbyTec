@@ -2,13 +2,13 @@
   <ul class="nav flex-column">
 
       <li class="nav-item">
-          <a class = "tab"  routerLink="/{{id}}/gestion-productos" routerLinkActive="tab-active">Productos</a>
+          <a class = "tab"  routerLink="/gestion/productos" routerLinkActive="tab-active" (click)="recargar('productos')">Productos</a>
       </li>
       <li class="nav-item">
-          <a class = "tab"  routerLink="/{{id}}/nuevo-admin" routerLinkActive="tab-active">Administrador</a>
+          <a class = "tab"  routerLink="/gestion/pedidos" routerLinkActive="tab-active" (click)="recargar('pedidos')">Pedidos</a>
       </li>
       <li class="nav-item">
-          <a class = "tab"  routerLink="/{{id}}/gestion/pedidos" routerLinkActive="tab-active">Pedidos</a>
-      </li>
+        <a class = "tab"  routerLink="/gestion/perfil/{{id}}" routerLinkActive="tab-active">Mi Perfil</a>
+    </li>
     </ul>
   </div>

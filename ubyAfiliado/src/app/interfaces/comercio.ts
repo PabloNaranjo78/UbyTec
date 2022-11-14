@@ -34,7 +34,7 @@ export class Comercio implements ComercioInterface{
     distrito!: string
 }
 
-class AdminComercio implements AdminComercioInterface{
+export  class AdminComercio implements AdminComercioInterface{
     idAdmin!: number
     correo!: string
     usuario!: string
@@ -44,5 +44,5 @@ class AdminComercio implements AdminComercioInterface{
     provincia!: string
     canton!: string
     distrito!: string
-    
+
 }

@@ -10,13 +10,21 @@ namespace UbyTECAPI.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        NpgsqlConnection _connection = new NpgsqlConnection(Connection.Connection.ConnectionString);
+        private NpgsqlConnection con = new NpgsqlConnection(Connection.Connection.ConnectionString);
+        private Empleado empleado = new();
+        private Comercio comercio = new();
+        private Cliente cliente = new();
         // GET api/<LoginController>/5
         //EMPLADO
         [HttpGet("empleado/{id}/{pass}")]
         public async Task<ActionResult<bool>> LoginAdmin(int id,string pass)
         {
-            return Ok(true);
+            con.Open();
+            NpgsqlCommand command = new($"SELECT validaempleado FROM validaempleado({id},'{pass}')", con);
+            var rd = command.ExecuteReader();
+            rd.Read();
+            var result = Convert.ToInt32(rd[0]);
+            return result == 1 ? Ok(true) : BadRequest(false);
         }
 
         // GET api/<LoginController>/5
@@ -24,7 +32,13 @@ namespace UbyTECAPI.Controllers
         [HttpGet("comercio/{id}/{pass}")]
         public async Task<ActionResult<bool>> LoginComercio(int id, string pass)
         {
-            return Ok(true);
+            con.Open();
+            NpgsqlCommand command = new($"SELECT validacomercio FROM validacomercio({id},'{pass}')", con);
+            var rd = command.ExecuteReader();
+            rd.Read();
+            var result = Convert.ToInt32(rd[0]);
+            return result == 1 ? Ok(true) : BadRequest(false);
+
         }
 
         // GET api/<LoginController>/5
@@ -32,7 +46,12 @@ namespace UbyTECAPI.Controllers
         [HttpGet("cliente/{id}/{pass}")]
         public async Task<ActionResult<bool>> LoginCliente(int id, string pass)
         {
-            return Ok(true);
+            con.Open();
+            NpgsqlCommand command = new($"SELECT validacliente FROM validacliente({id},'{pass}')", con);
+            var rd = command.ExecuteReader();
+            rd.Read();
+            var result = Convert.ToInt32(rd[0]);
+            return result == 1? Ok(true) : BadRequest(false);
         }
 
     }

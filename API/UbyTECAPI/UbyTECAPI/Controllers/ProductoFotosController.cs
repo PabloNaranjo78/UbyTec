@@ -58,7 +58,7 @@ namespace UbyTECAPI.Controllers
         {
             List<EmpleadoTelefonos> entityList = new();
 
-            var result = productoFotos.delete($"'{producto}' AND foto = '{foto}'");
+            var result = productoFotos.delete($"'{producto}','{foto}'");
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado eliminar la foto");
         }

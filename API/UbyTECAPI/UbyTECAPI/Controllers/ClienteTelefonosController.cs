@@ -58,7 +58,7 @@ namespace UbyTECAPI.Controllers
         {
             List<RepartidorTelefonos> entityList = new();
 
-            var result = clienteTelefonos.delete($"{idCliente} AND telefono = {telefono}");
+            var result = clienteTelefonos.delete($"{idCliente}, {telefono}");
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado eliminar a {telefono}");
         }

@@ -34,28 +34,10 @@ namespace UbyTECAPI.Controllers
             try
             {
                 con.Open();
-                NpgsqlCommand command = new($"SELECT idComercio,pass,idAdmin,tipo,nombre," +
-                    $"correo,sinpe,solicitud,provincia,canton,distrito FROM comercio" +
-                    $" WHERE solicitud = true", con);
+                NpgsqlCommand command = new($"SELECT idComercio,pass,tipo,nombre,correo,sinpe,solicitud," +
+                    $"provincia,canton,distrito FROM getsolicitudes()", con);
                 NpgsqlDataReader rd = command.ExecuteReader();
-                List<Comercio> entityList = new();
-                while (rd.Read())
-                {
-                    entityList.Add(new Comercio
-                    {
-                        idComercio = Convert.ToInt32(rd["idComercio"]),
-                        pass = rd["pass"].ToString(),
-                        tipo = rd["tipo"].ToString(),
-                        nombre = rd["nombre"].ToString(),
-                        correo = rd["correo"].ToString(),
-                        sinpe = Convert.ToInt32(rd["sinpe"]),
-                        solicitud = Boolean.Parse(rd["solicitud"].ToString()),
-                        provincia = rd["provincia"].ToString(),
-                        canton = rd["canton"].ToString(),
-                        distrito = rd["distrito"].ToString()
-
-                    });
-                }
+                List<Comercio> entityList = comercio.createEntityP(rd);
                 con.Close();
                 return Ok(entityList);
             }

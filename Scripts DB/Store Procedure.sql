@@ -328,13 +328,13 @@ $$
 $$;
 
 CREATE OR REPLACE FUNCTION GetAdmin_ComercioByID(
-	idAdmin_ int
+	idComercio_ int
 )
 RETURNS setof admin_comercio
 language sql
 AS $$
 	select idAdmin,usuario,pass,nombre,apellidos,correo,provincia,canton,distrito,idComercio from admin_comercio
-	where admin_comercio.idAdmin = idAdmin_;
+	where admin_comercio.idComercio = idComercio_;
 $$;
 
 
@@ -401,7 +401,8 @@ RETURNS setof comercio
 language sql
 AS
 $$
-	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from public.comercio
+	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito 
+	from public.comercio where solicitud=false
 	ORDER BY idComercio ASC;
 $$;
 
@@ -882,10 +883,10 @@ CREATE OR REPLACE FUNCTION ValidaEmpleado(
 	idEmpleado_ int,
 	pass_ VARCHAR
 )
-RETURNS setof empleado
+RETURNS int
 language sql
 AS $$
-	select idEmpleado,usuario,pass,nombre,apellidos,provincia,canton,distrito from empleado
+Select count(idEmpleado) from empleado
 	where empleado.idEmpleado = idEmpleado_ and empleado.pass = pass_;
 $$;
 
@@ -896,23 +897,22 @@ CREATE OR REPLACE FUNCTION ValidaComercio(
 	idComercio_ int,
 	pass_ VARCHAR
 )
-RETURNS setof comercio
+RETURNS int
 language sql
 AS $$
-	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from comercio
+Select count(idComercio) from comercio
 	where comercio.idComercio = idComercio_ and comercio.pass = pass_;
 $$;
-
 
 --Valida cliente
 CREATE OR REPLACE FUNCTION ValidaCliente(
 	idCliente_ int,
 	pass_ VARCHAR
 )
-RETURNS setof cliente
+RETURNS int
 language sql
 AS $$
-	select idCliente,usuario,pass,nombre,apellidos,fechaNac,provincia,canton,distrito from cliente
+	Select count(idCliente) from cliente
 	where cliente.idCliente = idCliente_ and cliente.pass = pass_;
 $$;
 

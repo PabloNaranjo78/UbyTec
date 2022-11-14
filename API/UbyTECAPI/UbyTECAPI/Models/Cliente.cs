@@ -62,5 +62,6 @@ namespace UbyTECAPI.Models
             return idCliente.ToString();
         }
 
+
     }
 }
