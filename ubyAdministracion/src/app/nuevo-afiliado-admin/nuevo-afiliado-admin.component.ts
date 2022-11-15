@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {Comercio,AdminComercio} from '../interfaces/comercio'
 import { Telefono, TelefonoInterface } from '../interfaces/genericas';
 import { ComerciosAdminService } from '../services/comercios.service';
-import { TelefonosService } from '../services/telefonos.service';
+import { DireccionesService, TelefonosService } from '../services/telefonos.service';
 
 
 @Component({
@@ -14,15 +14,19 @@ import { TelefonosService } from '../services/telefonos.service';
 export class NuevoAfiliadoAdminComponent implements OnInit {
 
 
-  
-  objeto:AdminComercio = new AdminComercio(); 
+
+  objeto:AdminComercio = new AdminComercio();
 
   editMode:boolean = true;
   listaTelefonos:Telefono[]=[]
   telefonoNuevo:Telefono = new Telefono();
   idComercio:number=0;
 
-  constructor(private service:ComerciosAdminService, private telefonosService:TelefonosService, private route:Router, private rou:ActivatedRoute) { 
+  provincias:string[] = [];
+  cantones:string[] = [];
+  distritos:string[] = [];
+
+  constructor(private service:ComerciosAdminService, private telefonosService:TelefonosService, private direccionesService:DireccionesService, private route:Router, private rou:ActivatedRoute) {
     this.telefonosService.url = "AdminComerTelefonos";
     this.telefonosService.nombre = "Telefono de Administrador";
     this.telefonosService.homePage = "actualizar/administrador/" + this.rou.snapshot.params['id'];
@@ -33,6 +37,9 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
       /*Mensaje emergente de exito*/
       next: (data) => {
         if (data[0]== undefined){
+          this.getProvincia();
+          this.getCanton();
+          this.getDistrito();
           this.editMode = false
         } else {
           this.objeto = data[0]
@@ -46,7 +53,7 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+
   }
 
   onGuardar(){
@@ -65,7 +72,7 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
     this.service.onEliminar(this.objeto.idAdmin)
   }
 
-  
+
   onTelefonos(){
     this.telefonosService.get(this.objeto.idAdmin).subscribe({
       /*Mensaje emergente de exito*/
@@ -86,4 +93,37 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
   onDeleteTelefono(tel:TelefonoInterface){
     this.telefonosService.onEliminar(tel.id, tel.telefono)
   }
+
+  //Provincias,cantones,distritos
+  getProvincia(){
+    this.direccionesService.get("Provincia").subscribe({
+      next: (data) => {
+        this.provincias = data;
+      }
+    })
+  }
+
+  getCanton(){
+    this.direccionesService.get(this.objeto.provincia).subscribe({
+      next: (data) => {
+        this.cantones = data;
+      }
+  })
+}
+
+  getDistrito(){
+    this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
+      next: (data) => {
+        this.distritos = data;
+      }
+  })
+}
+
+selected(){
+  this.getCanton();
+}
+
+selectedcant(){
+  this.getDistrito();
+}
 }
