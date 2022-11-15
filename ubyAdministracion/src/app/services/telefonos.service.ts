@@ -25,7 +25,31 @@ export class TelefonosService extends ConexionService<TelefonoInterface> {
   getNombre(): string {
     return this.nombre
   }
-  
+
+  constructor(protected override httpClient: HttpClient, protected override route:Router) {
+    super(httpClient, route);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class DireccionesService extends ConexionService<string> {
+
+
+  getResourceURL(): string {
+    return "/Direccion"
+  }
+
+  getHomePage(): string {
+    return ''
+  }
+
+  getNombre(): string {
+    return ''
+  }
+
   constructor(protected override httpClient: HttpClient, protected override route:Router) {
     super(httpClient, route);
   }
