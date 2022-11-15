@@ -26,9 +26,6 @@ export class NuevoEmpleadoComponent implements OnInit {
   provincia: any;
   canton: any;
 
-  able1: boolean = true;
-  able2: boolean = true;
-
 
 
   constructor(private service:EmpleadosService, private route:Router, private rou:ActivatedRoute, protected telefonosService:TelefonosService, protected direccionesService:DireccionesService) {
@@ -40,6 +37,7 @@ export class NuevoEmpleadoComponent implements OnInit {
     this.telefonosService.url = "EmpleadoTelefonos";
     this.telefonosService.nombre = "Telefono de Empleado";
     if(this.rou.snapshot.params['id']==undefined){
+      this.getProvincia();
       this.editMode = false;
       this.telefonosService.homePage = "nuevo/empleado";
     } else {
@@ -48,12 +46,17 @@ export class NuevoEmpleadoComponent implements OnInit {
         /*Mensaje emergente de exito*/
         next: (data) => {
           this.objeto = data[0];
+          this.getProvincia();
+          this.getCanton();
+          this.getDistrito();
         },
         /*Mensaje emergente de error*/
         error: (err) =>{
           this.service.avisoError(err.error)}
       });
     }
+
+
   }
 
   onGuardar(){
@@ -101,7 +104,6 @@ export class NuevoEmpleadoComponent implements OnInit {
       next: (data) => {
         this.provincias = data;
       }
-
     })
   }
 
@@ -122,23 +124,11 @@ export class NuevoEmpleadoComponent implements OnInit {
 }
 
 selected(){
-  if (this.objeto.provincia != undefined){
-    this.able1 = false;
-    this.able2 = true;
-  }
-  else{
-    this.able1 = true;
-    this.able2 = true;
-  }
+  this.getCanton();
 }
 
 selectedcant(){
-  if (this.objeto.provincia != undefined && this.objeto.canton != undefined){
-    this.able2 = false;
-  }
-  else{
-    this.able2 = false;
-  }
+  this.getDistrito();
 }
 
 }

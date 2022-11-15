@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {Comercio} from '../interfaces/comercio'
 import { Telefono, TelefonoInterface } from '../interfaces/genericas';
 import { ComerciosService } from '../services/comercios.service';
-import { TelefonosService } from '../services/telefonos.service';
+import { DireccionesService, TelefonosService } from '../services/telefonos.service';
 
 @Component({
   selector: 'app-nuevo-afiliado',
@@ -16,15 +16,20 @@ export class NuevoAfiliadoComponent implements OnInit {
   editMode:boolean = true;
   listaTelefonos:Telefono[]=[]
   telefonoNuevo:Telefono = new Telefono();
-  
 
-  constructor(private service:ComerciosService, private telefonosService:TelefonosService, private route:Router, private rou:ActivatedRoute) { 
+  provincias:string[] = [];
+  cantones:string[] = [];
+  distritos:string[] = [];
+
+
+  constructor(private service:ComerciosService, private telefonosService:TelefonosService, private direccionesService:DireccionesService, private route:Router, private rou:ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.telefonosService.url = "ComercioTelefonos";
     this.telefonosService.nombre = "Telefono de Comercio";
     if(this.rou.snapshot.params['id']==undefined){
+      this.getProvincia();
       this.editMode = false;
       this.telefonosService.homePage = "nuevo/afiliados";
     } else {
@@ -34,6 +39,9 @@ export class NuevoAfiliadoComponent implements OnInit {
         /*Mensaje emergente de exito*/
         next: (data) => {
           this.objeto = data[0];
+          this.getProvincia();
+          this.getCanton();
+          this.getDistrito();
         },
         /*Mensaje emergente de error*/
         error: (err) =>{
@@ -83,4 +91,38 @@ export class NuevoAfiliadoComponent implements OnInit {
     this.telefonosService.onEliminar(tel.id, tel.telefono)
     //mcsjhfnjednf
   }
+
+  //Provincias,cantones,distritos
+  getProvincia(){
+    this.direccionesService.get("Provincia").subscribe({
+      next: (data) => {
+        this.provincias = data;
+      }
+    })
+  }
+
+  getCanton(){
+    this.direccionesService.get(this.objeto.provincia).subscribe({
+      next: (data) => {
+        this.cantones = data;
+      }
+  })
+}
+
+  getDistrito(){
+    this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
+      next: (data) => {
+        this.distritos = data;
+      }
+  })
+}
+
+selected(){
+  this.getCanton();
+}
+
+selectedcant(){
+  this.getDistrito();
+}
+
 }
