@@ -923,7 +923,7 @@ $$;
 
 
 -- SELECT * FROM getCliente_telefonos();
--- SELECT * FROM getCliente();
+SELECT * FROM getCliente();
 -- CALL DeleteCliente(4555);
 
 -- CALL AddCliente(4555,'MongeF','123','Fernando','MR','2001-12-13','Cartago','Guarco','Tobosi');
@@ -947,12 +947,15 @@ $$;
 -- SELECT * FROM getAdmin_Comercio();
 -- CALL AddAdmin_Comercio(333,'fer','13','monge','fer','@', 'c','c','t',58);
 
--- CALL AddProducto('arroz',1000,'a',123);
+CALL AddProducto('coca',1000,'a',123);
+
 -- CALL AddProducto_Fotos('arroz','aaaa');
--- CALL AddProducto_Pedido(1111,'arroz',15);
+CALL AddProducto_Pedido(4,'coca',9);
 
 -- CALL DeleteProducto('arroz');
 
 -- SELECT * FROM GetProducto();
 -- SELECT * FROM GetProducto_Pedido();
 -- SELECT * FROM GetProducto_Fotos();
+
+CALL AddPedido(4,'cartago',True,'fmonge', 333);
