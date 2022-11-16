@@ -11,24 +11,31 @@ import { RepartidoresService } from '../services/repartidores.service';
   styleUrls: ['./gestiones.component.css']
 })
 export class GestionesComponent implements OnInit {
+  reporte:boolean=false;
   Tipo:string="";
   lista:Gestion[]=[]
   crear:boolean =true;
   constructor(private empleadoService:EmpleadosService, private repartidorService:RepartidoresService, private comercioService:ComerciosService,private route:Router, private rou:ActivatedRoute) {
     this.Tipo = this.rou.snapshot.params['Tipo']
     console.log(this.Tipo)
+    this.reporte=false;
     if(this.rou.snapshot.params['Tipo'] == "empleado"){
       this.lista = empleadoService.getAsInterface()
     }
     else if(this.rou.snapshot.params['Tipo'] == "repartidores"){
       this.lista = repartidorService.getAsInterface()
     }
-    
+
     else if(this.rou.snapshot.params['Tipo'] == "afiliados"){
       this.crear= false;
       this.lista = comercioService.getAsInterface()
     }
     else if(this.rou.snapshot.params['Tipo'] == "solicitudes"){
+      this.lista = comercioService.getAsInterface(true)
+    }
+    else if(this.rou.snapshot.params['Tipo'] == "reportes"){
+      this.reporte=true;
+      this.crear= false;
       this.lista = comercioService.getAsInterface(true)
     }
    }

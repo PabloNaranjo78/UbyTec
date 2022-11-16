@@ -14,6 +14,7 @@ import { NuevoRepartidorComponent } from './nuevo-repartidor/nuevo-repartidor.co
 import { NuevoAfiliadoComponent } from './nuevo-afiliado/nuevo-afiliado.component';
 import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afiliado-admin.component';
 import { SolicitudComponent } from './solicitud/solicitud.component';
+import { ReportesComponent } from './reportes/reportes.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SolicitudComponent } from './solicitud/solicitud.component';
     NuevoAfiliadoComponent,
     NuevoAfiliadoAdminComponent,
     SolicitudComponent,
+    ReportesComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,7 @@ import { SolicitudComponent } from './solicitud/solicitud.component';
       {path: "actualizar/afiliados/:id", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/solicitudes/:id", component:SolicitudComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/administrador/:id", component:NuevoAfiliadoAdminComponent, canActivate: [VigilanteGuard]},
+      {path: "reportes/:comercio", component:ReportesComponent, canActivate: [VigilanteGuard]},
     ]),
     FormsModule,
     HttpClientModule

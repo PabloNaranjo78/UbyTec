@@ -15,8 +15,12 @@
                             <div class="container gy-1">
                                 {{Tipo}}
                                 <div class="row m t-1"><h2>{{Objeto.nombre}}</h2></div>
-                                <!-- [routerLink]="['/actualizar-cliente',cliente.idCliente]"-->
-                                <button type="submit" [routerLink]="['/actualizar',Tipo,Objeto.id]" class="btn btn-outline-primary"> EDITAR </button>
+                                <div *ngIf="reporte; else gestionar">
+                                  <button type="submit" [routerLink]="['/reportes',Objeto.id]" class="btn btn-outline-primary"> VER </button>
+                                </div>
+                                <ng-template #gestionar>
+                                  <button type="submit" [routerLink]="['/actualizar',Tipo,Objeto.id]" class="btn btn-outline-primary"> EDITAR </button>
+                                </ng-template>
                             </div>
                         </div>
                     </ng-template>
