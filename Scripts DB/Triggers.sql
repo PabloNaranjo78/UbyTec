@@ -49,6 +49,8 @@ language plpgsql
 AS $$
 BEGIN
 	DELETE FROM comercio_telefonos WHERE idComercio=OLD.idComercio;
+	DELETE FROM producto WHERE idComercio=OLD.idComercio;
+	DELETE FROM admin_comercio WHERE idComercio=OLD.idComercio;
 	RETURN OLD;
 END
 $$;
@@ -72,7 +74,7 @@ $$;
 CREATE TRIGGER trigger_producto BEFORE DELETE ON Producto
 FOR EACH ROW EXECUTE PROCEDURE tr_producto();
 
---TRIGGER CLIENTE TELEFONOS
+--TRIGGER CLIENTE TELEFONOS, ADMIN COMERCIO
 CREATE OR REPLACE FUNCTION tr_cliente()
 RETURNS TRIGGER
 language plpgsql

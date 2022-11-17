@@ -959,3 +959,7 @@ CALL AddProducto_Pedido(4,'coca',9);
 -- SELECT * FROM GetProducto_Fotos();
 
 CALL AddPedido(4,'cartago',True,'fmonge', 333);
+
+Select * from getadmin_comercio();
+
+Call deletecomercio(7687);
