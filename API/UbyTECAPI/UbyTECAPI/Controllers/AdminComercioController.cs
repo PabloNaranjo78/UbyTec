@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UbyTECAPI.Models;
+using UbyTECAPI.Tools;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,12 +45,26 @@ namespace UbyTECAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<AdminComercio>>> Post(AdminComercio entity)
         {
-            List<AdminComercio> entityList = new();
-            entityList.Add(entity);
+            var tempPass = PassGenerator.generatePass();
+            entity.pass = tempPass;
 
-            var result = entity.post(entity);
+            List<AdminComercio> entityList = new()
+            {
+                entity
+            };
 
-            return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.nombre}");
+            if (!entity.post(entity))
+            {
+                return BadRequest($"No se ha logrado agregar a {entity.nombre}");
+            };
+            if (!EmailSender.sendEmail(entity.correo, entity.nombre, tempPass, "Administrador de Comercio"))
+            {
+                var result = entity.delete(entity.idAdmin.ToString());
+                Console.WriteLine(result);
+                return BadRequest("Email no válido");
+            };
+
+            return Ok(entityList);
         }
 
         // PUT api/<AdminComercioController>/5

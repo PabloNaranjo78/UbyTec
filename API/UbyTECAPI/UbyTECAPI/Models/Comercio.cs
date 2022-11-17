@@ -22,7 +22,7 @@ namespace UbyTECAPI.Models
         public string? nombre { get; set; }
         public string? correo { get; set; }
         public int sinpe { get; set; }
-        public bool solicitud { get; set; }
+        public string? solicitud { get; set; }
         public string? provincia { get; set; }
         public string? canton { get; set; }
         public string? distrito { get; set; }
@@ -37,7 +37,7 @@ namespace UbyTECAPI.Models
                 nombre = rd["nombre"].ToString(),
                 correo = rd["correo"].ToString(),
                 sinpe = Convert.ToInt32(rd["sinpe"]),
-                solicitud = Boolean.Parse(rd["solicitud"].ToString()),
+                solicitud = rd["solicitud"].ToString(),
                 provincia = rd["provincia"].ToString(),
                 canton = rd["canton"].ToString(),
                 distrito = rd["distrito"].ToString()

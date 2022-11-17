@@ -17,6 +17,7 @@ namespace UbyTECAPI.Controllers
             try
             {
                 var entityList = productoFotos.get();
+
                 return Ok(entityList);
             }
             catch (Exception)

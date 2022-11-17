@@ -416,7 +416,6 @@ AS $$
 	where comercio.idComercio = idComercio_;
 $$;
 
-
 CREATE OR REPLACE PROCEDURE UpdateComercio(
 	idComercio_ int,
 	pass_ VARCHAR,
@@ -424,7 +423,7 @@ CREATE OR REPLACE PROCEDURE UpdateComercio(
 	nombre_ VARCHAR,
 	correo_ VARCHAR,
 	sinpe_ int,
-	solicitud_ BOOLEAN,
+	solicitud_ VARCHAR,
 	provincia_ VARCHAR,
 	canton_ VARCHAR,
 	distrito_ VARCHAR

@@ -10,6 +10,7 @@ namespace UbyTECAPI.Models
 
         public string? producto { get; set; }
         public string? foto { get; set; }
+        public string? fotoData { get; set; }
 
         protected override ProductoFotos createEntity(NpgsqlDataReader rd)
         {
@@ -17,9 +18,9 @@ namespace UbyTECAPI.Models
             {
                 producto = rd["producto"].ToString(),
                 foto = rd["foto"].ToString()
-
             };
         }
+
 
         protected override string paramsToString()
         {

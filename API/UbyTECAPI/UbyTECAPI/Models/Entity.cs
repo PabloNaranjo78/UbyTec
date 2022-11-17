@@ -38,6 +38,7 @@ namespace UbyTECAPI.Models
             {
                 con.Open();
                 command.ExecuteNonQuery();
+                con.Close();
                 return true;
             }
             catch (Exception)
@@ -57,6 +58,7 @@ namespace UbyTECAPI.Models
             {
                 con.Open();
                 command.ExecuteNonQuery();
+                con.Close();
                 return true;
             }
             catch (Exception)
@@ -70,11 +72,11 @@ namespace UbyTECAPI.Models
         public bool delete(string id)
         {
             NpgsqlCommand command = new($"CALL delete{entity}({id})", con);
-
             try
             {
                 con.Open();
                 command.ExecuteNonQuery();
+                con.Close();
                 return true;
             }
             catch (Exception)
