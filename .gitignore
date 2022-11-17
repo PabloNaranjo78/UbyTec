@@ -612,3 +612,13 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/angular,visualstudio,csharp
 API/UbyTECAPI/UbyTECAPI/Connection/Connection.cs
+
+ubyCliente/tsconfig.json
+
+ubyCliente/.browserslistrc
+
+ubyCliente/package-lock.json
+
+ubyCliente/src/test.ts
+
+ubyCliente/package.json
