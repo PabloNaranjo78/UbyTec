@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gestion } from '../interfaces/gestion';
-import { ProductoInterface } from '../interfaces/producto';
+import { ProductoFotos, ProductoFotosInterface, ProductoInterface } from '../interfaces/producto';
 import { ConexionService } from './conexion.service';
 
 @Injectable({
@@ -10,12 +10,13 @@ import { ConexionService } from './conexion.service';
 })
 export class ProductosService extends ConexionService<ProductoInterface>{
   listaG:Gestion[]=[]
+  id!:number
   getResourceURL(): string {
     return "/Producto"
     //api producto
   }
   getHomePage(): string {
-    return 'gestion/productos'
+    return this.id+'/gestion/productos'
   }
   getNombre(): string {
     return "Producto"
@@ -33,6 +34,29 @@ export class ProductosService extends ConexionService<ProductoInterface>{
       }
     })
     return this.listaG;
+  }
+
+  constructor(protected override httpClient: HttpClient, protected override route:Router) {
+    super(httpClient, route);
+  }
+
+}
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductosFotosService extends ConexionService<ProductoFotosInterface>{
+  id!:number
+  url!:string
+  getResourceURL(): string {
+    return "/ProductoFotos"
+  }
+  getHomePage(): string {
+    return this.url
+  }
+  getNombre(): string {
+    return "Foto"
   }
 
   constructor(protected override httpClient: HttpClient, protected override route:Router) {

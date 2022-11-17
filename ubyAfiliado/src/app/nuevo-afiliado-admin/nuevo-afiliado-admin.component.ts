@@ -26,7 +26,7 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
   cantones:string[] = [];
   distritos:string[] = [];
 
-  constructor(private service:ComerciosAdminService, private telefonosService:TelefonosService, private direccionesService:DireccionesService, private route:Router, private rou:ActivatedRoute) {
+  constructor(private service:ComerciosAdminService, private telefonosService:TelefonosService, private direccionesService:DireccionesService, private rou:ActivatedRoute) {
     this.telefonosService.url = "AdminComerTelefonos";
     this.telefonosService.nombre = "Telefono de Administrador";
     this.telefonosService.homePage = this.rou.snapshot.params['id'] +"/nuevo-admin" 

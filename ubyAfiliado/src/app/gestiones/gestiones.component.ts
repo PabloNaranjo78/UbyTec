@@ -11,11 +11,13 @@ import { ProductosService } from '../services/productos.service';
 })
 
 export class GestionesComponent implements OnInit {
-  Tipo:string="";
+  tipo:string="";
   lista:Gestion[]=[]
+  id:number = 0;
   constructor( private productoService:ProductosService, private pedidoService:PedidosService, private route:Router, private rou:ActivatedRoute) {
-    this.Tipo = this.rou.snapshot.params['Tipo']
-    console.log(this.Tipo)
+    this.tipo = this.rou.snapshot.params['Tipo']
+    this.id = this.rou.snapshot.params['id']
+    console.log(this.tipo)
     if(this.rou.snapshot.params['Tipo'] == "productos"){
       this.lista = productoService.getAsInterface()
     }

@@ -2,18 +2,18 @@
   <div class="col-1"> </div>
   <div class="col">
     <div class="row mt-3">
-        <a class="btn btn-primary" style= "width: 100%; font-size:x-large;" href="/nuevo/{{Tipo}}" role="button">Añadir Nuevo {{Tipo}}</a>
+        <a class="btn btn-primary" style= "width: 100%; font-size:x-large;" href="{{id}}/nuevo/{{tipo}}" role="button">Añadir Nuevo {{tipo}}</a>
     </div>
     <div *ngFor="let n of lista; let i=index">
       <div *ngIf="crearFila(i)">
           <div class="row mt-4">
-              <ng-template ngFor let-Objeto [ngForOf] = "subLista(i)">
+              <ng-template ngFor let-objeto [ngForOf] = "subLista(i)">
                   <div class="col">
                       <div class="container gy-1">
-                          {{Tipo}}
-                          <div class="row m t-1"><h2>{{Objeto.nombre}}</h2></div>
+                          {{tipo}}
+                          <div class="row m t-1"><h2>{{objeto.nombre}}</h2></div>
                           <!-- [routerLink]="['/actualizar-cliente',cliente.idCliente]"-->
-                          <button type="submit" [routerLink]="['/actualizar',Tipo,Objeto.id]" class="btn btn-outline-primary"> EDITAR </button>
+                          <button type="submit" [routerLink]="['',id,'actualizar',tipo,objeto.id]" class="btn btn-outline-primary"> EDITAR </button>
                       </div>
                   </div>
               </ng-template>

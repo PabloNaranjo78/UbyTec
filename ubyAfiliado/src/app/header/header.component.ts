@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   }
 
   recargar(Tipo:string){
-    this.router.navigate(['gestion/'+Tipo])
+    this.router.navigate([this.id+'/gestion/'+Tipo])
     .then(() => {
       window.location.reload();
     });
