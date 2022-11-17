@@ -18,4 +18,7 @@ JOIN Producto ON producto=producto.nombre)
 			   
 
 
-SELECT * from Consolidado_Ventas;
+CREATE VIEW Comercio_Solicitud
+AS
+SELECT nombre, solicitud FROM Comercio
+ORDER BY solicitud ASC;
