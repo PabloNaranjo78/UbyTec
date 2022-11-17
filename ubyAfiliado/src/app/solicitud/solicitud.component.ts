@@ -1,3 +1,4 @@
+import { ConditionalExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdminComercio, AdminComercioInterface, Comercio } from '../interfaces/comercio';
@@ -12,19 +13,16 @@ import { ComerciosAdminService, ComerciosService } from '../services/comercios.s
 export class SolicitudComponent implements OnInit {
 
   objeto:Comercio = new Comercio();
-  editMode:boolean = true;
   listaTelefonos:Telefono[]=[]
   telefonoNuevo:Telefono = new Telefono();
   adminComercio:AdminComercio = new AdminComercio(); 
+  solicitudEnviada:boolean=false;
 
   constructor(private service:ComerciosService, private adminService: ComerciosAdminService,private route:Router, private rou:ActivatedRoute) { 
   }
 
   ngOnInit(): void {
-    if(this.rou.snapshot.params['id']==undefined){
-      this.editMode = false;
-    } else {
-      this.adminService.get(this.rou.snapshot.params['id']).subscribe({
+    this.adminService.get(this.rou.snapshot.params['id']).subscribe({
         /*Mensaje emergente de exito*/
         next: (data) => {
           console.log(data)
@@ -51,46 +49,39 @@ export class SolicitudComponent implements OnInit {
         /*Mensaje emergente de exito*/
         next: (data) => {
           this.objeto = data[0];
+          if(this.objeto.solicitud=="en proceso"){
+            this.solicitudEnviada=true;
+          }
         },
         /*Mensaje emergente de error*/
         error: (err) =>{
           this.service.avisoError(err.error)}
       });
-    }
+      
+  }
+  aux(){
+    this.service.update(this.objeto).subscribe({
+      /*Mensaje emergente de exito*/
+      
+      next: (data) => {
+        window.location.reload()
+      },
+
+        /*Mensaje emergente de error*/
+      error: (err) =>{
+        this.service.avisoError(err.error)
+        }
+    })
   }
 
-  onGuardar(){
-    if (this.editMode){
-      this.objeto.solicitud = "aceptada"
-      this.service.onActualizar(this.objeto,this.objeto.nombre)
-    } else {
-      
-      this.adminComercio.idComercio = this.objeto.idComercio
-      console.log(this.adminComercio)
-      this.service.add(this.objeto).subscribe({
-        next: (data) => {
-          this.adminService.add(this.adminComercio).subscribe({
-            /*Mensaje emergente de exito*/
-            next: (data) => {
-              this.adminService.avisoSuccess("añadido", this.adminComercio.nombre);
-              this.route.navigate([this.service.getHomePage()])
-            },
-              /*Mensaje emergente de error*/
-            error: (err) =>{
-              this.adminService.avisoError(err.error)
-              }
-          })
-        }, 
-        error: (err) => {
-          this.service.avisoError(err.error)
-        }
-      })
-      
-    }
+  onEnviar(){
+    this.objeto.solicitud = "en proceso"
+    this.aux()
   }
 
   onCancelar(){
-    this.service.onCancelar()
+    this.objeto.solicitud = "no enviada"
+    this.aux()
   }
 
   onRechazar(){

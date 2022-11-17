@@ -11,68 +11,68 @@ export abstract class ConexionService<T> {
 
   /**Ruta a conectarse con el API REST */
  //private readonly RUTA_API = "https://localhost:7035/api" + this.getResourceURL();
- private readonly RUTA_API = "https://ubytecdbapi.azurewebsites.net/api" + this.getResourceURL();
  constructor(protected httpClient:HttpClient, protected route:Router) {
  }
 
  getRuta(){
-  return this.RUTA_API;
+  return "https://ubytecdbapi.azurewebsites.net/api" + this.getResourceURL();
  }
 
  abstract getResourceURL(): string;
  abstract getHomePage(id?: string|number, id2?: string|number): string;
  abstract getNombre(): string;
-  
- lista:T[]=[]
- temp:T[]=[]
  
+ temp:T[]=[]
  listaAll:T[]=[]
   getList(){
-    return this.httpClient.get<T[]>(this.RUTA_API);
+    return this.httpClient.get<T[]>(this.getRuta());
   }
   
-
   get(id: string | number, marca?:string | number){
+    console.log(this.getRuta())
     if (marca){
-      return this.httpClient.get<T[]>(this.RUTA_API+"/"+id+ "/"+ marca);
+      return this.httpClient.get<T[]>(this.getRuta()+"/"+id+ "/"+ marca);
     }
-    return this.httpClient.get<T[]>(this.RUTA_API+"/"+id);
+    return this.httpClient.get<T[]>(this.getRuta()+"/"+id);
   }
 
-  private add(resource:T): Observable<T>{
-    return this.httpClient.post<T>(this.RUTA_API,resource);
+  add(resource:T): Observable<T>{
+    return this.httpClient.post<T>(this.getRuta(),resource);
   }
 
-  private update(resource:T): Observable<T> {
-    return this.httpClient.put<T>(this.RUTA_API,resource);
+  update(resource:T): Observable<T> {
+    return this.httpClient.put<T>(this.getRuta(),resource);
   }
 
   private delete(id: string | number){
-    return this.httpClient.delete<T[]>(this.RUTA_API+"/"+id);
+    return this.httpClient.delete<T[]>(this.getRuta()+"/"+id);
   }
 
-  onEliminar(id:string | number, id2?: string|number){
+
+  onEliminar(id:string | number, id2?: string|number, recargar?:boolean){
     if (id2){
       id = id + "/" + id2
     }
     this.delete(id).subscribe({
       next:(data)=>{
         this.avisoSuccess("eliminado", id);
-        this.route.navigate([this.getHomePage()])},
+        if (recargar==undefined){
+        this.route.navigate([this.getHomePage()])}},
         error: (err) =>{
           this.avisoError(err.error)} 
     })
   }
 
-  onActualizar(objeto:T, nombre:string | number){
+  onActualizar(objeto:T, nombre:string | number, recargar?:boolean){
     console.log(objeto)
     /**Solicitud HTTP para el PUT en el API */
     this.update(objeto).subscribe({
       /*Mensaje emergente de exito*/
       
       next: (data) => {
-        this.avisoSuccess("actualizado", nombre);
-        this.route.navigate([this.getHomePage()])
+        if (recargar==undefined){
+          this.avisoSuccess("actualizado", nombre);
+          this.route.navigate([this.getHomePage()])}
       },
 
         /*Mensaje emergente de error*/
@@ -82,38 +82,22 @@ export abstract class ConexionService<T> {
     })
   }
 
-  onNuevo(objeto:T, nombre:string | number){
+  onNuevo(objeto:T, nombre:string | number,  recargar?:boolean){
+    console.log(objeto)
     /**Solicitud HTTP para el PUT en el API */
     this.add(objeto).subscribe({
       /*Mensaje emergente de exito*/
       
       next: (data) => {
         this.avisoSuccess("añadido", nombre);
-        this.route.navigate([this.getHomePage()])
+        if (recargar==undefined){
+          this.route.navigate([this.getHomePage()])}
       },
         /*Mensaje emergente de error*/
       error: (err) =>{
         this.avisoError(err.error)
         }
     })
-  }
-
-  onGet(id:string | number, id2?: string|number) : T[]{
-    this.temp = []
-    if (id2){
-      id = id + "/" + id2
-    } 
-
-    this.get(id).subscribe({
-      next: (data)=>{
-        this.temp =  data
-      }, 
-      error: (err) => {
-        this.avisoError(err.error)
-      }
-    })
-
-    return this.temp
   }
 
   onCancelar(){
@@ -135,34 +119,5 @@ export abstract class ConexionService<T> {
     })
   } 
 
-    /*Crea filas de 5 unidades a partir de índice
-  valor:number 
-  return: boolean*/
-  crearFila(valor:number){
-    if (valor%5==0){
-      return true;
-    }
-    return false;
-  }
-  /*Rellena la lista con elementos nulos para conservar el espaciado
-  valor:number
-  return: list*/
-  subLista(valor:number){
-    var sub=[];
-    if(valor+5 > this.lista.length){
-      sub = this.lista.slice(valor)
-    } else {
-      sub = this.lista.slice(valor, valor+5);
-    }
-    return sub;
-  }
-
-  completar(valor:number){
-    var sub=[1,2,3,4,5];
-    if(valor+5 > this.lista.length){
-       return sub.slice(0,valor+5-this.lista.length)
-    } else {
-      return []
-    }
-  }
+  
 }

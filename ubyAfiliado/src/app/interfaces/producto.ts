@@ -19,6 +19,6 @@ class Producto implements ProductoInterface{
 
 class ProductoFotos implements ProductoFotosInterface{
     producto!: string;
-    foto!: string;
+    foto!: string
     
 }

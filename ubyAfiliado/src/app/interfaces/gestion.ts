@@ -1,7 +1,7 @@
 export interface Gestion
 {
-    nombre: string | number,
-    id: number | string,
+    nombre: number | string;
+    id: number | string;
     route: string
 }
 

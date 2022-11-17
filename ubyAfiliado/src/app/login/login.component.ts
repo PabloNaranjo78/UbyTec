@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import {Comercio} from '../interfaces/comercio';
+import { ComerciosService } from '../services/comercios.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -11,19 +12,16 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-CrearCuenta() {
-throw new Error('Method not implemented.');
-}
 
   id!:string
   password!:string
   editMode:boolean = false; 
 
-  comercio:Comercio = new Comercio();
+  objeto:Comercio = new Comercio();
 
-  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient) { 
+  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient, private comercioService:ComerciosService) { 
     if (cookie.get("tokenAfiliado")!=""){
-      this.route.navigate([cookie.get("tokenAfiliado") + "/gestion-productos"])
+      this.route.navigate([cookie.get("tokenAfiliado") + "/gestion/perfil"])
     }
   }
   ngOnInit(): void {
@@ -52,12 +50,13 @@ throw new Error('Method not implemented.');
     console.log("Cancelar")
   }
 
-  prueba(){
-    console.log(this.comercio)
-  }
   onGuardar(){
-    console.log("Guardar")
+    this.objeto.canton="";
+    this.objeto.provincia="";
+    this.objeto.distrito="";
+    this.objeto.solicitud="no enviada"
+    console.log(this.objeto)
+    this.comercioService.onNuevo(this.objeto, this.objeto.nombre)
   }
-
 }
 
