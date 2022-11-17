@@ -36,7 +36,7 @@ export abstract class ConexionService<T> {
     return this.httpClient.get<T[]>(this.getRuta()+"/"+id);
   }
 
-  private add(resource:T): Observable<T>{
+  add(resource:T): Observable<T>{
     return this.httpClient.post<T>(this.getRuta(),resource);
   }
 
@@ -49,28 +49,30 @@ export abstract class ConexionService<T> {
   }
 
 
-  onEliminar(id:string | number, id2?: string|number){
+  onEliminar(id:string | number, id2?: string|number, recargar?:boolean){
     if (id2){
       id = id + "/" + id2
     }
     this.delete(id).subscribe({
       next:(data)=>{
         this.avisoSuccess("eliminado", id);
-        this.route.navigate([this.getHomePage()])},
+        if (recargar==undefined){
+        this.route.navigate([this.getHomePage()])}},
         error: (err) =>{
           this.avisoError(err.error)} 
     })
   }
 
-  onActualizar(objeto:T, nombre:string | number){
+  onActualizar(objeto:T, nombre:string | number, recargar?:boolean){
     console.log(objeto)
     /**Solicitud HTTP para el PUT en el API */
     this.update(objeto).subscribe({
       /*Mensaje emergente de exito*/
       
       next: (data) => {
-        this.avisoSuccess("actualizado", nombre);
-        this.route.navigate([this.getHomePage()])
+        if (recargar==undefined){
+          this.avisoSuccess("actualizado", nombre);
+          this.route.navigate([this.getHomePage()])}
       },
 
         /*Mensaje emergente de error*/
@@ -80,7 +82,7 @@ export abstract class ConexionService<T> {
     })
   }
 
-  onNuevo(objeto:T, nombre:string | number){
+  onNuevo(objeto:T, nombre:string | number,  recargar?:boolean){
     console.log(objeto)
     /**Solicitud HTTP para el PUT en el API */
     this.add(objeto).subscribe({
@@ -88,7 +90,8 @@ export abstract class ConexionService<T> {
       
       next: (data) => {
         this.avisoSuccess("añadido", nombre);
-        this.route.navigate([this.getHomePage()])
+        if (recargar==undefined){
+          this.route.navigate([this.getHomePage()])}
       },
         /*Mensaje emergente de error*/
       error: (err) =>{

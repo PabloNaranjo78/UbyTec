@@ -38,7 +38,7 @@ import { ReportesComponent } from './reportes/reportes.component';
       {path: "nuevo/empleado", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/repartidores", component:NuevoRepartidorComponent, canActivate: [VigilanteGuard]},
       {path: "nuevo/afiliados", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
-      {path: "nuevo/solicitudes", component:SolicitudComponent, canActivate: [VigilanteGuard]},
+      {path: "nuevo/solicitudes", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/empleado/:id", component:NuevoEmpleadoComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/repartidores/:id", component:NuevoRepartidorComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/afiliados/:id", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},

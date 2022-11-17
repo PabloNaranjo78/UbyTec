@@ -38,11 +38,12 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
       next: (data) => {
         if (data[0]== undefined){
           this.getProvincia();
-          this.getCanton();
-          this.getDistrito();
           this.editMode = false
         } else {
           this.objeto = data[0]
+          this.getProvincia();
+          this.getCanton();
+          this.getDistrito();
         }
       },
       /*Mensaje emergente de error*/
@@ -56,12 +57,12 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
 
   }
 
-  onGuardar(){
+  onGuardar(recargar?:boolean){
     console.log(this.objeto)
     if (this.editMode){
-      this.service.onActualizar(this.objeto,this.objeto.nombre)
+      this.service.onActualizar(this.objeto,this.objeto.nombre,recargar)
     } else {
-      this.service.onNuevo(this.objeto,this.objeto.nombre)
+      this.service.onNuevo(this.objeto,this.objeto.nombre, recargar)
     }
   }
   onCancelar(){
@@ -74,6 +75,10 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
 
 
   onTelefonos(){
+    if (!this.editMode){
+      this.onGuardar(false)
+      this.editMode = true
+    }
     this.telefonosService.get(this.objeto.idAdmin).subscribe({
       /*Mensaje emergente de exito*/
       next: (data) => {

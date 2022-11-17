@@ -59,18 +59,18 @@ export class NuevoEmpleadoComponent implements OnInit {
 
   }
 
-  onGuardar(){
+  onGuardar(recargar?:boolean){
     if (this.editMode){
-      this.service.onActualizar(this.objeto,this.objeto.nombre)
+      this.service.onActualizar(this.objeto,this.objeto.nombre, recargar)
     } else {
-      this.service.onNuevo(this.objeto,this.objeto.nombre)
+      this.service.onNuevo(this.objeto,this.objeto.nombre, recargar)
     }
   }
 
   onAddTelefono(){
     this.telefonoNuevo.id = this.objeto.idEmpleado
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
-    // kcnsjcf
+    this.route.navigate(['actualizar/empleados/'+this.objeto.idEmpleado])
   }
 
   onDeleteTelefono(tel:TelefonoInterface){
@@ -79,6 +79,10 @@ export class NuevoEmpleadoComponent implements OnInit {
   }
 
   onTelefonos(){
+    if (!this.editMode){
+      this.onGuardar(false)
+      this.editMode = true
+    }
     this.telefonosService.get(this.objeto.idEmpleado).subscribe({
       /*Mensaje emergente de exito*/
       next: (data) => {

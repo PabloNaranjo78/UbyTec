@@ -50,11 +50,11 @@ export class NuevoAfiliadoComponent implements OnInit {
     }
   }
 
-  onGuardar(){
+  onGuardar(recargar?:boolean){
     if (this.editMode){
-      this.service.onActualizar(this.objeto,this.objeto.nombre)
+      this.service.onActualizar(this.objeto,this.objeto.nombre, recargar)
     } else {
-      this.service.onNuevo(this.objeto,this.objeto.nombre)
+      this.service.onNuevo(this.objeto,this.objeto.nombre, recargar)
     }
   }
 
@@ -67,6 +67,10 @@ export class NuevoAfiliadoComponent implements OnInit {
   }
 
   onTelefonos(){
+    if (!this.editMode){
+      this.onGuardar(false)
+      this.editMode = true
+    }
     this.telefonosService.get(this.objeto.idComercio).subscribe({
       /*Mensaje emergente de exito*/
       next: (data) => {
@@ -78,18 +82,18 @@ export class NuevoAfiliadoComponent implements OnInit {
     })
   }
   onAdministrador(){
-      this.route.navigate(['actualizar/administrador/' + this.rou.snapshot.params['id']])
+    this.onGuardar(false)
+    this.route.navigate(['actualizar/administrador/' + this.objeto.idComercio])
   }
 
   onAddTelefono(){
     this.telefonoNuevo.id = this.objeto.idComercio
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
-    // kcnsjcf
+    this.route.navigate(['actualizar/afiliados/'+this.objeto.idComercio])
   }
 
   onDeleteTelefono(tel:TelefonoInterface){
     this.telefonosService.onEliminar(tel.id, tel.telefono)
-    //mcsjhfnjednf
   }
 
   //Provincias,cantones,distritos

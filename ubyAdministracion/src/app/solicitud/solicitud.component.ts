@@ -28,7 +28,20 @@ export class SolicitudComponent implements OnInit {
         /*Mensaje emergente de exito*/
         next: (data) => {
           console.log(data)
-          this.adminComercio = data[0];
+          if (data[0]==undefined){
+            idComercio: this.objeto.idComercio;
+            idAdmin: 0;
+            correo:"";
+            usuario: "";
+            pass: "";
+            nombre: "";
+            apellidos: "";
+            provincia: "";
+            canton: "";
+            distrito: ""
+          } else {
+            this.adminComercio = data[0];
+          }
         },
         /*Mensaje emergente de error*/
         error: (err) =>{
@@ -48,11 +61,31 @@ export class SolicitudComponent implements OnInit {
 
   onGuardar(){
     if (this.editMode){
-      this.objeto.solicitud = false
+      this.objeto.solicitud = "aceptada"
       this.service.onActualizar(this.objeto,this.objeto.nombre)
     } else {
-      this.service.onNuevo(this.objeto,this.objeto.nombre)
-      this.adminService.onNuevo(this.adminComercio,this.adminComercio.nombre)
+      
+      this.adminComercio.idComercio = this.objeto.idComercio
+      console.log(this.adminComercio)
+      this.service.add(this.objeto).subscribe({
+        next: (data) => {
+          this.adminService.add(this.adminComercio).subscribe({
+            /*Mensaje emergente de exito*/
+            next: (data) => {
+              this.adminService.avisoSuccess("añadido", this.adminComercio.nombre);
+              this.route.navigate([this.service.getHomePage()])
+            },
+              /*Mensaje emergente de error*/
+            error: (err) =>{
+              this.adminService.avisoError(err.error)
+              }
+          })
+        }, 
+        error: (err) => {
+          this.service.avisoError(err.error)
+        }
+      })
+      
     }
   }
 
@@ -61,6 +94,15 @@ export class SolicitudComponent implements OnInit {
   }
 
   onEliminar(){
-    
+    this.objeto.solicitud = "rechazada"
+    this.service.onActualizar(this.objeto,this.objeto.nombre)
+    const input = document.getElementById('message') as HTMLInputElement | null;
+    if (input != null) {
+      console.log(
+        {id: this.objeto.idComercio,
+        message: input.value}
+        );
+    }
+
   }
 }
