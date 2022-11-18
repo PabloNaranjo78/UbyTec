@@ -9,8 +9,10 @@ import { LoginComponent } from './login/login.component';
 import { GestionesComponent } from './gestiones/gestiones.component';
 import { HeaderComponent } from './header/header.component';
 import { VigilanteGuard } from './vigilante.guard';
-import { PerfilComponent } from './perfil/perfil.component';
-import { AdminComponent } from './admin/admin.component';
+import { NuevoAfiliadoComponent } from './nuevo-afiliado/nuevo-afiliado.component';
+import { SolicitudComponent } from './solicitud/solicitud.component';
+import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afiliado-admin.component';
+import { NuevoProductoComponent } from './nuevo-producto/nuevo-producto.component';
 
 
 @NgModule({
@@ -19,19 +21,24 @@ import { AdminComponent } from './admin/admin.component';
     LoginComponent,
     GestionesComponent,
     HeaderComponent,
-    PerfilComponent,
-    AdminComponent
+    NuevoAfiliadoComponent,
+    NuevoAfiliadoAdminComponent,
+    SolicitudComponent,
+    NuevoProductoComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
       {path: "", component:LoginComponent, canActivate:[VigilanteGuard]},
-      {path: "gestion/:Tipo", component:GestionesComponent, canActivate: [VigilanteGuard]},
-      {path: ":id/nuevo-admin", component:GestionesComponent, canActivate: [VigilanteGuard]},
+      {path: ":id/gestion/:Tipo", component:GestionesComponent, canActivate: [VigilanteGuard]},
+      {path: ":id/nuevo-admin", component:NuevoAfiliadoAdminComponent, canActivate: [VigilanteGuard]},
+      {path: ":id/solicitud", component:SolicitudComponent, canActivate: [VigilanteGuard]},
       {path: ":id/gestion/pedidos", component:GestionesComponent, canActivate: [VigilanteGuard]},
       {path: "login", component:LoginComponent},
-      {path: "gestion/perfil/:id", component:PerfilComponent, canActivate: [VigilanteGuard]},
-      {path: "admin", component:AdminComponent, canActivate: [VigilanteGuard]}
+      {path: ":id/gestion/perfil", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
+      {path: ":id/nuevo/productos", component:NuevoProductoComponent, canActivate: [VigilanteGuard]},
+      {path: ":id/actualizar/productos/:producto", component:NuevoProductoComponent, canActivate: [VigilanteGuard]}
+      
     ]),
     HttpClientModule,
     FormsModule

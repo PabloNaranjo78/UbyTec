@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ComercioInterface, Comercio, AdminComercio} from '../interfaces/comercio';
+import { ComercioInterface, AdminComercio} from '../interfaces/comercio';
 import { Gestion } from '../interfaces/gestion';
 import { ConexionService} from './conexion.service';
 

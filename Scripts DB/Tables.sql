@@ -109,6 +109,17 @@ CREATE TABLE CLIENTE(
 	distrito VARCHAR(20) not null
 );
 
+CREATE TABLE DIRECCIONES(
+	provincia varchar(20),
+	canton varchar(30),
+	distrito varchar(40),
+	lat float4,
+	lon float4
+);
+
+ALTER TABLE DIRECCIONES
+ADD PRIMARY KEY(provincia,canton,distrito);
+
 ALTER TABLE REPARTIDOR_TELEFONOS
 ADD PRIMARY KEY (usuarioRep, telefono);
 

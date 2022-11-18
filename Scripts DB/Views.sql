@@ -13,8 +13,12 @@ SELECT Cliente.nombre AS Cliente, comercio.nombre AS Afiliado, count(pedido.idPe
 FROM ((((pedido JOIN producto_pedido  ON pedido.idPedido=producto_pedido.idPedido) 
 JOIN Producto ON producto=producto.nombre) 
 			   JOIN comercio ON producto.idComercio = comercio.idComercio ) JOIN Cliente ON pedido.idCliente = Cliente.idCliente)
-			   WHERE Pedido.finalizado = TRUE GROUP BY Pedido.idpedido, Comercio.nombre, Cliente.nombre
+			   WHERE Pedido.finalizado = TRUE GROUP BY Pedido.repartidor, Comercio.nombre, Cliente.nombre
 			   ORDER BY Cliente.nombre ASC;
 			   
 
 
+CREATE VIEW Comercio_Solicitud
+AS
+SELECT nombre, solicitud FROM Comercio
+ORDER BY solicitud ASC;
