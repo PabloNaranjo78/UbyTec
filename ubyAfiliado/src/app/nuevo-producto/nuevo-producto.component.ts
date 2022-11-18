@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Producto, ProductoFotos } from '../interfaces/producto';
 import { ProductosFotosService, ProductosService } from '../services/productos.service';
+import { NgxImageCompressService, UploadResponse} from 'ngx-image-compress'
 
 @Component({
-  selector: 'app-nuevo-producto',
+    selector: 'app-nuevo-producto',
   templateUrl: './nuevo-producto.component.html',
   styleUrls: ['./nuevo-producto.component.css']
 })
@@ -14,11 +14,10 @@ export class NuevoProductoComponent implements OnInit {
   editMode:boolean = true;
   listaFotos:ProductoFotos[] = []
   productoFoto:ProductoFotos = new ProductoFotos()
-  public archivos: any = []
   base64:string="";
   loading:boolean=false;
 
-  constructor(private sanitazer:DomSanitizer, private service:ProductosService, private fotosService:ProductosFotosService,private rou:ActivatedRoute) { 
+  constructor(private imageCompress:NgxImageCompressService, private service:ProductosService, private fotosService:ProductosFotosService,private rou:ActivatedRoute) { 
     this.objeto.idComercio = this.rou.snapshot.params['id']
     this.service.id = this.rou.snapshot.params['id']
     this.fotosService.id = this.rou.snapshot.params['id']
@@ -37,38 +36,19 @@ export class NuevoProductoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  capturarImagenes(event:any): any{
-    const archivoCapturado = event.target.files[0];
-    this.extraerBase64(archivoCapturado).then((imagen:any) =>{
-      this.productoFoto.foto = imagen.base
-      this.productoFoto.producto = this.objeto.nombre
-      //this.listaFotos.push(this.productoFoto)
-    })
-  }
-
-  extraerBase64 = async($event:any) => new Promise((resolve) =>{
-    try {
-      const unsafeImg = window.URL.createObjectURL($event);
-      const image = this.sanitazer.bypassSecurityTrustUrl(unsafeImg);
-      const reader = new FileReader();
-
-      reader.readAsDataURL($event);
-      reader.onload = () =>{
-        resolve({
-          base: reader.result
+  uploadAndResize() {
+    this.productoFoto.producto = this.objeto.nombre
+    return this.imageCompress.uploadFile().then(({image, orientation}: UploadResponse) => {
+        this.imageCompress.compressFile(image, orientation, 50, 50).then((result: string) => {
+          this.productoFoto.fotoData = result;
+        console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
+      });
+        this.imageCompress.compressFile(image, orientation, 50, 50, 200, 100).then((result: string) => {
+            this.productoFoto.thumbnails = result;
+            console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
         });
-      };
-      reader.onerror = error => {
-        resolve({
-          base: null
-        });
-      };
-      return true
-    } catch (e){
-      return null;
-    }
-  })
+    });
+}
 
   onGuardar(recargar?:boolean){
     console.log(this.objeto)
@@ -89,6 +69,13 @@ export class NuevoProductoComponent implements OnInit {
   onFotos(){
     this.onGuardar(false)
     this.editMode = true
+    console.log(this.objeto.nombre)
+    this.fotosService.get(this.objeto.nombre).subscribe({
+      next: (data) =>{
+        console.log(data)
+        this.listaFotos = data
+      }
+    })
   }
 
   onAddFoto(){
@@ -99,6 +86,7 @@ export class NuevoProductoComponent implements OnInit {
       next: (data) =>{
         this.fotosService.avisoSuccess("Añadido", "")
         this.loading = false
+        window.location.reload()
       }, error: (err) =>{
         this.fotosService.avisoError(err.error)
         this.loading = false

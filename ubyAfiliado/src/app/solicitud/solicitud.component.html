@@ -4,9 +4,10 @@
       <div class="col-1">
       </div>
       <div class="col"> 
-        <div class="row my-5">  
-            <div class="col"><h2 class = "fw-bold offset-md-1">Información de Comercio</h2></div>
-            <div class="col"><h2 class = "fw-bold offset-md-1">Información de Administrador</h2></div>
+        <div class="row my-3">  
+            <div class="col offset-md-1"><h2 class = "fw-bold ">Información de <br> Comercio</h2></div>
+            <div class="col offset-md-1"><h2 class = "fw-bold offset-md-1">Información <br> Administrador</h2></div>
+            <div class="col offset-md-1"><h2 class = "fw-bold offset-md-1">Estado de <br> Solicitud</h2></div>
           
         </div>
         <form #form="ngForm" (ngSubmit)="onEnviar()">
@@ -22,7 +23,7 @@
                 <div class="row mt-4 right"><label for = "canton" class="form-label">Cantón</label></div>
                 <div class="row mt-4 right"><label for = "distrito" class="form-label">Distrito</label></div>
              </div>
-              <div class="col">  
+              <div class="col">
                 <div class="row mt-4"><input type = "text" class="form-control" name = "nombre" [(ngModel)] = "objeto.nombre" disabled></div>
                 <div class="row mt-4"><input type = "text" class="form-control" name = "correo" [(ngModel)] = "objeto.correo" disabled></div>
                 <div class="row mt-4"><input type = "text" class="form-control" name = "tipo" [(ngModel)] = "objeto.tipo" disabled></div>
@@ -57,14 +58,10 @@
                 <div class="row mt-4"><input type = "text" class="form-control" name = "distritoA" [(ngModel)] = "adminComercio.distrito" disabled></div>
 
               </div>
-  
-            </div>
-            <div class="row my-5"></div>
 
-            <div class="row">
-            
-              <div class="col text-center offset-md-2">
-                <h2>Estado de la solicitud: {{objeto.solicitud}}</h2>
+              <div class="col-1"></div>
+              <div class="col text-center">
+                <h2>{{objeto.solicitud}}</h2>
                 <div *ngIf="!solicitudEnviada; else enviar">
                   <div class="col"> <button type="submit" class="btn btn-outline-primary" style=" width:100%; height:100%"> Enviar Solicitud </button> </div>
                 </div>
@@ -73,12 +70,11 @@
                 </ng-template>
               </div>
 
-                  
+              <div class="col-1"></div>
             </div>
-              
           </form>
       </div>
-      <div class="col-2">
+      <div class="col-1">
       </div>
     </div>
   </div>

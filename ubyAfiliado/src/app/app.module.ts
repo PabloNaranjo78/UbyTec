@@ -13,6 +13,7 @@ import { NuevoAfiliadoComponent } from './nuevo-afiliado/nuevo-afiliado.componen
 import { SolicitudComponent } from './solicitud/solicitud.component';
 import { NuevoAfiliadoAdminComponent } from './nuevo-afiliado-admin/nuevo-afiliado-admin.component';
 import { NuevoProductoComponent } from './nuevo-producto/nuevo-producto.component';
+import { GestionProductosComponent } from './gestion-productos/gestion-productos.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { NuevoProductoComponent } from './nuevo-producto/nuevo-producto.componen
     NuevoAfiliadoComponent,
     NuevoAfiliadoAdminComponent,
     SolicitudComponent,
-    NuevoProductoComponent
+    NuevoProductoComponent,
+    GestionProductosComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,7 @@ import { NuevoProductoComponent } from './nuevo-producto/nuevo-producto.componen
       {path: ":id/solicitud", component:SolicitudComponent, canActivate: [VigilanteGuard]},
       {path: ":id/gestion/pedidos", component:GestionesComponent, canActivate: [VigilanteGuard]},
       {path: "login", component:LoginComponent},
-      {path: ":id/gestion/perfil", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
+      {path: ":id/gestion-perfil", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
       {path: ":id/nuevo/productos", component:NuevoProductoComponent, canActivate: [VigilanteGuard]},
       {path: ":id/actualizar/productos/:producto", component:NuevoProductoComponent, canActivate: [VigilanteGuard]}
       

@@ -72,7 +72,7 @@
                     <div class="carousel-inner">
                         <div *ngFor="let foto of listaFotos; let i=index">
                             <div class="carousel-item active">
-                                <img [src]="foto.foto" class="d-block w-100" alt="...">
+                                <img [src]="foto.fotoData" class="d-block w-100" alt="...">
                               </div>
                           </div>
                     </div>
@@ -87,15 +87,19 @@
                   </div>
                 <div class="mb-3">
                     <h2 class="text-center">Agregar nueva</h2>
-                    <input class="form-control" (change) ="capturarImagenes($event)" type="file" id="formFileMultiple">
-                  </div>
-                  <div *ngIf="productoFoto.foto">
-                    <div class="carousel-item active">
-                      <img [src]="productoFoto.foto" class="d-block w-100" alt="...">
-                    </div></div>
+                    <div class="row my-3">
+                        <div class="col-3"><h4>Nombre</h4></div>
+                        <div class="col"><input type = "text" class="form-control" name = "foto" [(ngModel)] = "productoFoto.foto"></div>
+                    </div>
+                    <button (click)="uploadAndResize()" style="width:100%">Seleccionar una imagen</button>
+                    <div class="row"  *ngIf="productoFoto.fotoData">
+                        <div class="carousel-item active">
+                          <img [src]="productoFoto.fotoData" class="d-block w-100" >
+                        </div></div>
                   <div class="row mt-4"><button class="btn btn-primary" [disabled]="loading" (click) = onAddFoto() style= "width: 100%" >
-                {{(loading) ? 'Cargando...' : 'Subir Archivo'}}</button></div>
-
+                    {{(loading) ? 'Cargando...' : 'Subir Archivo'}}</button></div>
+                  
+                </div>
               </div>
       </div>
     </div>

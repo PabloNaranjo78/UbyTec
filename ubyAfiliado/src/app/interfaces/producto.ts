@@ -8,6 +8,8 @@ export interface ProductoInterface {
 export interface ProductoFotosInterface {
     producto:string,
     foto:string,
+    fotoData:string,
+    thumbnails:string
 }
 
 export class Producto implements ProductoInterface{
@@ -19,6 +21,7 @@ export class Producto implements ProductoInterface{
 
 export class ProductoFotos implements ProductoFotosInterface{
     producto!: string;
-    foto!: string
-    
+    foto!: string;
+    fotoData!:string;
+    thumbnails!:string;
 }
