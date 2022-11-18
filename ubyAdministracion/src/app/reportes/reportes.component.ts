@@ -14,7 +14,11 @@ export class ReportesComponent implements OnInit {
   reporte2:Reporte[] = [];
   reporte3:Reporte[] = [];
   listaclientes:Cliente[] = [];
-  listaafiliados:Afiliado[] = [];
+
+  totalcomprasS:number = 0;
+  MontoTotalS:number = 0;
+  MontoServicioS:number = 0;
+
 
 
   constructor(private rou:ActivatedRoute, private route:Router, private reportesService:ReportesService) { }
@@ -24,6 +28,7 @@ export class ReportesComponent implements OnInit {
       next: data => {
         this.reporte1=data;
         this.sumreporte1();
+
         console.log(this.reporte1)
       }
     })
@@ -51,20 +56,15 @@ export class ReportesComponent implements OnInit {
   }
 }
   sumreporte2(){
-    let añadido2:boolean = false;
     for (let i = 0; i < this.reporte2.length; i++) {
-      for(let j = 0; j < this.listaafiliados.length; j++){
-        if(this.reporte2[i].afiliado == this.listaafiliados[j].afiliado){
-          this.listaafiliados[j].añadirdetalle2(this.reporte2[i]);
-          añadido2 = true;
-        }
+        this.totalcomprasS += this.reporte2[i].compras;
+        this.MontoTotalS += this.reporte2[i].monto_total;
+        this.MontoServicioS += this.reporte2[i].monto_servicio;
+        console.log(this.totalcomprasS)
       }
-      if(!añadido2){
-        this.listaafiliados.push(new Afiliado(this.reporte2[i].afiliado, this.reporte2[i]))
+
+      }
     }
-  }
-}
-}
 
 
 class Cliente{
@@ -88,24 +88,3 @@ class Cliente{
   }
 }
 
-
-class Afiliado{
-  afiliado!: string;
-  totalcomprasS:number = 0;
-  MontoTotalS:number = 0;
-  MontoServicioS:number = 0;
-
-  detalles2:Reporte[]=[]
-
-  constructor(afiliado:string, detalle2:Reporte){
-    this.afiliado = afiliado;
-    this.añadirdetalle2(detalle2)
-  }
-
-  añadirdetalle2(detalle2:Reporte){
-    this.totalcomprasS += detalle2.compras;
-    this.MontoTotalS += detalle2.monto_total;
-    this.MontoServicioS += detalle2.monto_servicio;
-    this.detalles2.push(detalle2)
-  }
-}

@@ -55,7 +55,6 @@
           <div class="centered-text mt-4">
         <h2>UbyTec</h2>
         <h2>Reporte Ventas por Afiliado</h2>
-        <div *ngFor="let afiliados of listaafiliados">
           <table class="table">
             <thead>
               <tr>
@@ -65,24 +64,24 @@
                 <th scope="col">Monto Servicio</th>
               </tr>
             </thead>
+
             <tbody>
-              <tr *ngFor="let venta of afiliados.detalles2">
-                <td>{{venta.afiliado}}</td>
-                <td>{{venta.compras}}</td>
-                <td>{{venta.monto_total}}</td>
-                <td>{{venta.monto_servicio}}</td>
+              <tr *ngFor="let reporte of reporte2">
+                <td>{{reporte.afiliado}}</td>
+                <td>{{reporte.compras}}</td>
+                <td>{{reporte.monto_total}}</td>
+                <td>{{reporte.monto_servicio}}</td>
+              </tr>
             </tbody>
             <tfoot>
               <tr>
                 <th scope="col">Total</th>
-                <td>{{afiliados.totalcomprasS}}</td>
-                <td>{{afiliados.MontoTotalS}}</td>
-                <td>{{afiliados.MontoServicioS}}</td>
+                <td>{{totalcomprasS}}</td>
+                <td>{{MontoTotalS}}</td>
+                <td>{{MontoServicioS}}</td>
               </tr>
             </tfoot>
           </table>
-        </div>
-      </div>
         <div class="col-sm-1">
         </div>
       </div>
