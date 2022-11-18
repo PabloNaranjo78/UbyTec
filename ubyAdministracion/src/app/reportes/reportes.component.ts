@@ -19,8 +19,6 @@ export class ReportesComponent implements OnInit {
   MontoTotalS:number = 0;
   MontoServicioS:number = 0;
 
-
-
   constructor(private rou:ActivatedRoute, private route:Router, private reportesService:ReportesService) { }
 
   ngOnInit(): void {
@@ -37,6 +35,12 @@ export class ReportesComponent implements OnInit {
         this.reporte2=data
         this.sumreporte2();
         console.log(this.reporte2)
+      }
+    })
+    this.reportesService.get('ComercioSolicitud').subscribe({
+      next: data => {
+        this.reporte3=data
+        console.log(this.reporte3)
       }
     })
   }
@@ -60,7 +64,6 @@ export class ReportesComponent implements OnInit {
         this.totalcomprasS += this.reporte2[i].compras;
         this.MontoTotalS += this.reporte2[i].monto_total;
         this.MontoServicioS += this.reporte2[i].monto_servicio;
-        console.log(this.totalcomprasS)
       }
 
       }

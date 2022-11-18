@@ -87,6 +87,7 @@
       </div>
         </div>
     </div>
+  </div>
 
     <div class="carousel-item">
       <div class="row align-items-start">
@@ -96,6 +97,20 @@
           <div class="centered-text mt-4">
         <h2>UbyTec</h2>
         <h2>Reporte Solicitudes de Afiliados</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Afiliado</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let report of reporte3">
+              <td>{{report.nombre}}</td>
+              <td>{{report.solicitud}}</td>
+            </tr>
+          </tbody>
+          </table>
       </div>
     </div>
     </div>
