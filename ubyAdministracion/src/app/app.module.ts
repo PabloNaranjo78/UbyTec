@@ -44,7 +44,7 @@ import { ReportesComponent } from './reportes/reportes.component';
       {path: "actualizar/afiliados/:id", component:NuevoAfiliadoComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/solicitudes/:id", component:SolicitudComponent, canActivate: [VigilanteGuard]},
       {path: "actualizar/administrador/:id", component:NuevoAfiliadoAdminComponent, canActivate: [VigilanteGuard]},
-      {path: "reportes/:comercio", component:ReportesComponent, canActivate: [VigilanteGuard]},
+      {path: "reportes", component:ReportesComponent, canActivate: [VigilanteGuard]},
     ]),
     FormsModule,
     HttpClientModule
