@@ -916,21 +916,22 @@ AS $$
 	where cliente.idCliente = idCliente_ and cliente.pass = pass_;
 $$;
 
--- EN PROCESO
+
 -- PRODUCTO, FOTO Y PRECIO
-CREATE OR REPLACE FUNCTION ProductoFoto(
+CREATE OR REPLACE FUNCTION Comercio_producto(
 	idComercio_ int
 )
 RETURNS table (Producto VARCHAR, Foto VARCHAR, Precio int)
 language sql
 AS $$
-	select * from ((Comercio JOIN Producto On Comercio.idComercio = Producto.idComercio) JOIN Producto_Fotos on Producto.nombre = Producto_Fotos.producto)
-	where cliente.idCliente = idCliente_;
+	select producto, foto, precio from ((Comercio JOIN Producto On Comercio.idComercio = Producto.idComercio) JOIN Producto_Fotos on Producto.nombre = Producto_Fotos.producto)
+	where Comercio.idComercio = idComercio_;
 $$;
+
+select * from Comercio_producto(123456);
 
 
 --AUX
---
 
 
 -- SELECT * FROM getCliente_telefonos();
