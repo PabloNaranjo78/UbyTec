@@ -25,7 +25,6 @@ export class GestionesComponent implements OnInit {
     else if(this.rou.snapshot.params['Tipo'] == "repartidores"){
       this.lista = repartidorService.getAsInterface()
     }
-
     else if(this.rou.snapshot.params['Tipo'] == "afiliados"){
       this.crear= false;
       this.lista = comercioService.getAsInterface()
@@ -34,9 +33,7 @@ export class GestionesComponent implements OnInit {
       this.lista = comercioService.getAsInterface(true)
     }
     else if(this.rou.snapshot.params['Tipo'] == "reportes"){
-      this.reporte=true;
       this.crear= false;
-      this.lista = comercioService.getAsInterface(true)
     }
    }
 

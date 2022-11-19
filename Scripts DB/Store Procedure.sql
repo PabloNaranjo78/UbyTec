@@ -917,15 +917,28 @@ AS $$
 $$;
 
 
+-- PRODUCTO, FOTO Y PRECIO
+CREATE OR REPLACE FUNCTION Comercio_producto(
+	idComercio_ int
+)
+RETURNS table (Producto VARCHAR, Foto VARCHAR, Precio int)
+language sql
+AS $$
+	select producto, foto, precio from ((Comercio JOIN Producto On Comercio.idComercio = Producto.idComercio) JOIN Producto_Fotos on Producto.nombre = Producto_Fotos.producto)
+	where Comercio.idComercio = idComercio_;
+$$;
+
+select * from Comercio_producto(123456);
+
+
 --AUX
---
 
 
 -- SELECT * FROM getCliente_telefonos();
 SELECT * FROM getCliente();
 -- CALL DeleteCliente(4555);
 
--- CALL AddCliente(4555,'MongeF','123','Fernando','MR','2001-12-13','Cartago','Guarco','Tobosi');
+CALL AddCliente(5555,'MongeF','123','pEDRITO','MR','2001-12-13','Cartago','Guarco','Tobosi');
 
 -- CALL AddCliente_Telefonos(4555,7777);
 
@@ -946,10 +959,13 @@ SELECT * FROM getCliente();
 -- SELECT * FROM getAdmin_Comercio();
 -- CALL AddAdmin_Comercio(333,'fer','13','monge','fer','@', 'c','c','t',58);
 
-CALL AddProducto('coca',1000,'a',123);
+call AddComercio(999,'sfs','1','KFC','gdgerg',52545,TRUE,'cartago','central','centro')
+call AddComercio(888,'sfs','1','BK','gdgerg',52545,TRUE,'cartago','central','centro')
+
+CALL AddProducto('papasfritas',1000,'a',999);
 
 -- CALL AddProducto_Fotos('arroz','aaaa');
-CALL AddProducto_Pedido(4,'coca',9);
+CALL AddProducto_Pedido(8,'bur',68);
 
 -- CALL DeleteProducto('arroz');
 
@@ -957,7 +973,8 @@ CALL AddProducto_Pedido(4,'coca',9);
 -- SELECT * FROM GetProducto_Pedido();
 -- SELECT * FROM GetProducto_Fotos();
 
-CALL AddPedido(4,'cartago',True,'fmonge', 333);
+
+CALL AddPedido(8,'cartago',True,'fmonge', 5555);
 
 Select * from getadmin_comercio();
 
