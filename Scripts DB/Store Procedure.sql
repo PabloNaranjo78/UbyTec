@@ -928,7 +928,19 @@ AS $$
 	where Comercio.idComercio = idComercio_;
 $$;
 
-select * from Comercio_producto(123456);
+--COMPRAS AFILIADO
+
+CREATE OR REPLACE FUNCTION Comercio_pedidos(
+	idComercio_ int
+)
+RETURNS table (idPedido int, direccion VARCHAR, finalizado BOOLEAN, repartidor VARCHAR, idCliente int)
+language sql
+AS $$
+	select Pedido.idPedido, Pedido.direccion,Pedido.finalizado, Pedido.repartidor,Pedido.idCliente from (((Comercio JOIN Producto On Comercio.idComercio = Producto.idComercio) JOIN Producto_Pedido on Producto.nombre = Producto_Pedido.producto) JOIN Pedido ON Producto_Pedido.idPedido = Pedido.idPedido)
+	where Comercio.idComercio = idComercio_ and Pedido.finalizado = FALSE;
+$$;
+
+select * from Comercio_pedidos(123);
 
 
 --AUX
