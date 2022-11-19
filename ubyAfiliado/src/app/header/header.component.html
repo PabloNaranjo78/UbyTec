@@ -1,6 +1,9 @@
 <div class="container" *ngIf="logged">
   <ul class="nav flex-column">
 
+    <li class="nav-item">
+      <a class = "tab"  routerLink="/{{id}}/gestion-perfil" routerLinkActive="tab-active">Mi Perfil</a>
+    </li>
       <li class="nav-item">
           <a class = "tab"  routerLink="{{id}}/gestion/productos" routerLinkActive="tab-active" (click)="recargar('productos')">Productos</a>
       </li>
@@ -8,13 +11,10 @@
           <a class = "tab"  routerLink="{{id}}/gestion/pedidos" routerLinkActive="tab-active" (click)="recargar('pedidos')">Pedidos</a>
       </li>
       <li class="nav-item">
-        <a class = "tab"  routerLink="/{{id}}/gestion-perfil" routerLinkActive="tab-active">Mi Perfil</a>
-      </li>
-      <li class="nav-item">
         <a class = "tab"  routerLink="{{id}}/solicitud" routerLinkActive="tab-active">Solicitud</a>
       </li>
       <li class="nav-item">
-        <a class = "tab"  routerLink="{{id}}/nuevo/producto" routerLinkActive="tab-active">Producto</a>
+        <a class = "tab" (click)="logout()" >Log Out</a>
       </li>
     </ul>
   </div>

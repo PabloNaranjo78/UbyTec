@@ -37,6 +37,11 @@ recargar(Tipo:string){
  reloadPage(){
    window.location.reload()
  }
+ logout(){
+  this.cookie.delete("tokenAdministrador")
+  this.reloadPage()
+  console.log(this.cookie.get("tokenAdministrador"))
+}
 
   ngOnInit(): void {
   }

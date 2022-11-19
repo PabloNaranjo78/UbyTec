@@ -41,6 +41,11 @@ export class HeaderComponent implements OnInit {
      window.location.reload()
    }
 
+   logout(){
+      this.cookie.delete("tokenAfiliado")
+      this.reloadPage()
+   }
+
   ngOnInit(): void {
   }
 

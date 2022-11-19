@@ -15,8 +15,8 @@ throw new Error('Method not implemented.');
 }
 
   id!:number
-  password!:string 
-  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient) { 
+  password!:string
+  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient) {
     if (cookie.get("tokenAdministrador")!=""){
       this.route.navigate(["gestion/empleado"])
     }
