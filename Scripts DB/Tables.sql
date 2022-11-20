@@ -92,6 +92,8 @@ CREATE TABLE PEDIDO(
 	idCliente int not null
 );
 
+
+
 CREATE TABLE CLIENTE_TELEFONOS(
 	idCliente int not null,
 	telefono int not null
@@ -115,6 +117,11 @@ CREATE TABLE DIRECCIONES(
 	distrito varchar(40),
 	lat float4,
 	lon float4
+);
+
+CREATE TABLE DISTANCIAS_REPARTIDORES(
+	usuario VARCHAR not null,
+	distancia FLOAT4
 );
 
 ALTER TABLE DIRECCIONES
