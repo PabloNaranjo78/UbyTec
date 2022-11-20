@@ -65,7 +65,7 @@ export class ComerciosAdminService extends ConexionService<AdminComercio>{
     return "/AdminComercio"
   }
   getHomePage(): string {
-    return this.id +"/gestion/perfil"
+    return this.id +"/gestion-perfil"
   }
   getNombre(): string {
     return "Administrador"

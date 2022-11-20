@@ -7,7 +7,10 @@
     padding-bottom: 10%;
     height: 100%;
   }
-  
+  .form-label{
+    margin-top: 7px
+}
+
   .btn{
     /*border-radius: 0%;*/
     background-color: black;

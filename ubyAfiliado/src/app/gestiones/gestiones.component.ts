@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Gestion } from '../interfaces/gestion';
 import { PedidosService } from '../services/pedidos.service';
-import { ProductosService } from '../services/productos.service';
-
 @Component({
   selector: 'app-gestiones',
   templateUrl: './gestiones.component.html',
@@ -14,17 +12,9 @@ export class GestionesComponent implements OnInit {
   tipo:string="";
   lista:Gestion[]=[]
   id:number = 0;
-  constructor( private productoService:ProductosService, private pedidoService:PedidosService, private route:Router, private rou:ActivatedRoute) {
-    this.tipo = this.rou.snapshot.params['Tipo']
+  constructor(private pedidoService:PedidosService, private route:Router, private rou:ActivatedRoute) {
     this.id = this.rou.snapshot.params['id']
-    console.log(this.tipo)
-    if(this.rou.snapshot.params['Tipo'] == "productos"){
-      this.lista = productoService.getAsInterface()
-    }
-
-    else if(this.rou.snapshot.params['Tipo'] == "pedidos"){
-      this.lista = pedidoService.getAsInterface()
-    }
+    this.lista = pedidoService.getAsInterface()
    }
 
     /*Crea filas de 5 unidades a partir de índice

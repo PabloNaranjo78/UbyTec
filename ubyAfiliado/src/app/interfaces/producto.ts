@@ -5,6 +5,13 @@ export interface ProductoInterface {
     idComercio:number
 }
 
+export interface ProductoPedidoInterface {
+    idPedido:number,
+    producto:string,
+    cantidad:number
+    precio:number
+}
+
 export interface ProductoFotosInterface {
     producto:string,
     foto:string,
@@ -24,4 +31,11 @@ export class ProductoFotos implements ProductoFotosInterface{
     foto!: string;
     fotoData!:string;
     thumbnails!:string;
+}
+
+export class ProductoPedido implements ProductoPedidoInterface{
+    idPedido!: number;
+    producto!: string;
+    cantidad!: number;
+    precio!: number;
 }

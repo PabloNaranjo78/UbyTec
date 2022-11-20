@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gestion } from '../interfaces/gestion';
-import { ProductoFotos, ProductoFotosInterface, ProductoInterface } from '../interfaces/producto';
+import { ProductoFotos, ProductoFotosInterface, ProductoInterface, ProductoPedidoInterface } from '../interfaces/producto';
 import { ConexionService } from './conexion.service';
 
 @Injectable({
@@ -57,6 +57,28 @@ export class ProductosFotosService extends ConexionService<ProductoFotosInterfac
   }
   getNombre(): string {
     return "Foto"
+  }
+
+  constructor(protected override httpClient: HttpClient, protected override route:Router) {
+    super(httpClient, route);
+  }
+
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductosPedidoService extends ConexionService<ProductoPedidoInterface>{
+  id!:number
+  url!:string
+  getResourceURL(): string {
+    return "/ProductosPedido"
+  }
+  getHomePage(): string {
+    return this.url
+  }
+  getNombre(): string {
+    return "Prodcuto de Pedido"
   }
 
   constructor(protected override httpClient: HttpClient, protected override route:Router) {

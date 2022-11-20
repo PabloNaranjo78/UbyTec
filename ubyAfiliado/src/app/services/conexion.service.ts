@@ -119,5 +119,12 @@ export abstract class ConexionService<T> {
     })
   } 
 
+  aviso(mensaje:string){
+    Swal.fire({
+      icon: 'success',
+      title: mensaje
+    })
+  }
+
   
 }

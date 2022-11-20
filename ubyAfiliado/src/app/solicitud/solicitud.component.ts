@@ -49,7 +49,7 @@ export class SolicitudComponent implements OnInit {
         /*Mensaje emergente de exito*/
         next: (data) => {
           this.objeto = data[0];
-          if(this.objeto.solicitud=="en proceso"){
+          if(this.objeto.solicitud=="en proceso" || this.objeto.solicitud=="aceptada"){
             this.solicitudEnviada=true;
           }
         },

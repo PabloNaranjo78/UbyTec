@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Producto } from '../interfaces/producto';
+import { ProductosService } from '../services/productos.service';
 
 @Component({
   selector: 'app-gestion-productos',
@@ -41,7 +43,14 @@ export class GestionProductosComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor(private rou:ActivatedRoute, private service: ProductosService) {
+    this.id = this.rou.snapshot.params['id']
+    service.getList().subscribe({
+      next: (data) => {
+        this.lista = data
+      }
+    })
+   }
 
   ngOnInit(): void {
   }
