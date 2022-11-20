@@ -1,29 +1,17 @@
-<div class="container">
+<div class="container" *ngIf="logged">
   <ul class="nav flex-column">
 
       <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-citas" routerLinkActive="tab-active">Citas</a>
+          <a class = "tab"  routerLink="/gestion/cliente" routerLinkActive="tab-active">Mi Perfil</a>
       </li>
       <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-clientes" routerLinkActive="tab-active">Clientes</a>
+          <a class = "tab"  routerLink="/gestion/comercios" routerLinkActive="tab-active">Comercios</a>
       </li>
       <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-trabajadores" routerLinkActive="tab-active">Trabajadores</a>
+          <a class = "tab"  routerLink="/gestion/carrito" routerLinkActive="tab-active">Carrito de Compras</a>
       </li>
       <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-proveedores" routerLinkActive="tab-active">Proveedores</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-insumos" routerLinkActive="tab-active">Insumos</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-lavados" routerLinkActive="tab-active">Lavados</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-sucursales" routerLinkActive="tab-active">Sucursales</a>
-      </li>
-      <li class="nav-item">
-          <a class = "tab"  routerLink="/gestion-reportes" routerLinkActive="tab-active">Reportes</a>
+        <a class = "tab"  (click)="logout()" >Log Out</a>
       </li>
     </ul>
   </div>
