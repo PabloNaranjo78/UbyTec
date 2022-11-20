@@ -15,13 +15,13 @@ export class LoginComponent implements OnInit {
 
   id!:string
   password!:string
-  editMode:boolean = false; 
+  editMode:boolean = false;
 
   objeto:Comercio = new Comercio();
 
-  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient, private comercioService:ComerciosService) { 
+  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient, private comercioService:ComerciosService) {
     if (cookie.get("tokenAfiliado")!=""){
-      this.route.navigate([cookie.get("tokenAfiliado") + "/gestion/perfil"])
+      this.route.navigate([cookie.get("tokenAfiliado") + "/gestion-perfil"])
     }
   }
   ngOnInit(): void {

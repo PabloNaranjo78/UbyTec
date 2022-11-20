@@ -20,18 +20,20 @@ import { HeaderComponent } from './header/header.component';
     CrearcuentaComponent,
     NuevoPedidioComponent,
     NuevoProductoPedidoComponent
-    
+
   ],
   imports: [
     BrowserModule,RouterModule.forRoot([
       {path: "", component:LoginComponent},
-      {path: "nuevo/pedido", component:NuevoPedidioComponent},
-      {path: "nuevo/productopedido", component:NuevoProductoPedidoComponent},
+      {path: "login", component:LoginComponent},
+      {path: "nuevo/pedido", component:NuevoPedidioComponent, canActivate:[VigilanteGuard]},
+      {path: "nuevo/productopedido", component:NuevoProductoPedidoComponent, canActivate:[VigilanteGuard]},
+      {path: "gestion/:Tipo", component:GestionesComponent, canActivate:[VigilanteGuard]},
     ]),
     FormsModule,
     HttpClientModule
 
-    
+
   ],
   providers: [],
   bootstrap: [AppComponent]
