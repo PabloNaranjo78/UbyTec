@@ -8,18 +8,19 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
   logged:boolean = false
+  id!:number|string
   constructor(private cookie:CookieService, private router:Router) {
     console.log(cookie.get("tokenCliente"));
     this.logged = !(cookie.get("tokenCliente")=="")
     console.log(this.logged)
+    this.id = cookie.get("tokenCliente")
   }
 
-recargar(Tipo:string){
-  this.router.navigate(['gestion/'+Tipo])
-  .then(() => {
-    window.location.reload();
+  recargar(Tipo:string){
+    this.router.navigate(['gestion/'+Tipo])
+    .then(() => {
+      window.location.reload();
   });
 
 }
@@ -39,9 +40,9 @@ recargar(Tipo:string){
    window.location.reload()
  }
  logout(){
-  this.cookie.delete("tokenAdministrador")
+  this.cookie.delete("tokenCliente")
   this.reloadPage()
-  console.log(this.cookie.get("tokenAdministrador"))
+  console.log(this.cookie.get("tokenCliente"))
 }
 
   ngOnInit(): void {

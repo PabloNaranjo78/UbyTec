@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import {Cliente, ClienteInterface} from '../interfaces/cliente';
 import { ClientesService } from '../services/clientes.service';
+import { DireccionesService } from '../services/telefonos.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -12,27 +13,21 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-CrearCuenta() {
-throw new Error('Method not implemented.');
-}
 
   editMode:boolean = false;
   idCliente!:number
-  fechaNac!:string
-  usuario!:string
   pass!:string
-  nombre!:string
-  apellidos!:string
-  provincia!:string
-  canton!:string
-  distrito!:string
+  
+  provincias:string[] = [];
+  cantones:string[] = [];
+  distritos:string[] = [];
 
 
   objeto:Cliente = new Cliente();
 
-  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient, private ClientesService:ClientesService) {
+  constructor(private route:Router, private aoth:UserService, private cookie: CookieService, private router: Router, private httpClient:HttpClient, private ClientesService:ClientesService, private direccionesService:DireccionesService) {
     if (cookie.get("tokenCliente")!=""){
-      this.route.navigate([cookie.get("tokenCliente") + "/gestion/cliente"])
+      this.route.navigate([cookie.get("tokenCliente") + "/mi-perfil"])
     }
   }
 
@@ -42,7 +37,7 @@ throw new Error('Method not implemented.');
     this.aoth.get(this.idCliente,this.pass).subscribe({
       next:(data) => {
         if(data){
-          this.cookie.set("tokenCliente", this.idCliente.toString(), 4, "/");
+          this.cookie.set("tokenCliente", this.idCliente.toString());
           window.location.reload()
         }
       },
@@ -62,17 +57,41 @@ throw new Error('Method not implemented.');
   }
 
   onGuardar(){
-    this.objeto.idCliente = this.idCliente;
-    this.objeto.fechaNac= this.nombre;
-    this.objeto.usuario= this.usuario;
-    this.objeto.pass = this.pass;
-    this.objeto.nombre = this.nombre;
-    this.objeto.apellidos = this.apellidos;
-    this.objeto.provincia = this.provincia;
-    this.objeto.canton = this.canton;
-    this.objeto.distrito = this.distrito;
     console.log(this.objeto)
     this.ClientesService.onNuevo(this.objeto, this.objeto.nombre)
+  }
+
+  //Provincias,cantones,distritos
+  getProvincia(){
+    this.direccionesService.get("Provincia").subscribe({
+      next: (data) => {
+        this.provincias = data;
+      }
+    })
+  }
+
+  getCanton(){
+    this.direccionesService.get(this.objeto.provincia).subscribe({
+      next: (data) => {
+        this.cantones = data;
+      }
+    })
+  }
+
+  getDistrito(){
+    this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
+      next: (data) => {
+        this.distritos = data;
+      }
+    })
+  }
+  
+  selected(){
+    this.getCanton()
+  }
+  
+  selectedcant(){
+    this.getDistrito();
   }
 
 }

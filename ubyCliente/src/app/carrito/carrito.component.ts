@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Pedido } from '../interfaces/pedido';
 import { Producto } from '../interfaces/producto';
 import { ProductosService } from '../services/productos.service';
 
 @Component({
-  selector: 'app-gestion-productos',
-  templateUrl: './gestion-productos.component.html',
-  styleUrls: ['./gestion-productos.component.css']
+  selector: 'app-carrito',
+  templateUrl: './carrito.component.html',
+  styleUrls: ['./carrito.component.css']
 })
-export class GestionProductosComponent implements OnInit {
+export class CarritoComponent implements OnInit {
   lista:Producto[]=[]
-  id:number = 0
+
+  constructor(private service:ProductosService, private rou:ActivatedRoute) {
+    this.service.getList().subscribe({
+      next: (data) =>{
+        this.lista = data
+      }
+    })
+   }
+
+  ngOnInit(): void {
+  }
 
     /*Crea filas de 5 unidades a partir de índice
   valor:number
@@ -42,18 +51,6 @@ export class GestionProductosComponent implements OnInit {
     } else {
       return []
     }
-  }
-
-  constructor(private rou:ActivatedRoute, private service: ProductosService) {
-    this.id = this.rou.snapshot.params['id']
-    service.getList().subscribe({
-      next: (data) => {
-        this.lista = data
-      }
-    })
-   }
-
-  ngOnInit(): void {
   }
 
 }

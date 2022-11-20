@@ -19,7 +19,7 @@
                 </div>
                 <div class="row">
                     <div class="col"><button type="submit" class="btn btn-outline-primary"> ENTRAR </button></div>
-                    <div class="col"><button type="submit" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#crearCuenta"> Crear Cuenta </button></div>
+                    <div class="col"><a type="button" class="btn btn-outline-primary" (click) = "getProvincia()" data-bs-toggle="modal" data-bs-target="#crearCuenta"> Crear Cuenta </a></div>
                     <!-- <div class="col"><button (click)=prueba() style= "width: 100%;" >Añadir Dirección</button></div> -->
                   </div>
                 <div class = "row my-3">
@@ -70,9 +70,24 @@
                         <div class="row mt-4"><input type = "date" class="form-control" name = "fechaNac" [(ngModel)] = "objeto.fechaNac" ></div>
 
 
-                        <div class="row mt-4"><input type = "text" class="form-control" name = "provincia" [(ngModel)] = "objeto.provincia" ></div>
-                        <div class="row mt-4"><input type = "text" class="form-control" name = "canton" [(ngModel)] = "objeto.canton" ></div>
-                        <div class="row mt-4"><input type = "text" class="form-control" name = "distrito" [(ngModel)] = "objeto.distrito" ></div>
+                        <div class="row mt-4">
+                          <select class="form-select" id="provincia" [(ngModel)]="objeto.provincia" name="provincia" (click)="selected()">
+                            <!--<option *ngFor="let provincia of provincias" [value]="provincia" >{{provincia}}</option>-->
+                            <ng-template ngFor let-provincia [ngForOf] = "provincias"; let-i="index">
+                              <option [value] ="provincia">{{provincia}}</option>
+                            </ng-template>
+                          </select>
+                        </div>
+                        <div class="row mt-4">
+                          <select class="form-select" id="canton" name="canton" [(ngModel)]="objeto.canton" name="canton" (click)="selectedcant()">
+                            <option *ngFor="let canton of cantones"  [value]="canton" name="Canton">{{canton}}</option>
+                          </select>
+                        </div>
+                        <div class="row mt-4">
+                          <select class="form-select" name="distrito" [(ngModel)]="objeto.distrito" name="distrito">
+                            <option *ngFor="let distrito of distritos" [value]="distrito" name="Distrito">{{distrito}}</option>
+                          </select>
+                        </div>
 
                         <div class="row mt-4"><input type = "number" class="form-control" name = "cedula" [(ngModel)] = "objeto.idCliente"></div>
                         <div class="row mt-4"><input type = "text" class="form-control" name = "usuario" [(ngModel)] = "objeto.usuario"></div>

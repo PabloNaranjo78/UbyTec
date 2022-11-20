@@ -8,7 +8,7 @@ import { ConexionService } from './conexion.service';
 })
 export class UserService extends ConexionService<boolean>{
   getResourceURL(): string {
-    return "/Login/comercio"
+    return "/Login/Cliente"
   }
   getHomePage(): string {
     return ''

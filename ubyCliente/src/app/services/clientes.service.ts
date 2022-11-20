@@ -13,7 +13,7 @@ import { ConexionService } from './conexion.service';
     listaG:Gestion[]=[];
     id!: number;
     getResourceURL(): string {
-      return "/Clientes"
+      return "/Cliente"
     }
     getHomePage(): string {
       return this.id + '/gestion/perfil'
