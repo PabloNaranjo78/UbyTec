@@ -60,7 +60,6 @@ namespace UbyTECAPI.Controllers
             if (!EmailSender.sendEmail(entity.correo, entity.nombre, tempPass, "Administrador de Comercio"))
             {
                 var result = entity.delete(entity.idAdmin.ToString());
-                Console.WriteLine(result);
                 return BadRequest("Email no válido");
             };
 

@@ -98,9 +98,38 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar con la base de datos");
             }
         }
+        [HttpGet("ComercioPedidos")]
+        public async Task<ActionResult<List<ComercioPedidos>>> GetComercioPedidos()
+        {
+            try
+            {
+                con.Open();
+                NpgsqlCommand command = new("select idpedido,direccion,finalizado,repartidor,idcliente from comercio_solicitud", con);
+                var rd = command.ExecuteReader();
+                var reporte = new List<ComercioSolicitud>();
+                while (rd.Read())
+                {
+                    reporte.Add(new ComercioSolicitud
+                    {
+                        nombre = rd["nombre"].ToString(),
+                        solicitud = rd["solicitud"].ToString()
+                    });
+                };
+                con.Close();
+
+                return Ok(reporte);
+            }
+            catch (Exception)
+            {
+                return BadRequest("No se logró conectar con la base de datos");
+            }
+        }
     }
 
-    public class VentasAfiliado
+    
+}
+
+public class VentasAfiliado
     {
         public string? afiliado { get; set; }
         public int compras { get; set; }
@@ -122,5 +151,14 @@ namespace UbyTECAPI.Controllers
     {
         public string? nombre { get; set; }
         public string? solicitud { get; set; }
+    }
+
+    public class ComercioPedidos
+    {
+        public int idPedido { get; set; }
+        public string? direccion { get; set; }
+        public bool finalizado { get; set; }
+        public string? repartidor { get; set; }
+        public int idCliente { get; set; }
     }
 }
