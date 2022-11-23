@@ -56,13 +56,14 @@ CREATE OR REPLACE PROCEDURE AddRepartidor(
 	disponible_ BOOLEAN,
 	provincia_ VARCHAR,
 	canton_ VARCHAR,
-	distrito_ VARCHAR
+	distrito_ VARCHAR,
+	correo_ VARCHAR
 )
 language plpgsql
 AS $$
 BEGIN
-	INSERT INTO repartidor(usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito)
-	VALUES (usuario_,pass_,nombre_,apellidos_,disponible_,provincia_,canton_,distrito_);
+	INSERT INTO repartidor(usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito,correo)
+	VALUES (usuario_,pass_,nombre_,apellidos_,disponible_,provincia_,canton_,distrito_,correo_);
 	commit;
 END
 $$;
@@ -73,7 +74,7 @@ RETURNS setof repartidor
 language sql
 AS
 $$
-	select usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito from public.repartidor
+	select usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito,correo from public.repartidor
 	ORDER BY usuario ASC;
 $$;
 
@@ -84,7 +85,7 @@ CREATE OR REPLACE FUNCTION GetRepartidorByID(
 RETURNS setof repartidor
 language sql
 AS $$
-	select usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito from repartidor
+	select usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito,correo from repartidor
 	where repartidor.usuario = usuario_;
 $$;
 
@@ -97,13 +98,14 @@ CREATE OR REPLACE PROCEDURE UpdateRepartidor(
 	disponible_ BOOLEAN,
 	provincia_ VARCHAR,
 	canton_ VARCHAR,
-	distrito_ VARCHAR
+	distrito_ VARCHAR,
+	correo_ VARCHAR
 )
 language plpgsql
 AS $$
 BEGIN
 	UPDATE repartidor SET pass=pass_,nombre=nombre_,apellidos=apellidos_,disponible=disponible,
-	provincia=provincia_,canton=canton_,distrito=distrito_ WHERE usuario=usuario_;
+	provincia=provincia_,canton=canton_,distrito=distrito_,correo=correo_ WHERE usuario=usuario_;
 	commit;
 END
 $$;
@@ -587,6 +589,24 @@ AS $$
 	where producto.nombre = nombre_;
 $$;
 
+CREATE OR REPLACE FUNCTION GetProducto()
+RETURNS setof producto
+language sql
+AS
+$$
+	select nombre,precio,categoria,idComercio from public.producto
+	ORDER BY nombre ASC;
+$$;
+
+CREATE OR REPLACE FUNCTION GetProductoByIdComercio(
+	idComercio_ int
+)
+RETURNS setof producto
+language sql
+AS $$
+	select nombre,precio,categoria,idComercio from producto
+	where producto.idComercio = idComercio_;
+$$;
 
 CREATE OR REPLACE PROCEDURE UpdateProducto(
 	nombre_ VARCHAR,
@@ -688,26 +708,26 @@ CREATE OR REPLACE PROCEDURE AddPedido(
 	
 	idPedido_ int,
 	direccion_ VARCHAR,
-	finalizado_ BOOLEAN,
+	finalizado_ VARCHAR,
 	repartidor_ VARCHAR,
-	idCliente_ int
+	idCliente_ int,
+	comprobante_ VARCHAR
 )
 language plpgsql
 AS $$
 BEGIN
-	INSERT INTO pedido(idPedido,direccion,finalizado,repartidor,idCliente)
-	VALUES (idPedido_,direccion_,finalizado_,repartidor_,idCliente_);
+	INSERT INTO pedido(idPedido,direccion,finalizado,repartidor,idCliente,comprobante)
+	VALUES (idPedido_,direccion_,finalizado_,repartidor_,idCliente_,comprobante_);
 	commit;
 END
 $$;
-
 
 CREATE OR REPLACE FUNCTION GetPedido()
 RETURNS setof pedido
 language sql
 AS
 $$
-	select idPedido,direccion,finalizado,repartidor,idCliente from public.pedido
+	select idPedido,direccion,finalizado,repartidor,idCliente,comprobante from public.pedido
 	ORDER BY idPedido ASC;
 $$;
 
@@ -717,21 +737,35 @@ CREATE OR REPLACE FUNCTION GetPedidoByID(
 RETURNS setof pedido
 language sql
 AS $$
-	select idPedido,direccion,finalizado,repartidor,idCliente from pedido
+	select idPedido,direccion,finalizado,repartidor,idCliente,comprobante from pedido
 	where pedido.idPedido = idPedido_;
 $$;
+
+CREATE OR REPLACE FUNCTION GetPedidoByIDComercio(
+	idComercio_ int
+)
+RETURNS setof pedido
+language sql
+AS $$
+	select idPedido,direccion,finalizado,repartidor,idCliente,comprobante from pedido
+	Where exists
+	(select idComercio,idPedido from (producto_pedido join producto on producto_pedido.producto = producto.nombre) where idComercio=idComercio_ AND pedido.idPedido = idPedido );
+$$;
+
+select idComercio,idPedido from (producto_pedido join producto on producto_pedido.producto = producto.nombre) where idComercio=123
 
 CREATE OR REPLACE PROCEDURE UpdatePedido(
 	idPedido_ int,
 	direccion_ VARCHAR,
-	finalizado_ BOOLEAN,
+	finalizado_ VARCHAR,
 	repartidor_ VARCHAR,
-	idCliente_ int
+	idCliente_ int,
+	comprobante_ VARCHAR
 )
 language plpgsql
 AS $$
 BEGIN
-	UPDATE pedido SET direccion=direccion_,finalizado=finalizado_,repartidor=repartidor_,idCliente=idCliente_
+	UPDATE pedido SET direccion=direccion_,finalizado=finalizado_,repartidor=repartidor_,idCliente=idCliente_,comprobante=comprobante_
 	WHERE idPedido = idPedido_;
 	commit;
 END

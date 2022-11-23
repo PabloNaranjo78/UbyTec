@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Npgsql;
 using UbyTECAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,6 +10,7 @@ namespace UbyTECAPI.Controllers
     [ApiController]
     public class ProductoController : ControllerBase
     {
+        private NpgsqlConnection con = new(Connection.Connection.ConnectionString);
         private Producto producto = new();
         // GET: api/<ProductoController>
         [HttpGet]
@@ -32,6 +34,26 @@ namespace UbyTECAPI.Controllers
             try
             {
                 var entityList = producto.get($"'{nombre}'");
+                return Ok(entityList);
+            }
+            catch (Exception)
+            {
+                return BadRequest("No se logró conectar a la base de datos");
+            }
+        }
+
+
+        // GET api/<ProductoController>/5
+        [HttpGet("Comercio/{id}")]
+        public async Task<ActionResult<List<Producto>>> GetByComercio(int id)
+        {
+            try
+            {
+                con.Open();
+                NpgsqlCommand command = new($"SELECT {producto.getAtributes()} from GetProductoByIdComercio({id})", con);
+                NpgsqlDataReader rd = command.ExecuteReader();
+                List<Producto> entityList = producto.createEntityList(rd);
+
                 return Ok(entityList);
             }
             catch (Exception)

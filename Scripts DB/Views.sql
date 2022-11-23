@@ -4,7 +4,7 @@ SELECT comercio.nombre AS Afiliado, count(pedido.idPedido) AS Compras, SUM(produ
 FROM (((pedido JOIN producto_pedido  ON pedido.idPedido=producto_pedido.idPedido) 
 JOIN Producto ON producto=producto.nombre) 
 			   JOIN comercio ON producto.idComercio = comercio.idComercio )
-			   WHERE Pedido.finalizado = TRUE  GROUP BY comercio.idComercio
+			   WHERE Pedido.finalizado = 'Finalizado'  GROUP BY comercio.idComercio;
 
 
 CREATE VIEW Consolidado_Ventas
@@ -13,7 +13,7 @@ SELECT Cliente.nombre AS Cliente, comercio.nombre AS Afiliado, count(pedido.idPe
 FROM ((((pedido JOIN producto_pedido  ON pedido.idPedido=producto_pedido.idPedido) 
 JOIN Producto ON producto=producto.nombre) 
 			   JOIN comercio ON producto.idComercio = comercio.idComercio ) JOIN Cliente ON pedido.idCliente = Cliente.idCliente)
-			   WHERE Pedido.finalizado = TRUE GROUP BY Pedido.repartidor, Comercio.nombre, Cliente.nombre
+			   WHERE Pedido.finalizado = 'Finalizado' GROUP BY Pedido.repartidor, Comercio.nombre, Cliente.nombre
 			   ORDER BY Cliente.nombre ASC;
 			   
 

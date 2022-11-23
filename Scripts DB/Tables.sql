@@ -11,7 +11,8 @@ CREATE TABLE REPARTIDOR(
 	disponible BOOLEAN not null,
 	provincia VARCHAR(20) not null,
 	canton VARCHAR(20) not null,
-	distrito VARCHAR(20) not null
+	distrito VARCHAR(20) not null,
+	correo VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE EMPLEADO_TELEFONOS(
@@ -87,9 +88,10 @@ CREATE TABLE PRODUCTO_PEDIDO(
 CREATE TABLE PEDIDO(
 	idPedido int not null,
 	direccion VARCHAR(20) not null,
-	finalizado BOOLEAN not null,
+	finalizado VARCHAR(20) not null,
 	repartidor VARCHAR(20) not null,
-	idCliente int not null
+	idCliente int not null,
+	comprobante VARCHAR(40) not null,
 );
 
 

@@ -7,7 +7,7 @@ namespace UbyTECAPI.Models
 
         protected override string? atributes
         {
-            get => "usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito";
+            get => "usuario,pass,nombre,apellidos,disponible,provincia,canton,distrito,correo";
         }
 
         protected override string? entity
@@ -28,6 +28,7 @@ namespace UbyTECAPI.Models
         public string? provincia { get; set; }
         public string? canton { get; set; }
         public string? distrito { get; set; }
+        public string? correo { get; set; }
 
         protected override Repartidor createEntity(NpgsqlDataReader rd)
         {
@@ -40,12 +41,13 @@ namespace UbyTECAPI.Models
                 disponible = Boolean.Parse(rd["disponible"].ToString()),
                 provincia = rd["provincia"].ToString(),
                 canton = rd["canton"].ToString(),
-                distrito = rd["distrito"].ToString()
+                distrito = rd["distrito"].ToString(),
+                correo = rd["correo"].ToString()
             };
         }
         protected override string paramsToString()
         {
-            return $"'{usuario}','{pass}','{nombre}','{apellidos}','{disponible}','{provincia}','{canton}','{distrito}'";
+            return $"'{usuario}','{pass}','{nombre}','{apellidos}','{disponible}','{provincia}','{canton}','{distrito}','{correo}'";
         }
 
         protected override string putParams()

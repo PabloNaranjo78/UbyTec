@@ -126,10 +126,7 @@ namespace UbyTECAPI.Controllers
         }
     }
 
-    
-}
-
-public class VentasAfiliado
+    public class VentasAfiliado
     {
         public string? afiliado { get; set; }
         public int compras { get; set; }
@@ -161,4 +158,7 @@ public class VentasAfiliado
         public string? repartidor { get; set; }
         public int idCliente { get; set; }
     }
+
 }
+
+

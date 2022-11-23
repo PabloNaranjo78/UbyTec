@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Npgsql;
 using UbyTECAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,6 +10,7 @@ namespace UbyTECAPI.Controllers
     [ApiController]
     public class PedidoController : ControllerBase
     {
+        private NpgsqlConnection con = new(Connection.Connection.ConnectionString);
         private Pedido pedido = new();
         // GET: api/<PedidoController>
         [HttpGet]
@@ -40,6 +42,26 @@ namespace UbyTECAPI.Controllers
             }
         }
 
+        // GET api/<PedidoController>/5
+        [HttpGet("Comercio/{id}")]
+        public async Task<ActionResult<List<Pedido>>> GetByIDComercio(int id)
+        {
+            try
+            {
+                con.Open();
+                NpgsqlCommand command = new($"SELECT idPedido,direccion," +
+                    $"finalizado,repartidor,idCliente,comprobante FROM GetPedidoByIDComercio({id})", con);
+                NpgsqlDataReader rd = command.ExecuteReader();
+                List<Pedido> entityList = pedido.createEntityP(rd);
+                
+                return Ok(entityList);
+            }
+            catch (Exception)
+            {
+                return BadRequest("No se logró conectar a la base de datos");
+            }
+        }
+
         // POST api/<PedidoController>
         [HttpPost]
         public async Task<ActionResult<List<Pedido>>> Post(Pedido entity)
@@ -56,12 +78,20 @@ namespace UbyTECAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<List<Pedido>>> Put(Pedido entity)
         {
-            List<Pedido> entityList = new();
-            entityList.Add(entity);
+            con.Open();
+            NpgsqlCommand command = new($"select idComercio from (producto_pedido " +
+                $"join producto on producto_pedido.producto = producto.nombre) where idComercio={entity.idPedido}");
+            NpgsqlDataReader rd = command.ExecuteReader();
+            int idComercio = Convert.ToInt32(rd["idcomercio"]);
+            con.Close();
+            if (!(entity.finalizado == "Solicitado"))
+            {
 
-            var result = entity.put(entity);
-
-            return result ? Ok(entityList) : BadRequest($"No se ha logrado actualizar a {entity.idPedido}");
+                //Finalizar pedido
+                return Ok("");
+            }
+            //llama la de asignar
+            return Ok("");
         }
 
         // DELETE api/<PedidoController>/5

@@ -6,7 +6,7 @@ namespace UbyTECAPI.Models
     {
         protected override string? atributes
         {
-            get => "idPedido,direccion,finalizado,repartidor,idCliente";
+            get => "idPedido,direccion,finalizado,repartidor,idCliente,comprobante";
         }
         protected override string? entity
         {
@@ -18,9 +18,10 @@ namespace UbyTECAPI.Models
         }
         public int idPedido { get; set; }
         public string? direccion { get; set; }
-        public bool finalizado { get; set; }
+        public string? finalizado { get; set; }
         public string? repartidor { get; set; }
         public int idCliente { get; set; }
+        public string? comprobante { get; set; }
 
         protected override Pedido createEntity(NpgsqlDataReader rd)
         {
@@ -28,25 +29,31 @@ namespace UbyTECAPI.Models
             {
                 idPedido = Convert.ToInt32(rd["idPedido"]),
                 direccion = rd["direccion"].ToString(),
-                finalizado = Boolean.Parse(rd["finalizado"].ToString()),
+                finalizado = rd["finalizado"].ToString(),
                 repartidor = rd["repartidor"].ToString(),
-                idCliente = Convert.ToInt32(rd["idCliente"])
+                idCliente = Convert.ToInt32(rd["idCliente"]),
+                comprobante = rd["comprobante"].ToString(),
             };
         }
 
         protected override string paramsToString()
         {
-            return $"{idPedido},'{direccion}','{finalizado}','{repartidor}',{idCliente}";
+            return $"{idPedido},'{direccion}','{finalizado}','{repartidor}',{idCliente},'{comprobante}'";
         }
 
         protected override string putParams()
         {
-            return $"direccion='{direccion}',finalizado='{finalizado}',repartidor='{repartidor}',idCliente={idCliente}";
+            return $"direccion='{direccion}',finalizado='{finalizado}',repartidor='{repartidor}',idCliente={idCliente},comprobante='{comprobante}'";
         }
 
         protected override string getID()
         {
             return idPedido.ToString();
+        }
+
+        public List<Pedido> createEntityP(NpgsqlDataReader rd)
+        {
+            return createEntityList(rd);
         }
     }
 }

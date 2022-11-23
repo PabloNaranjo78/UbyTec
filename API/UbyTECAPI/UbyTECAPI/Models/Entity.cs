@@ -87,7 +87,7 @@ namespace UbyTECAPI.Models
         }
 
 
-        protected List<T> createEntityList(NpgsqlDataReader rd)
+        public List<T> createEntityList(NpgsqlDataReader rd)
         {
             List<T> entityList = new();
             while (rd.Read())
@@ -117,6 +117,11 @@ namespace UbyTECAPI.Models
         protected virtual string getID()
         {
             return getID();
+        }
+
+        public string getAtributes()
+        {
+            return atributes;
         }
 
     }
