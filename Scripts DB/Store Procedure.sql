@@ -408,6 +408,20 @@ $$
 	ORDER BY idComercio ASC;
 $$;
 
+
+CREATE OR REPLACE FUNCTION GetComercioCercanoACliente(
+	idCliente_ int
+)
+RETURNS setof comercio
+language SQL
+AS
+$$
+
+	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from Comercio 
+	where provincia = (Select provincia from Cliente where idCliente = idCliente_) AND solicitud='aceptada';
+
+$$;
+
 CREATE OR REPLACE FUNCTION GetComercioByID(
 	idComercio_ int
 )
