@@ -35,8 +35,7 @@ namespace UbyTECAPI.Controllers
             try
             {
                 con.Open();
-                NpgsqlCommand command = new($"SELECT idComercio,pass,tipo,nombre,correo,sinpe,solicitud," +
-                    $"provincia,canton,distrito FROM getsolicitudes()", con);
+                NpgsqlCommand command = new($"SELECT {comercio.getAtributes()} FROM getsolicitudes()", con);
                 NpgsqlDataReader rd = command.ExecuteReader();
                 List<Comercio> entityList = comercio.createEntityP(rd);
                 con.Close();
@@ -55,6 +54,25 @@ namespace UbyTECAPI.Controllers
             try
             {
                 var entityList = comercio.get(id.ToString());
+                return Ok(entityList);
+            }
+            catch (Exception)
+            {
+                return BadRequest("No se logró conectar a la base de datos");
+            }
+        }
+
+        // GET api/<ComercioController>/5
+        [HttpGet("Cercano/{id}")]
+        public async Task<ActionResult<List<Comercio>>> GetCercanos(int id)
+        {
+            try
+            {
+                con.Open();
+                NpgsqlCommand command = new($"SELECT {comercio.getAtributes()} FROM GetComercioCercanoACliente({id})", con);
+                NpgsqlDataReader rd = command.ExecuteReader();
+                List<Comercio> entityList = comercio.createEntityP(rd);
+                con.Close();
                 return Ok(entityList);
             }
             catch (Exception)
