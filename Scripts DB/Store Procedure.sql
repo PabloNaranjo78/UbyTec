@@ -122,6 +122,7 @@ BEGIN
 END
 $$;
 
+
 -- EMPLEADO TELEFONOS
 CREATE OR REPLACE PROCEDURE AddEmpleado_Telefonos(
 	idEmpleado_ int,
@@ -407,19 +408,6 @@ $$
 	ORDER BY idComercio ASC;
 $$;
 
-
-CREATE OR REPLACE FUNCTION GetComercioCercanoACliente(
-	idCliente_ int
-)
-RETURNS setof comercio
-language SQL
-AS
-$$
-
-	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from Comercio 
-	where provincia = (Select provincia from Cliente where idCliente = idCliente_);
-
-$$;
 CREATE OR REPLACE FUNCTION GetComercioByID(
 	idComercio_ int
 )
@@ -1018,12 +1006,13 @@ CREATE OR REPLACE PROCEDURE Distancia_Repartidores(
 )
 language plpgsql
 AS $$
-DECLARE rep repartidor:=(SELECT calcDistancia from calcDistancia(i.provincia,i.canton,i.distrito,provincia_,canton_,distrito_));
+--DECLARE rep repartidor:=(SELECT calcDistancia from calcDistancia(i.provincia,i.canton,i.distrito,provincia_,canton_,distrito_));
+--DECLARE rep repartidor:=(SELECT usuario from repartidor where repartidor.disponible=TRUE);
 
 declare i record;
 BEGIN
-	FOR i IN SELECT * FROM repartidor LOOP
-			INSERT INTO distancias_repartidores(usuario, distansia)
+	FOR i IN (SELECT * FROM getrepartidor() WHERE disponible = true) LOOP
+			INSERT INTO distancias_repartidores(usuario, distancia)
 			VALUES (i.usuario, (SELECT calcDistancia from calcDistancia(i.provincia,i.canton,i.distrito,provincia_,canton_,distrito_))); 
 		END LOOP;
 	commit;
@@ -1031,6 +1020,44 @@ END
 $$;
 
 
+
+--ASIGNA REPARTIDORES
+CREATE OR REPLACE PROCEDURE Asigna_Repartidor(
+	idComercio_ int,
+	idPedido_ int
+)
+language plpgsql
+AS $$
+	DECLARE provincia_ varchar = (SELECT Provincia FROM Comercio WHERE idComercio = idComercio_);
+	DECLARE canton_ varchar = (SELECT Canton FROM Comercio WHERE idComercio = idComercio_);
+	DECLARE distrito_ varchar = (SELECT Distrito FROM Comercio WHERE idComercio = idComercio_);
+BEGIN
+	DELETE FROM distancias_repartidores;
+	CALL Distancia_Repartidores(provincia_,canton_,distrito_);
+	UPDATE Pedido SET finalizado = 'En Curso', repartidor =(SELECT usuario FROM distancias_repartidores ORDER BY distancias_repartidores.distancia ASC LIMIT 1) WHERE idPedido=idPedido_;
+	UPDATE repartidor SET disponible = False WHERE usuario = (SELECT usuario FROM distancias_repartidores ORDER BY distancias_repartidores.distancia ASC LIMIT 1);
+	
+	commit;
+END
+$$;
+
+
+
+
+SELECT * from repartidor;
+SELECT * from getcomercio();
+SELECT * from getpedido();
+
+CALL Asigna_Repartidor(123, 3);
+
+
+DELETE FROM distancias_repartidores;
+
+SELECT usuario, min(distancia) FROM distancias_repartidores GROUP BY usuario, distancia;
+
+SELECT * FROM distancias_repartidores ORDER BY distancias_repartidores.distancia ASC LIMIT 1;
+
+CALL addrepartidor('pedri','123','PEDRO','Montero',True,'Guanacaste','Santa Cruz','Tempate')
 
 
 
