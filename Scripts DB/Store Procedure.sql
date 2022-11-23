@@ -1010,8 +1010,6 @@ $$;
 
 
 
-
-
 SELECT * from repartidor;
 SELECT * from getcomercio();
 SELECT * from getpedido();
