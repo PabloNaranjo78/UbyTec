@@ -12,11 +12,11 @@ namespace UbyTECAPI.Tools
             {
                 MailMessage mmsg = new MailMessage();
                 mmsg.To.Add(email);
-                mmsg.Subject = $"Contrasela UbyTEC para {tipo}";
+                mmsg.Subject = $"Contraseña UbyTEC para {tipo}";
                 mmsg.SubjectEncoding = System.Text.Encoding.UTF8;
 
                 mmsg.Body = $"<h1>Hola, {usuario} </h1>" +
-                    $"<h2>Su contaseña para {tipo} es {pass}</h2>";
+                    $"<h2>Su contraseña para {tipo} es {pass}</h2>";
                 mmsg.BodyEncoding = System.Text.Encoding.UTF8;
                 mmsg.IsBodyHtml = true;
                 mmsg.From = new MailAddress(Connection.Connection.email);
