@@ -48,7 +48,6 @@ export class NuevoPedidoComponent implements OnInit {
   }
 
   onEnviar(){
-    this.objeto.finalizado
     this.service.update(this.objeto).subscribe({
       next: (data) => {
         this.service.aviso("¡Has enviado el pedido de exitosamente!")

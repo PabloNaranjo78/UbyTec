@@ -68,7 +68,7 @@
         </div>
         <div class="modal-body mx-3">
             <div class="container my-4">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                <div *ngIf="!downloading; else wait" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
                     <div class="carousel-inner">
                         <div *ngFor="let foto of listaFotos; let i=index">
                             <div class="carousel-item active">
@@ -85,11 +85,14 @@
                       <span class="visually-hidden">Next</span>
                     </button>
                   </div>
+                <ng-template #wait>
+                  <h3>Cargando imágenes...</h3>
+                </ng-template>
                 <div class="mb-3">
                     <h2 class="text-center">Agregar nueva</h2>
                     <div class="row my-3">
                         <div class="col-3"><h4>Nombre</h4></div>
-                        <div class="col"><input type = "text" class="form-control" name = "foto" [(ngModel)] = "productoFoto.foto"></div>
+                        <div class="col"><input type = "text" class="form-control" name = "foto" [(ngModel)] = "productoFoto.foto" required></div>
                     </div>
                     <button (click)="uploadAndResize()" style="width:100%">Seleccionar una imagen</button>
                     <div class="row"  *ngIf="productoFoto.fotoData">

@@ -16,7 +16,7 @@ export class ProductosService extends ConexionService<ProductoInterface>{
     //api producto
   }
   getHomePage(): string {
-    return this.id+'/gestion/productos'
+    return this.id+'/gestion-productos'
   }
   getNombre(): string {
     return "Producto"

@@ -46,7 +46,7 @@ export class GestionProductosComponent implements OnInit {
 
   constructor(private rou:ActivatedRoute, private service: ProductosService) {
     this.id = this.rou.snapshot.params['id']
-    service.getList().subscribe({
+    service.get("Comercio", this.id).subscribe({
       next: (data) => {
         this.lista = data
       }

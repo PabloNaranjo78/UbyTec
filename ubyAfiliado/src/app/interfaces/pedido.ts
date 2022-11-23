@@ -1,9 +1,10 @@
 export interface PedidoInterface {
     idPedido: number;
     direccion: string;
-    finalizado: boolean;
+    finalizado: string;
     repartidor: string;
     idCliente:number;
+    comprobante:string
 }
 
 export interface ProductoPedidoInterface {
@@ -15,9 +16,10 @@ export interface ProductoPedidoInterface {
 export class Pedido implements PedidoInterface{
     idPedido!: number;
     direccion!: string;
-    finalizado!: boolean;
+    finalizado = "Solicitado";
     repartidor!: string;
     idCliente!: number;
+    comprobante!:string
 }
 
 class ProductoPedido implements ProductoPedidoInterface{

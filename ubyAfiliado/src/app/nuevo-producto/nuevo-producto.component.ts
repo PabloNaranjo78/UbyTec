@@ -16,6 +16,7 @@ export class NuevoProductoComponent implements OnInit {
   productoFoto:ProductoFotos = new ProductoFotos()
   base64:string="";
   loading:boolean=false;
+  downloading:boolean = false;
 
   constructor(private imageCompress:NgxImageCompressService, private service:ProductosService, private fotosService:ProductosFotosService,private rou:ActivatedRoute) { 
     this.objeto.idComercio = this.rou.snapshot.params['id']
@@ -70,28 +71,35 @@ export class NuevoProductoComponent implements OnInit {
     this.onGuardar(false)
     this.editMode = true
     console.log(this.objeto.nombre)
+    this.downloading = true
     this.fotosService.get(this.objeto.nombre).subscribe({
       next: (data) =>{
         console.log(data)
         this.listaFotos = data
+        this.downloading = false
       }
     })
   }
 
   onAddFoto(){
-    this.productoFoto.producto = this.objeto.nombre
-    console.log(this.productoFoto)
-    this.loading = true
-    this.fotosService.add(this.productoFoto).subscribe({
-      next: (data) =>{
-        this.fotosService.avisoSuccess("Añadido", "")
-        this.loading = false
-        window.location.reload()
-      }, error: (err) =>{
-        this.fotosService.avisoError(err.error)
-        this.loading = false
-      }
-    })
+    if (this.objeto.nombre = "" ){
+      this.productoFoto.producto = this.objeto.nombre
+      console.log(this.productoFoto)
+      this.loading = true
+      this.fotosService.add(this.productoFoto).subscribe({
+        next: (data) =>{
+          this.fotosService.avisoSuccess("Añadido", "")
+          this.loading = false
+          window.location.reload()
+        }, error: (err) =>{
+          this.fotosService.avisoError(err.error)
+          this.loading = false
+        }
+      })
+    }
+    else{
+      console.log("nombre no lleno")
+    }
 
   }
   onDeleteFoto(foto:ProductoFotos){

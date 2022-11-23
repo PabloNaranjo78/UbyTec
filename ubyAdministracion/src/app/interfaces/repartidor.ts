@@ -2,6 +2,7 @@ import { PersonalInterface } from "./genericas";
 
 export interface RepartidorInterface extends PersonalInterface{
     disponible: boolean;
+    correo:string
 }
 
 export class Repartidor implements RepartidorInterface{
@@ -13,4 +14,5 @@ export class Repartidor implements RepartidorInterface{
     provincia!: string;
     canton!: string;
     distrito!: string;
+    correo!:string
 }

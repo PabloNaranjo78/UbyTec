@@ -24,7 +24,8 @@ export class PedidosService extends ConexionService<PedidoInterface> {
 
     getAsInterface(): Gestion[]{
       this.listaG = []
-      this.getList().subscribe((data) =>{
+      console.log(this.id)
+      this.get("Comercio",this.id).subscribe((data) =>{
         for (let i =0; i<data.length;i++){
           this.service.get(data[i].idCliente).subscribe({
             next: (info) => {

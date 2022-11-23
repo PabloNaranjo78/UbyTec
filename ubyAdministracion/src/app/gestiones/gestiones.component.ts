@@ -10,6 +10,12 @@ import { RepartidoresService } from '../services/repartidores.service';
   templateUrl: './gestiones.component.html',
   styleUrls: ['./gestiones.component.css']
 })
+
+/** Clase Gestion Componente 
+ * Visualiza los objetos dependiendo del tipo proporcionado en la ruta 
+ * se escoje entre: Empleado, Repartidores, Afiliado, Solicitudes
+ * 
+ */
 export class GestionesComponent implements OnInit {
   reporte:boolean=false;
   Tipo:string="";

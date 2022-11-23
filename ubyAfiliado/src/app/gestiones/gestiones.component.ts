@@ -14,6 +14,7 @@ export class GestionesComponent implements OnInit {
   id:number = 0;
   constructor(private pedidoService:PedidosService, private route:Router, private rou:ActivatedRoute) {
     this.id = this.rou.snapshot.params['id']
+    this.pedidoService.id = this.id
     this.lista = pedidoService.getAsInterface()
    }
 
