@@ -29,7 +29,7 @@ throw new Error('Method not implemented.');
     this.aoth.get(this.id,this.password).subscribe({
       next:(data) => {
         if(data){
-          this.cookie.set("tokenAdministrador", this.id.toString(), 4, "/");
+          this.cookie.set("tokenAdministrador", this.id.toString());
           window.location.reload()
         }
       },

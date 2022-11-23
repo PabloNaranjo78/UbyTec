@@ -9,39 +9,40 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class HeaderComponent implements OnInit {
   logged:boolean = false
+  id!:string|number;
   constructor(private cookie:CookieService, private router:Router) {
     console.log(cookie.get("tokenAdministrador"));
     this.logged = !(cookie.get("tokenAdministrador")=="")
+    this.id = cookie.get("tokenAdministrador")
     console.log(this.logged)
   }
 
-recargar(Tipo:string){
-  this.router.navigate(['gestion/'+Tipo])
-  .then(() => {
-    window.location.reload();
-  });
+  recargar(Tipo:string){
+    this.router.navigate(['gestion/'+Tipo])
+    .then(() => {
+      window.location.reload();
+    });
 
-}
+  }
 
-  reloadComponent(self:boolean,urlToNavigateTo ?:string){
-    //skipLocationChange:true means dont update the url to / when navigating
-   console.log("Current route I am on:",this.router.url);
-   const url=self ? this.router.url :urlToNavigateTo;
-   this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
-     this.router.navigate([`/${url}`]).then(()=>{
-       console.log(`After navigation I am on:${this.router.url}`)
-     })
-   })
- }
+    reloadComponent(self:boolean,urlToNavigateTo ?:string){
+      //skipLocationChange:true means dont update the url to / when navigating
+    console.log("Current route I am on:",this.router.url);
+    const url=self ? this.router.url :urlToNavigateTo;
+    this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
+      this.router.navigate([`/${url}`]).then(()=>{
+        console.log(`After navigation I am on:${this.router.url}`)
+      })
+    })
+  }
 
- reloadPage(){
-   window.location.reload()
- }
- logout(){
-  this.cookie.delete("tokenAdministrador")
-  this.reloadPage()
-  console.log(this.cookie.get("tokenAdministrador"))
-}
+    reloadPage(){
+      window.location.reload()
+    }
+    logout(){
+      this.cookie.delete("tokenAdministrador")
+      this.reloadPage()
+    }
 
   ngOnInit(): void {
   }
