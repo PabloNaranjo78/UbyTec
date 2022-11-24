@@ -53,7 +53,7 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró agregar el feedback")
 ;
             }
-            return Ok(comercioRechazado);
+            return Ok(new List<ComercioRechazado>() { comercioRechazado });
         }
 
 
