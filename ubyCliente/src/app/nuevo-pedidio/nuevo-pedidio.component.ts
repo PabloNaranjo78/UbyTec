@@ -8,7 +8,7 @@ import { Pedido } from '../interfaces/pedido';
 })
 export class NuevoPedidioComponent implements OnInit {
 
- 
+
   pedido:Pedido = new Pedido();
   editMode:boolean = false;
 
@@ -16,7 +16,7 @@ export class NuevoPedidioComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   onGuardar(){
     console.log("Guardar");
   }

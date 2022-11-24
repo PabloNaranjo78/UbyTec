@@ -41,11 +41,16 @@ export class NuevoAfiliadoComponent implements OnInit {
           this.service.avisoError(err.error)}
       });
   }
-
+  /**
+   * Guarda los cambios realizados en el objeto
+   * @param recargar
+   */
   onGuardar(recargar?:boolean){
     this.service.onActualizar(this.objeto,this.objeto.nombre, recargar)
   }
-
+  /**
+   * Funcion que llama a telefonosService para obtener los telefonos del comercio
+   */
   onTelefonos(){
     this.onGuardar(false)
     this.telefonosService.get(this.objeto.idComercio).subscribe({
@@ -58,21 +63,31 @@ export class NuevoAfiliadoComponent implements OnInit {
         this.service.avisoError(err.error)}
     })
   }
+  /**
+   * Funcion que redirige a la pagina de gestion de comercios
+   */
   onAdministrador(){
     this.onGuardar(false)
     this.route.navigate([this.objeto.idComercio+'/nuevo-admin'])
   }
-
+  /**
+   * Funcion que llama a telefonosService para agregar un nuevo telefono al comercio
+   */
   onAddTelefono(){
     this.telefonoNuevo.id = this.objeto.idComercio
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
   }
-
+  /**
+   * Funcion que eliminar un telefono del comercio
+   * @param tel
+   */
   onDeleteTelefono(tel:TelefonoInterface){
     this.telefonosService.onEliminar(tel.id, tel.telefono)
   }
 
-  //Provincias,cantones,distritos
+  /**
+   * Funcion que obtiene las provincia de comercios
+   */
   getProvincia(){
     this.direccionesService.get("Provincia").subscribe({
       next: (data) => {
@@ -80,7 +95,9 @@ export class NuevoAfiliadoComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * Funcion que obtiene los cantones de comercios
+   */
   getCanton(){
     this.direccionesService.get(this.objeto.provincia).subscribe({
       next: (data) => {
@@ -88,7 +105,9 @@ export class NuevoAfiliadoComponent implements OnInit {
       }
   })
 }
-
+  /**
+   * Funcion que obtiene los distritos de comercios
+   */
   getDistrito(){
     this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
       next: (data) => {

@@ -15,10 +15,10 @@ export class SolicitudComponent implements OnInit {
   objeto:Comercio = new Comercio();
   listaTelefonos:Telefono[]=[]
   telefonoNuevo:Telefono = new Telefono();
-  adminComercio:AdminComercio = new AdminComercio(); 
+  adminComercio:AdminComercio = new AdminComercio();
   solicitudEnviada:boolean=false;
 
-  constructor(private service:ComerciosService, private adminService: ComerciosAdminService,private route:Router, private rou:ActivatedRoute) { 
+  constructor(private service:ComerciosService, private adminService: ComerciosAdminService,private route:Router, private rou:ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -57,12 +57,15 @@ export class SolicitudComponent implements OnInit {
         error: (err) =>{
           this.service.avisoError(err.error)}
       });
-      
+
   }
+  /**
+   * Funcion auxiliar para enviar la solicitud
+   */
   aux(){
     this.service.update(this.objeto).subscribe({
       /*Mensaje emergente de exito*/
-      
+
       next: (data) => {
         window.location.reload()
       },
@@ -73,17 +76,23 @@ export class SolicitudComponent implements OnInit {
         }
     })
   }
-
+  /**
+   * Funcion para enviar la solicitud
+   */
   onEnviar(){
     this.objeto.solicitud = "en proceso"
     this.aux()
   }
-
+  /**
+   * Funcion que cancela la solicitud
+   */
   onCancelar(){
     this.objeto.solicitud = "no enviada"
     this.aux()
   }
-
+  /**
+   * Funcion que rechaza la solicitud
+   */
   onRechazar(){
     this.objeto.solicitud = "rechazada"
     this.service.onActualizar(this.objeto,this.objeto.nombre)

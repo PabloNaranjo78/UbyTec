@@ -58,7 +58,10 @@ export class NuevoEmpleadoComponent implements OnInit {
 
 
   }
-
+  /**
+   * Funcion que realiza la accion de guardar
+   * @param recargar recarga la pagina
+   */
   onGuardar(recargar?:boolean){
     if (this.editMode){
       this.service.onActualizar(this.objeto,this.objeto.nombre, recargar)
@@ -66,18 +69,25 @@ export class NuevoEmpleadoComponent implements OnInit {
       this.service.onNuevo(this.objeto,this.objeto.nombre, recargar)
     }
   }
-
+  /**
+   * Funcion que agrega un telefono a la lista de telefonos
+   */
   onAddTelefono(){
     this.telefonoNuevo.id = this.objeto.idEmpleado
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
     this.route.navigate(['actualizar/empleados/'+this.objeto.idEmpleado])
   }
-
+  /**
+   * Funcion que elimina un telefono de la lista de telefonos
+   * @param tel
+   */
   onDeleteTelefono(tel:TelefonoInterface){
     this.telefonosService.onEliminar(this.objeto.idEmpleado, tel.telefono)
     //mcsjhfnjednf
   }
-
+  /**
+   * Funcion que actualiza la lista de telefonos
+   */
   onTelefonos(){
     if (!this.editMode){
       this.onGuardar(false)
@@ -93,16 +103,22 @@ export class NuevoEmpleadoComponent implements OnInit {
         this.service.avisoError(err.error)}
     })
   }
-
+  /**
+   * Funcion que cancela el servicio
+   */
   onCancelar(){
     this.service.onCancelar()
   }
-
+  /**
+   * Funcion que elimina un empleado
+   */
   onEliminar(){
     this.service.onEliminar(this.objeto.idEmpleado)
   }
 
-  //Provincias,cantones,distritos
+  /**
+   * Funcion que obtiene las provincias
+   */
   getProvincia(){
     this.direccionesService.get("Provincia").subscribe({
       next: (data) => {
@@ -110,7 +126,9 @@ export class NuevoEmpleadoComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * Funcion que obtiene los cantones
+   */
   getCanton(){
     this.direccionesService.get(this.objeto.provincia).subscribe({
       next: (data) => {
@@ -118,7 +136,9 @@ export class NuevoEmpleadoComponent implements OnInit {
       }
   })
 }
-
+  /**
+   * Funcion que obtiene los distritos
+   */
   getDistrito(){
     this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
       next: (data) => {
@@ -126,11 +146,15 @@ export class NuevoEmpleadoComponent implements OnInit {
       }
   })
 }
-
+  /**
+   * Funcion que obtiene el canton
+   */
 selected(){
   this.getCanton();
 }
-
+  /**
+   * Funcion que obtiene el distrito
+   */
 selectedcant(){
   this.getDistrito();
 }

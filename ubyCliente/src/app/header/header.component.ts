@@ -24,7 +24,11 @@ export class HeaderComponent implements OnInit {
     });
 
   }
-
+  /**
+   * Redirige a la gestion indicada y recarga la pagina
+   * @param self
+   * @param urlToNavigateTo
+   */
     reloadComponent(self:boolean,urlToNavigateTo ?:string){
       //skipLocationChange:true means dont update the url to / when navigating
     console.log("Current route I am on:",this.router.url);
@@ -35,11 +39,15 @@ export class HeaderComponent implements OnInit {
       })
     })
   }
-
+  /**
+   * Recarga la pagina
+   */
   reloadPage(){
     window.location.reload()
   }
-
+  /**
+   * Borra cookie de vista especifica y recarga pagina
+   */
   logout(){
     this.cookie.delete("tokenCliente")
     this.reloadPage()

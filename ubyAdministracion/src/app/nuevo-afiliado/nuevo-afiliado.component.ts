@@ -49,7 +49,9 @@ export class NuevoAfiliadoComponent implements OnInit {
       });
     }
   }
-
+    /*
+    Guardar datos en la pagina cuando se presiona el boton de guardar
+     */
   onGuardar(recargar?:boolean){
     if (this.editMode){
       this.service.onActualizar(this.objeto,this.objeto.nombre, recargar)
@@ -57,15 +59,21 @@ export class NuevoAfiliadoComponent implements OnInit {
       this.service.onNuevo(this.objeto,this.objeto.nombre, recargar)
     }
   }
-
+  /*
+  Funcion para cancelar la edicion de un objeto
+   */
   onCancelar(){
     this.service.onCancelar()
   }
-
+  /*
+  Funcion para eliminar un objeto
+   */
   onEliminar(){
     this.service.onEliminar(this.objeto.idComercio)
   }
-
+  /*
+  Funcion para cargar, editar y eliminar telefonos
+   */
   onTelefonos(){
     if (!this.editMode){
       this.onGuardar(false)
@@ -81,22 +89,32 @@ export class NuevoAfiliadoComponent implements OnInit {
         this.service.avisoError(err.error)}
     })
   }
+
+  /*
+  Funcion que redirige a administracion de afiliados
+   */
   onAdministrador(){
     this.onGuardar(false)
     this.route.navigate(['actualizar/administrador/' + this.objeto.idComercio])
   }
-
+  /*
+  Funcion para agregar un nuevo telefono
+   */
   onAddTelefono(){
     this.telefonoNuevo.id = this.objeto.idComercio
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
     this.route.navigate(['actualizar/afiliados/'+this.objeto.idComercio])
   }
-
+  /*
+  Funcion para eliminar un telefono
+   */
   onDeleteTelefono(tel:TelefonoInterface){
     this.telefonosService.onEliminar(tel.id, tel.telefono)
   }
 
-  //Provincias,cantones,distritos
+  /*
+  Funcion para cargar las provincias
+   */
   getProvincia(){
     this.direccionesService.get("Provincia").subscribe({
       next: (data) => {
@@ -104,7 +122,9 @@ export class NuevoAfiliadoComponent implements OnInit {
       }
     })
   }
-
+  /*
+  Funcion para cargar los cantones
+   */
   getCanton(){
     this.direccionesService.get(this.objeto.provincia).subscribe({
       next: (data) => {
@@ -112,7 +132,9 @@ export class NuevoAfiliadoComponent implements OnInit {
       }
   })
 }
-
+  /*
+  Funcion para cargar los distritos
+   */
   getDistrito(){
     this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
       next: (data) => {
@@ -120,11 +142,15 @@ export class NuevoAfiliadoComponent implements OnInit {
       }
   })
 }
-
+/*
+Funcion para llamar el get canton
+ */
 selected(){
   this.getCanton();
 }
-
+/*
+Funcion para llamar el get distrito
+ */
 selectedcant(){
   this.getDistrito();
 }

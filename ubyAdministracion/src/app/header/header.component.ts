@@ -16,7 +16,11 @@ export class HeaderComponent implements OnInit {
     this.id = cookie.get("tokenAdministrador")
     console.log(this.logged)
   }
-
+    /*
+    * Redirige a la gestion indicada
+    * @param: Tipo:string
+    * return: void
+     */
   recargar(Tipo:string){
     this.router.navigate(['gestion/'+Tipo])
     .then(() => {
@@ -35,10 +39,11 @@ export class HeaderComponent implements OnInit {
       })
     })
   }
-
+  /*Recarga la página*/
     reloadPage(){
       window.location.reload()
     }
+    /*Borra cookie de vista especifica y recarga pagina*/
     logout(){
       this.cookie.delete("tokenAdministrador")
       this.reloadPage()

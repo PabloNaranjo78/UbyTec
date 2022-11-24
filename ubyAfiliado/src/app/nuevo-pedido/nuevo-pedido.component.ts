@@ -11,7 +11,7 @@ import { ProductosPedidoService, ProductosService } from '../services/productos.
   styleUrls: ['./nuevo-pedido.component.css']
 })
 export class NuevoPedidoComponent implements OnInit {
-  
+
   objeto:Pedido = new Pedido()
   listaProductos:ProductoPedido[] = []
   total:number = 0;
@@ -46,7 +46,9 @@ export class NuevoPedidoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  /**
+   * Funcion que actualiza el objeto
+   */
   onEnviar(){
     this.service.update(this.objeto).subscribe({
       next: (data) => {
@@ -55,6 +57,9 @@ export class NuevoPedidoComponent implements OnInit {
       }
     })
   }
+  /**
+   * Funcion que cancela la edicion de objeto
+   */
   onCancelar(){
     this.service.onCancelar()
   }

@@ -44,6 +44,9 @@ export class ReportesComponent implements OnInit {
       }
     })
   }
+  /**
+   * Funcio que crea el primer reporte
+   */
   sumreporte1(){
     let añadido:boolean = false;
     for(let i = 0; i < this.reporte1.length; i++){
@@ -59,6 +62,9 @@ export class ReportesComponent implements OnInit {
     }
   }
 }
+/**
+ * Funcion que crea el segundo reporte
+ */
   sumreporte2(){
     for (let i = 0; i < this.reporte2.length; i++) {
         this.totalcomprasS += this.reporte2[i].compras;
@@ -82,7 +88,10 @@ class Cliente{
     this.cliente = cliente;
     this.añadirdetalle(detalle)
   }
-
+  /**
+   * Funcion que añade los detalles de cada cliente al reporte
+   * @param detalle
+   */
   añadirdetalle(detalle:Reporte){
     this.totalcomprasT += detalle.compras;
     this.MontoTotalT += detalle.monto_total;

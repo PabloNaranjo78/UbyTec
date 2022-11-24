@@ -41,11 +41,16 @@ export class MiPerfilComponent implements OnInit {
           this.clientesservice.avisoError(err.error)}
       });
   }
-
+  /**
+   * Guarda los cambios realizados en el perfil del cliente
+   * @param recargar
+   */
   onGuardar(recargar?:boolean){
     this.clientesservice.onActualizar(this.objeto,this.objeto.nombre, recargar)
   }
-
+  /**
+   * Funcion que llama a telefonos
+   */
   onTelefonos(){
     this.onGuardar(false)
     this.telefonosService.get(this.objeto.idCliente).subscribe({
@@ -58,17 +63,24 @@ export class MiPerfilComponent implements OnInit {
         this.clientesservice.avisoError(err.error)}
     })
   }
-
+  /**
+   * Funcion que agrega un telefono a la lista de telefonos
+   */
   onAddTelefono(){
     this.telefonoNuevo.id = this.objeto.idCliente
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
   }
-
+  /**
+   * Funcion que elimina un telefono de la lista de telefonos
+   * @param tel
+   */
   onDeleteTelefono(tel:TelefonoInterface){
     this.telefonosService.onEliminar(tel.id, tel.telefono)
   }
 
-  //Provincias,cantones,distritos
+  /**
+   * Funcion que obtiene las provincias
+   */
   getProvincia(){
     this.direccionesService.get("Provincia").subscribe({
       next: (data) => {
@@ -76,7 +88,9 @@ export class MiPerfilComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * Funcion que obtiene los cantones
+   */
   getCanton(){
     this.direccionesService.get(this.objeto.provincia).subscribe({
       next: (data) => {
@@ -84,7 +98,9 @@ export class MiPerfilComponent implements OnInit {
       }
   })
 }
-
+  /**
+   * Funcion que obtiene los distritos
+   */
   getDistrito(){
     this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
       next: (data) => {

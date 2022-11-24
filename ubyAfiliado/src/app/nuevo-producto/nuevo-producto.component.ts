@@ -18,7 +18,7 @@ export class NuevoProductoComponent implements OnInit {
   loading:boolean=false;
   downloading:boolean = false;
 
-  constructor(private imageCompress:NgxImageCompressService, private service:ProductosService, private fotosService:ProductosFotosService,private rou:ActivatedRoute) { 
+  constructor(private imageCompress:NgxImageCompressService, private service:ProductosService, private fotosService:ProductosFotosService,private rou:ActivatedRoute) {
     this.objeto.idComercio = this.rou.snapshot.params['id']
     this.service.id = this.rou.snapshot.params['id']
     this.fotosService.id = this.rou.snapshot.params['id']
@@ -37,6 +37,9 @@ export class NuevoProductoComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  /**
+   * Funcion que comprime la imagen
+   */
   uploadAndResize() {
     this.productoFoto.producto = this.objeto.nombre
     return this.imageCompress.uploadFile().then(({image, orientation}: UploadResponse) => {
@@ -50,7 +53,10 @@ export class NuevoProductoComponent implements OnInit {
         });
     });
 }
-
+  /**
+   * Funcion que guarda el producto y recarga pagina
+   * @param recargar
+   */
   onGuardar(recargar?:boolean){
     console.log(this.objeto)
     if (this.editMode){
@@ -59,14 +65,21 @@ export class NuevoProductoComponent implements OnInit {
       this.service.onNuevo(this.objeto,this.objeto.nombre, recargar)
     }
   }
+  /**
+   * Funcion que cancela edicion de objeto
+   */
   onCancelar(){
     this.service.onCancelar()
   }
-
+  /**
+   * Funcion que elimina el producto
+   */
   onEliminar(){
     this.service.onEliminar(this.objeto.nombre)
   }
-
+  /**
+   * Funcion que sube la foto
+   */
   onFotos(){
     this.onGuardar(false)
     this.editMode = true
@@ -80,7 +93,9 @@ export class NuevoProductoComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * FUncion que guarda la foto
+   */
   onAddFoto(){
     if (this.objeto.nombre = "" ){
       this.productoFoto.producto = this.objeto.nombre
@@ -102,10 +117,13 @@ export class NuevoProductoComponent implements OnInit {
     }
 
   }
+  /**
+   *  Funcion que elimina la foto
+   */
   onDeleteFoto(foto:ProductoFotos){
 
   }
 
-  
+
 
 }

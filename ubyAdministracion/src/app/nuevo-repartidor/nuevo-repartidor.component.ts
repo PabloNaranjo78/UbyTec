@@ -53,7 +53,9 @@ export class NuevoRepartidorComponent implements OnInit {
       });
     }
   }
-
+  /**
+   * Metodo que se encarga de guardar un nuevo repartidor
+   */
   onGuardar(){
     if (this.editMode){
       this.service.onActualizar(this.objeto,this.objeto.nombre)
@@ -61,17 +63,23 @@ export class NuevoRepartidorComponent implements OnInit {
       this.service.onNuevo(this.objeto,this.objeto.nombre)
     }
   }
-
+  /**
+   * Metodo que se encarga de regresar a la pagina anterior
+   */
   onCancelar(){
     this.service.onCancelar()
   }
-
+  /**
+   * Funcion que elimua un repartidor
+   */
   onEliminar(){
     this.service.onEliminar(this.objeto.usuario)
   }
 
 
-
+  /**
+   * Metodo que se encarga de obtener los telefonos de un repartidor
+   */
   onTelefonos(){
     this.telefonosService.get(this.objeto.usuario).subscribe({
       /*Mensaje emergente de exito*/
@@ -83,18 +91,24 @@ export class NuevoRepartidorComponent implements OnInit {
         this.service.avisoError(err.error)}
     })
   }
-
+  /**
+   * Metodo que se encarga de agregar un nuevo telefono
+   */
   onAddTelefono(){
     this.telefonoNuevo.id = this.objeto.usuario
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
   }
-
+  /**
+   * Metodo que se encarga de eliminar un telefono
+   * @param tel
+   */
   onDeleteTelefono(tel:TelefonoInterface){
     this.telefonosService.onEliminar(tel.id, tel.telefono)
 
   }
-
-  //Provincias,cantones,distritos
+  /**
+   * Metodo que se encarga de obtener las provincias
+   */
   getProvincia(){
     this.direccionesService.get("Provincia").subscribe({
       next: (data) => {
@@ -102,7 +116,9 @@ export class NuevoRepartidorComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * Metodo que se encarga de obtener los cantones
+   */
   getCanton(){
     this.direccionesService.get(this.objeto.provincia).subscribe({
       next: (data) => {
@@ -110,7 +126,9 @@ export class NuevoRepartidorComponent implements OnInit {
       }
   })
 }
-
+  /**
+   * Metodo que se encarga de obtener los distritos
+   */
   getDistrito(){
     this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
       next: (data) => {
@@ -118,11 +136,15 @@ export class NuevoRepartidorComponent implements OnInit {
       }
   })
 }
-
+  /**
+   * Metodo que se encarga de obtener los datos de canton un repartidor
+   */
 selected(){
   this.getCanton();
 }
-
+  /*
+   * Metodo que se encarga de obtener los datos de distrito de un repartidor
+   */
 selectedcant(){
   this.getDistrito();
 }

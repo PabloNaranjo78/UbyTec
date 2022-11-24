@@ -11,10 +11,10 @@ import { RepartidoresService } from '../services/repartidores.service';
   styleUrls: ['./gestiones.component.css']
 })
 
-/** Clase Gestion Componente 
- * Visualiza los objetos dependiendo del tipo proporcionado en la ruta 
+/** Clase Gestion Componente
+ * Visualiza los objetos dependiendo del tipo proporcionado en la ruta
  * se escoje entre: Empleado, Repartidores, Afiliado, Solicitudes
- * 
+ *
  */
 export class GestionesComponent implements OnInit {
   reporte:boolean=false;
@@ -64,7 +64,10 @@ export class GestionesComponent implements OnInit {
     }
     return sub;
   }
-
+  /*Completa la lista de gestiones con los datos de la base de datos
+  valor:number
+  return: list
+  */
   completar(valor:number){
     var sub=[1,2,3,4,5];
     if(valor+5 > this.lista.length){

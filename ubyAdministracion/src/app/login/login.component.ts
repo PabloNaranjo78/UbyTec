@@ -25,6 +25,9 @@ throw new Error('Method not implemented.');
   ngOnInit(): void {
   }
 
+  /*
+  Al hacer click en el boton de login, se envia una peticion al servidor para verificar si el usuario existe
+   */
   onSubmit(){
     this.aoth.get(this.id,this.password).subscribe({
       next:(data) => {

@@ -29,7 +29,7 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
   constructor(private service:ComerciosAdminService, private telefonosService:TelefonosService, private direccionesService:DireccionesService, private rou:ActivatedRoute) {
     this.telefonosService.url = "AdminComerTelefonos";
     this.telefonosService.nombre = "Telefono de Administrador";
-    this.telefonosService.homePage = this.rou.snapshot.params['id'] +"/nuevo-admin" 
+    this.telefonosService.homePage = this.rou.snapshot.params['id'] +"/nuevo-admin"
     this.idComercio = this.rou.snapshot.params['id']
     this.service.id = this.rou.snapshot.params['id']
     this.objeto.idComercio = this.rou.snapshot.params['id']
@@ -56,7 +56,10 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+  /**
+   * Guarda el objeto en la base de datos
+   * @param recargar
+   */
   onGuardar(recargar?:boolean){
     console.log(this.objeto)
     if (this.editMode){
@@ -65,15 +68,22 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
       this.service.onNuevo(this.objeto,this.objeto.nombre, recargar)
     }
   }
+  /**
+   * Funcion que cancela la edicion del objeto
+   */
   onCancelar(){
     this.service.onCancelar()
   }
-
+  /**
+   * Funcion que elimina el objeto
+   */
   onEliminar(){
     this.service.onEliminar(this.objeto.idAdmin)
   }
 
-
+  /**
+   * Funcion que llama a telefonosService para obtener los telefonos del objeto
+   */
   onTelefonos(){
     if (!this.editMode){
       this.onGuardar(false)
@@ -89,17 +99,24 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
         this.service.avisoError(err.error)}
     })
   }
-
+  /**
+   * Funcion que agrega un telefono al objeto
+   */
   onAddTelefono(){
     this.telefonoNuevo.id = this.objeto.idAdmin
     this.telefonosService.onNuevo(this.telefonoNuevo,this.telefonoNuevo.telefono)
   }
-
+  /**
+   * Funcion que elimina un telefono del objeto
+   * @param tel
+   */
   onDeleteTelefono(tel:TelefonoInterface){
     this.telefonosService.onEliminar(tel.id, tel.telefono)
   }
 
-  //Provincias,cantones,distritos
+  /**
+   * Funcion que obtiene las provincias de la base de datos
+   */
   getProvincia(){
     this.direccionesService.get("Provincia").subscribe({
       next: (data) => {
@@ -107,7 +124,9 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * Funcion que obtiene los cantones de la base de datos
+   */
   getCanton(){
     this.direccionesService.get(this.objeto.provincia).subscribe({
       next: (data) => {
@@ -115,7 +134,9 @@ export class NuevoAfiliadoAdminComponent implements OnInit {
       }
   })
 }
-
+  /**
+   * Funcion que obtiene los distritos de la base de datos
+   */
   getDistrito(){
     this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
       next: (data) => {

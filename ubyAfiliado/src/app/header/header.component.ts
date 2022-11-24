@@ -17,7 +17,10 @@ export class HeaderComponent implements OnInit {
     this.id = cookie.get("tokenAfiliado")
     console.log(this.id)
   }
-
+  /**
+   * Redirige a la gestion indicada
+   * @param Tipo
+   */
   recargar(Tipo:string){
     this.router.navigate([this.id+'/gestion/'+Tipo])
     .then(() => {
@@ -25,7 +28,11 @@ export class HeaderComponent implements OnInit {
     });
 
   }
-
+  /**
+   * Recarga la página con componentes actualizados
+   * @param self
+   * @param urlToNavigateTo
+   */
     reloadComponent(self:boolean,urlToNavigateTo ?:string){
       //skipLocationChange:true means dont update the url to / when navigating
      console.log("Current route I am on:",this.router.url);
@@ -36,11 +43,15 @@ export class HeaderComponent implements OnInit {
        })
      })
    }
-
+   /**
+    * Recarga la página
+    */
    reloadPage(){
      window.location.reload()
    }
-
+   /**
+    * Borra cookie de vista especifica y recarga pagina
+    */
    logout(){
       this.cookie.delete("tokenAfiliado")
       this.reloadPage()

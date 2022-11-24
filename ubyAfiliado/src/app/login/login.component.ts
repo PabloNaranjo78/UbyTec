@@ -26,7 +26,9 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
+  /**
+   * Al hacer click en el boton de login, se envia una peticion al servidor para verificar si el usuario existe
+   */
   onSubmit(){
     this.aoth.get(this.id,this.password).subscribe({
       next:(data) => {
@@ -49,7 +51,9 @@ export class LoginComponent implements OnInit {
   onCancelar(){
     console.log("Cancelar")
   }
-
+  /**
+   * Funcion que se ejecuta al hacer click en el boton de crear cuenta
+   */
   onGuardar(){
     this.objeto.canton="";
     this.objeto.provincia="";

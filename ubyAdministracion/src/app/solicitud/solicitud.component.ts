@@ -15,9 +15,9 @@ export class SolicitudComponent implements OnInit {
   editMode:boolean = true;
   listaTelefonos:Telefono[]=[]
   telefonoNuevo:Telefono = new Telefono();
-  adminComercio:AdminComercio = new AdminComercio(); 
+  adminComercio:AdminComercio = new AdminComercio();
 
-  constructor(private service:ComerciosService, private adminService: ComerciosAdminService,private route:Router, private rou:ActivatedRoute) { 
+  constructor(private service:ComerciosService, private adminService: ComerciosAdminService,private route:Router, private rou:ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -58,13 +58,15 @@ export class SolicitudComponent implements OnInit {
       });
     }
   }
-
+  /**
+   * Funcion que se encarga de enviar la solicitud de registro de un comercio
+   */
   onGuardar(){
     if (this.editMode){
       this.objeto.solicitud = "aceptada"
       this.service.onActualizar(this.objeto,this.objeto.nombre)
     } else {
-      
+
       this.adminComercio.idComercio = this.objeto.idComercio
       console.log(this.adminComercio)
       this.service.add(this.objeto).subscribe({
@@ -80,19 +82,23 @@ export class SolicitudComponent implements OnInit {
               this.adminService.avisoError(err.error)
               }
           })
-        }, 
+        },
         error: (err) => {
           this.service.avisoError(err.error)
         }
       })
-      
+
     }
   }
-
+  /**
+   * Funcion que devuelve a la pagina anterior
+   */
   onCancelar(){
     this.service.onCancelar()
   }
-
+  /**
+   * Funcion que rechaza solicitud de registro de un comercio
+   */
   onRechazar(){
     this.objeto.solicitud = "rechazada"
     this.service.onActualizar(this.objeto,this.objeto.nombre)

@@ -29,7 +29,9 @@ export class CarritoComponent implements OnInit {
       }
     })
    }
-
+   /**
+    * Funcion que agrega un producto al carrito
+    */
    onAddProducto(){
     console.log(this.temporal)
     let pro = new ProductoPedido()
@@ -38,7 +40,9 @@ export class CarritoComponent implements OnInit {
     pro.producto = this.temporal.producto
     this.productos.push(pro)
    }
-
+   /**
+    * Funcion que solicita un pedido
+    */
    onSolicitarPedido(){
     let pedido = new Pedido()
     pedido.idCliente = this.rou.snapshot.params['id']
@@ -50,18 +54,23 @@ export class CarritoComponent implements OnInit {
     this.pedidoService.add(pedido).subscribe({
       next: (data) => {
         console.log(data)
-      } 
+      }
     })
-
+    /**
+     * Funcion que recibe el total de productos
+     */
    }
    getTotal(){
     let total = 0;
     for(let i=0; i < this.productos.length; i++){
-      total= total + this.productos[i].precio * this.productos[i].cantidad 
+      total= total + this.productos[i].precio * this.productos[i].cantidad
     }
     return total
    }
-
+   /**
+    * Funcion que selecciona un producto
+    * @param obj
+    */
    onSelectProducto(obj:Producto){
     this.objeto = obj
     this.downloading = true

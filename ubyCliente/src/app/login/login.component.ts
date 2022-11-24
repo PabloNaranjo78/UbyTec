@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   editMode:boolean = false;
   idCliente!:number
   pass!:string
-  
+
   provincias:string[] = [];
   cantones:string[] = [];
   distritos:string[] = [];
@@ -33,6 +33,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  /**
+   * Al hacer click en el boton de login, se envia una peticion al servidor para verificar si el usuario existe
+   */
   onSubmit(){
     this.aoth.get(this.idCliente,this.pass).subscribe({
       next:(data) => {
@@ -55,13 +58,17 @@ export class LoginComponent implements OnInit {
   onCancelar(){
     console.log("Cancelar")
   }
-
+  /**
+   * Funcion que se ejecuta al hacer click en el boton de crear cuenta
+   */
   onGuardar(){
     console.log(this.objeto)
     this.ClientesService.onNuevo(this.objeto, this.objeto.nombre)
   }
 
-  //Provincias,cantones,distritos
+  /**
+   * Funcion que llama las provincias de la base de datos
+   */
   getProvincia(){
     this.direccionesService.get("Provincia").subscribe({
       next: (data) => {
@@ -69,7 +76,9 @@ export class LoginComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * Funcion que llama los cantones de la base de datos
+   */
   getCanton(){
     this.direccionesService.get(this.objeto.provincia).subscribe({
       next: (data) => {
@@ -77,7 +86,9 @@ export class LoginComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * Funcion que llama los distritos de la base de datos
+   */
   getDistrito(){
     this.direccionesService.get(this.objeto.provincia,this.objeto.canton).subscribe({
       next: (data) => {
@@ -89,7 +100,7 @@ export class LoginComponent implements OnInit {
   selected(){
     this.getCanton()
   }
-  
+
   selectedcant(){
     this.getDistrito();
   }
