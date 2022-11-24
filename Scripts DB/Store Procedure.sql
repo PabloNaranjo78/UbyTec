@@ -416,7 +416,6 @@ RETURNS setof comercio
 language SQL
 AS
 $$
-
 	select idComercio,pass,tipo,nombre,correo,sinpe,solicitud,provincia,canton,distrito from Comercio 
 	where provincia = (Select provincia from Cliente where idCliente = idCliente_) AND solicitud='aceptada';
 
@@ -717,13 +716,12 @@ $$;
 
 
 --PEDIDO
-
 CREATE OR REPLACE PROCEDURE AddPedido(
 	
 	idPedido_ int,
 	direccion_ VARCHAR,
 	finalizado_ VARCHAR,
-	repartidor_ VARCHAR,
+	repartidor VARCHAR,
 	idCliente_ int,
 	comprobante_ VARCHAR
 )
@@ -731,10 +729,12 @@ language plpgsql
 AS $$
 BEGIN
 	INSERT INTO pedido(idPedido,direccion,finalizado,repartidor,idCliente,comprobante)
-	VALUES (idPedido_,direccion_,finalizado_,repartidor_,idCliente_,comprobante_);
+	VALUES (idPedido_,direccion_,finalizado_,null,idCliente_,comprobante_);
 	commit;
 END
 $$;
+
+
 
 CREATE OR REPLACE FUNCTION GetPedido()
 RETURNS setof pedido
@@ -745,6 +745,17 @@ $$
 	ORDER BY idPedido ASC;
 $$;
 
+CREATE OR REPLACE FUNCTION GetPedidoEnCurso(
+	idCliente_ int
+)
+returns setof pedido
+language sql
+AS
+$$
+	select idPedido,direccion,finalizado,repartidor,idCliente,comprobante from pedido
+	where finalizado = 'En Curso' AND idCliente = idCliente_;
+$$;
+select * from GetPedidoEnCurso(333)
 CREATE OR REPLACE FUNCTION GetPedidoByID(
 	idPedido_ int
 )
@@ -1056,53 +1067,13 @@ END
 $$;
 
 
---FINALIZA PEDIDO
-CREATE OR REPLACE PROCEDURE Finaliza_Pedido(
-	idPedido_ int
-)
-language plpgsql
-AS $$
-BEGIN	
-	UPDATE Pedido SET finalizado = 'Finalizado' WHERE idPedido=idPedido_;
-	UPDATE repartidor SET disponible = True WHERE usuario = (SELECT repartidor FROM Pedido WHERE idPedido = idPedido_);
-	commit;
-END
-$$;
 
 
---PEDIDOS CLIENTE
-
-CREATE OR REPLACE FUNCTION Pedidos_Ciente(
-	idCliente_ int
-)
-RETURNS table (Comercio VARCHAR, Total int)
-language sql
-AS $$
-	SELECT  comercio.nombre AS Afiliado, ((producto.precio * producto_pedido.cantidad)+((producto.precio * producto_pedido.cantidad) * 0.05)) AS Total
-FROM ((((pedido JOIN producto_pedido  ON pedido.idPedido=producto_pedido.idPedido) 
-JOIN Producto ON producto_pedido.producto=producto.nombre) 
-			   JOIN comercio ON producto.idComercio = comercio.idComercio ) JOIN Cliente ON pedido.idCliente = Cliente.idCliente)
-			   WHERE Pedido.finalizado = 'Finalizado' AND Pedido.idCliente = idCliente_ GROUP BY Pedido.repartidor, Comercio.nombre, Cliente.nombre, producto.precio, producto_pedido.cantidad;
-$$;
-
-
-
-
-
-Select * FROM Pedidos_Ciente(5555);
-
-
-
-SELECT * from comercio;
-SELECT * from producto;
 SELECT * from repartidor;
 SELECT * from getcomercio();
 SELECT * from getpedido();
 
-SELECT * from cliente;
-
 CALL Asigna_Repartidor(123, 3);
-CALL Finaliza_Pedido(3);
 
 
 DELETE FROM distancias_repartidores;
