@@ -16,7 +16,7 @@ export interface TelefonoInterface{
     telefono:number
 }
 
-class Telefono implements TelefonoInterface{
+export class Telefono implements TelefonoInterface{
     id!: string | number
     telefono!: number
 
