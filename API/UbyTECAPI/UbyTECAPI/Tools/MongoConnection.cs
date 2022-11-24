@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using UbyTECAPI.Connection;
+using UbyTECAPI.Models;
 
 namespace UbyTECAPI.Tools
 {
@@ -94,6 +95,77 @@ namespace UbyTECAPI.Tools
 
         }
 
+        public static string getFeedback(int idPedido)
+        {
+            var database = client.GetDatabase("UbyTEC");
+
+            var feedbackDB = database.GetCollection<MongoFeedback>("feedback");
+            try
+            {
+                MongoFeedback listResult = feedbackDB.Find(d => d.idPedido == idPedido).ToList().First();
+                return listResult.comentario;
+            }
+            catch (Exception)
+            {
+                return "Sin comentario";
+            }
+        }
+
+        public static bool addFeedback(MongoFeedback mongoFB)
+        {
+            try
+            {
+                var database = client.GetDatabase("UbyTEC");
+
+                var feedBK = database.GetCollection<MongoFeedback>("feedback");
+
+                feedBK.InsertOne(mongoFB);
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+        }
+
+        public static MongoComercioRechazado getRechazado(int idComercio)
+        {
+            var database = client.GetDatabase("UbyTEC");
+
+            var rechazadosBD = database.GetCollection<MongoComercioRechazado>("comercios-rechazados");
+            try
+            {
+                MongoComercioRechazado listResult = rechazadosBD.Find(d => d.idComercio == idComercio).ToList().First();
+                return listResult;
+            }
+            catch (Exception)
+            {
+                return new MongoComercioRechazado() { comentario = "Sin comentario" , idComercio = idComercio};
+            }
+        }
+
+        public static bool addRechazado(MongoComercioRechazado mongoR)
+        {
+            try
+            {
+                var database = client.GetDatabase("UbyTEC");
+
+                var rechazadoDB = database.GetCollection<MongoComercioRechazado>("comercios-rechazados");
+
+                rechazadoDB.InsertOne(mongoR);
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+        }
 
     }
 
@@ -114,5 +186,23 @@ namespace UbyTECAPI.Tools
         public string? nombreImagen { get; set; }
         public string? producto { get; set; }
         public string? thumbnails { get; set; }
+    }
+
+    public class MongoFeedback
+    {
+        [BsonId]
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string? Id { get; set; }
+        public int idPedido { get; set; }
+        public string? comentario { get; set; }
+    }
+
+    public class MongoComercioRechazado
+    {
+        [BsonId]
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+        public string? Id { get; set; }
+        public int idComercio { get; set; }
+        public string? comentario { get; set; }
     }
 }

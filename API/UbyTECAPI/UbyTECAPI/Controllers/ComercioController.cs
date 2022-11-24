@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver.Core.Operations;
 using Npgsql;
 using System;
 using UbyTECAPI.Models;
@@ -28,6 +29,34 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
+
+        // GET: api/<ComercioController>
+        [HttpGet("Razon/{id}")]
+        public async Task<ActionResult<List<ComercioRechazado>>> GetRechazados(int id)
+        {
+            var result = MongoConnection.getRechazado(id);
+
+            return Ok(new List<ComercioRechazado>() { new ComercioRechazado{
+                idComercio = result.idComercio,
+                comentario = result.comentario
+            } });
+
+        }
+
+
+        [HttpPost("Razon")]
+        public async Task<ActionResult<List<ComercioRechazado>>> PostRechazados(ComercioRechazado comercioRechazado)
+        {
+            var result = MongoConnection.addRechazado(new MongoComercioRechazado { comentario = comercioRechazado.comentario, idComercio = comercioRechazado.idComercio });
+            if (!result)
+            {
+                return BadRequest("No se logró agregar el feedback")
+;
+            }
+            return Ok(comercioRechazado);
+        }
+
+
 
         [HttpGet("solicitudes")]
         public async Task<ActionResult<List<Comercio>>> GetSolicitudes()

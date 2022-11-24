@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using UbyTECAPI.Models;
+using UbyTECAPI.Tools;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,10 +51,44 @@ namespace UbyTECAPI.Controllers
             {
                 con.Open();
                 NpgsqlCommand command = new($"SELECT idPedido,direccion," +
-                    $"finalizado,repartidor,idCliente,comprobante FROM GetPedidoByIDComercio({id})", con);
+                    $"finalizado,repartidor,idCliente,comprobante FROM GetPedidoByIDComercio({id}) where finalizado='Solicitado'", con);
                 NpgsqlDataReader rd = command.ExecuteReader();
                 List<Pedido> entityList = pedido.createEntityP(rd);
-                
+
+                return Ok(entityList);
+            }
+            catch (Exception)
+            {
+                return BadRequest("No se logró conectar a la base de datos");
+            }
+        }
+
+        // GET api/<PedidoController>/5
+        [HttpGet("Recientes/{id}")]
+        public async Task<ActionResult<List<PedidosCliente>>> GetPedidosRecientes(int id)
+        {
+            try
+            {
+                con.Open();
+                NpgsqlCommand command = new($"Select comercio,total,idPedido from Pedidos_Ciente({id})", con);
+                NpgsqlDataReader rd = command.ExecuteReader();
+                List<PedidosCliente> entityList = new();
+
+                while (rd.Read())
+                {
+                    entityList.Add(new PedidosCliente
+                    {
+                        comercio = rd["comercio"].ToString(),
+                        total = Convert.ToInt32(rd["total"]),
+                        idPedido = Convert.ToInt32(rd["idPedido"])
+                    });
+                }
+
+                foreach (var item in entityList)
+                {
+                    item.feedback = MongoConnection.getFeedback(item.idPedido);
+                }
+
                 return Ok(entityList);
             }
             catch (Exception)
@@ -86,9 +121,9 @@ namespace UbyTECAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Pedido>> Post(Pedido entity)
         {
-            
+
             con.Open();
-            NpgsqlCommand command = new($"select getNewIDPedido from getNewIDPedido()",con);
+            NpgsqlCommand command = new($"select getNewIDPedido from getNewIDPedido()", con);
             NpgsqlDataReader rd = command.ExecuteReader();
             rd.Read();
 
@@ -97,10 +132,27 @@ namespace UbyTECAPI.Controllers
             entity.idPedido = newIdPedido;
             entity.repartidor = null;
 
-            var result = entity.post(entity);  
+            var result = entity.post(entity);
 
 
             return result ? Ok(entity) : BadRequest($"No se ha logrado agregar a {entity.idPedido}");
+        }
+
+        // POST api/<PedidoController>
+        [HttpPost("Recientes")]
+        public async Task<ActionResult<Pedido>> PostFeedBack(PedidosCliente entity)
+        {
+            var result = MongoConnection.addFeedback(new MongoFeedback()
+            {
+                idPedido = entity.idPedido,
+                comentario = entity.feedback
+            });
+
+            if (!result)
+            {
+                return BadRequest("No se logró agregar el feedback");
+            }
+            return Ok(entity);
         }
 
         // PUT api/<PedidoController>/5
@@ -109,27 +161,46 @@ namespace UbyTECAPI.Controllers
         {
             con.Open();
             NpgsqlCommand command = new($"select idComercio from (producto_pedido " +
-                $"join producto on producto_pedido.producto = producto.nombre) where idComercio={entity.idPedido}");
+                $"join producto on producto_pedido.producto = producto.nombre) where idPedido={entity.idPedido}", con);
             NpgsqlDataReader rd = command.ExecuteReader();
             rd.Read();
-            int idComercio = Convert.ToInt32(rd["idcomercio"]);
-            rd.Read();
+            Console.Write("---------------");
+            int idComercio;
+            try
+            {
+                idComercio = Convert.ToInt32(rd[0]);
+            }
+            catch (Exception)
+            {
+                return BadRequest("No se encontró un comercio relacionado");
+            }
+
+
+            Console.Write(idComercio);
             con.Close();
-            if (!(entity.finalizado == "Solicitado"))
+
+            if (entity.finalizado == "Solicitado")
             {
                 con.Open();
-                NpgsqlCommand command2 = new($"CALL Finaliza_Pedido({entity.idPedido})");
+                Console.WriteLine($"{idComercio},{entity.idPedido}");
+                NpgsqlCommand command3 = new($"CALL Asigna_Repartidor({idComercio},{entity.idPedido})", con);
+                command3.ExecuteNonQuery();
+                con.Close();
+                //llama la de asignar
+                return Ok(new Pedido());
+            }
+            else
+            if (entity.finalizado == "En Curso")
+            {
+                con.Open();
+                NpgsqlCommand command2 = new($"CALL Finaliza_Pedido({entity.idPedido})", con);
                 command2.ExecuteNonQuery();
                 con.Close();
                 //Finalizar pedido
-                return Ok("Pedido finalizado");
+                return Ok(new Pedido());
             }
-            con.Open();
-            NpgsqlCommand command3 = new($"CALL Asigna_Repartidor({idComercio},{entity.idPedido})");
-            command.ExecuteNonQuery();
-            con.Close();
-            //llama la de asignar
-            return Ok("Pedido Asignado");
+            return BadRequest("Esto no debería salir");
+
         }
 
         // DELETE api/<PedidoController>/5
