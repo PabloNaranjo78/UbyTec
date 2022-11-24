@@ -15,7 +15,7 @@
                 <div class="row mt-4 right"><label for = "apellidos" class="form-label">Apellidos</label></div>
 
                 <div class="row mt-4 right"><label for = "usuario" class="form-label">Usuario</label></div>
-                
+
                 <div class="row mt-4 right"><label for = "correo" class="form-label">Correo</label></div>
 
               </div>
@@ -93,7 +93,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Teléfonos de Usuario</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Teléfonos de Repartidor</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body mx-3">
@@ -114,10 +114,10 @@
             <div class="row my-3">
               <div *ngFor="let tel of listaTelefonos; let i=index">
                 <div class="row mt-4 style">
+                  <div class="col-2"><button type="submit" data-bs-dismiss="modal" (click) = onDeleteTelefono(tel) class="btn btn-outline-primary"> Eliminar </button></div>
                   <div class="col-2"></div>
-                  <div class="col-2"><button type="submit" data-bs-dismiss="modal" (click) = onDeleteTelefono(tel) class="btn btn-outline-primary"> D </button></div>
                   <div class="col-4 gy-2" >Teléfono {{i+1}}:</div>
-                  <div class="col gy-2">{{tel.telefono}}               </div>
+                  <div class="col gy-2">{{tel.telefono}}</div>
                   <div class="col-2"></div>
                 </div>
               </div>
