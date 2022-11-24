@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { ComprasComponent } from './compras/compras.component';
 import { CarritoComponent } from './carrito/carrito.component';
+import { PedidoCursoComponent } from './pedido-curso/pedido-curso.component';
 
 @NgModule({
     declarations: [
@@ -21,8 +22,9 @@ import { CarritoComponent } from './carrito/carrito.component';
         NuevoProductoPedidoComponent,
         HeaderComponent,
         MiPerfilComponent,
+        CarritoComponent,
         ComprasComponent,
-        CarritoComponent
+        PedidoCursoComponent
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -32,9 +34,10 @@ import { CarritoComponent } from './carrito/carrito.component';
             { path: "login", component: LoginComponent },
             { path: "nuevo/pedido", component: NuevoPedidioComponent, canActivate: [VigilanteGuard] },
             { path: "nuevo/productopedido", component: NuevoProductoPedidoComponent, canActivate: [VigilanteGuard] },
-            { path: ":id/comprar", component: ComprasComponent, canActivate: [VigilanteGuard] },
+            { path: ":id/comprar", component:ComprasComponent, canActivate: [VigilanteGuard] },
             { path: ":id/comprar/:comercio", component: CarritoComponent, canActivate: [VigilanteGuard] },
             { path: ":id/mi-perfil", component: MiPerfilComponent, canActivate: [VigilanteGuard] },
+            { path: ":id/en-curso", component: PedidoCursoComponent, canActivate: [VigilanteGuard] }
         ]),
         FormsModule,
         HttpClientModule

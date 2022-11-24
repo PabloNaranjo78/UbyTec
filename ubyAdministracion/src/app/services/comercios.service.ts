@@ -86,3 +86,22 @@ export class ComerciosAdminService extends ConexionService<AdminComercio>{
     super(httpClient, route);
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ComerciosRechazadoService extends ConexionService<{idComercio:number, comentario:string}>{
+
+  getResourceURL(): string {
+    return "/Comercio/Razon"
+  }
+  getHomePage(): string {
+    return ""
+  }
+  getNombre(): string {
+    return "Comercio"
+  }
+  constructor(protected override httpClient: HttpClient, protected override route:Router) {
+    super(httpClient, route);
+  }
+}

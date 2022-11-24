@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdminComercio, AdminComercioInterface, Comercio } from '../interfaces/comercio';
 import { Telefono } from '../interfaces/genericas';
-import { ComerciosAdminService, ComerciosService } from '../services/comercios.service';
+import { ComerciosAdminService, ComerciosRechazadoService, ComerciosService } from '../services/comercios.service';
 
 @Component({
   selector: 'app-solicitud',
@@ -17,8 +17,9 @@ export class SolicitudComponent implements OnInit {
   telefonoNuevo:Telefono = new Telefono();
   adminComercio:AdminComercio = new AdminComercio();
   solicitudEnviada:boolean=false;
+  razon=""
 
-  constructor(private service:ComerciosService, private adminService: ComerciosAdminService,private route:Router, private rou:ActivatedRoute) {
+  constructor(private service:ComerciosService, private razonService:ComerciosRechazadoService, private adminService: ComerciosAdminService,private route:Router, private rou:ActivatedRoute) { 
   }
 
   ngOnInit(): void {
@@ -51,6 +52,13 @@ export class SolicitudComponent implements OnInit {
           this.objeto = data[0];
           if(this.objeto.solicitud=="en proceso" || this.objeto.solicitud=="aceptada"){
             this.solicitudEnviada=true;
+          }
+          if (this.objeto.solicitud=="rechazada"){
+            this.razonService.get(this.objeto.idComercio).subscribe({
+              next: (data) => {
+                this.razon = data[0].comentario
+              }
+            })
           }
         },
         /*Mensaje emergente de error*/
@@ -103,6 +111,6 @@ export class SolicitudComponent implements OnInit {
         message: input.value}
         );
     }
-
+    this.service.aviso("Pedido completado Exitosamente, ¡Gracias por tu compra!")
   }
 }
