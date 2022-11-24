@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using UbyTECAPI.Models;
+using UbyTECAPI.Tools;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +13,7 @@ namespace UbyTECAPI.Controllers
     {
         private NpgsqlConnection con = new(Connection.Connection.ConnectionString);
         private Producto producto = new();
+        
         // GET: api/<ProductoController>
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> Get()
@@ -45,16 +47,27 @@ namespace UbyTECAPI.Controllers
 
         // GET api/<ProductoController>/5
         [HttpGet("Comercio/{id}")]
-        public async Task<ActionResult<List<Producto>>> GetByComercio(int id)
+        public async Task<ActionResult<List<ProductoThumbnail>>> GetByComercio(int id)
         {
+            
             try
             {
                 con.Open();
                 NpgsqlCommand command = new($"SELECT {producto.getAtributes()} from GetProductoByIdComercio({id})", con);
                 NpgsqlDataReader rd = command.ExecuteReader();
-                List<Producto> entityList = producto.createEntityList(rd);
+                List<Producto> entity = producto.createEntityList(rd);
 
-                return Ok(entityList);
+                List<ProductoThumbnail> productoThumbnailsList = new();
+
+                foreach (var item in entity)
+                {
+                    productoThumbnailsList.Add(new ProductoThumbnail(item)
+                    {
+                        data = MongoConnection.getThumbnails(item.nombre).thumbnails
+                    });
+                }
+
+                return Ok(productoThumbnailsList);
             }
             catch (Exception)
             {
@@ -96,4 +109,5 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado eliminar a {nombre}");
         }
     }
+
 }
