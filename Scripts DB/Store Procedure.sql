@@ -734,7 +734,12 @@ BEGIN
 END
 $$;
 
-
+CREATE OR REPLACE FUNCTION getNewIDPedido()
+RETURNS INT
+language sql
+AS $$
+	select Max(idPedido)+1 from pedido;
+$$;
 
 CREATE OR REPLACE FUNCTION GetPedido()
 RETURNS setof pedido
