@@ -1042,13 +1042,53 @@ END
 $$;
 
 
+--FINALIZA PEDIDO
+CREATE OR REPLACE PROCEDURE Finaliza_Pedido(
+	idPedido_ int
+)
+language plpgsql
+AS $$
+BEGIN	
+	UPDATE Pedido SET finalizado = 'Finalizado' WHERE idPedido=idPedido_;
+	UPDATE repartidor SET disponible = True WHERE usuario = (SELECT repartidor FROM Pedido WHERE idPedido = idPedido_);
+	commit;
+END
+$$;
 
 
+--PEDIDOS CLIENTE
+
+CREATE OR REPLACE FUNCTION Pedidos_Ciente(
+	idCliente_ int
+)
+RETURNS table (Comercio VARCHAR, Total int)
+language sql
+AS $$
+	SELECT  comercio.nombre AS Afiliado, ((producto.precio * producto_pedido.cantidad)+((producto.precio * producto_pedido.cantidad) * 0.05)) AS Total
+FROM ((((pedido JOIN producto_pedido  ON pedido.idPedido=producto_pedido.idPedido) 
+JOIN Producto ON producto_pedido.producto=producto.nombre) 
+			   JOIN comercio ON producto.idComercio = comercio.idComercio ) JOIN Cliente ON pedido.idCliente = Cliente.idCliente)
+			   WHERE Pedido.finalizado = 'Finalizado' AND Pedido.idCliente = idCliente_ GROUP BY Pedido.repartidor, Comercio.nombre, Cliente.nombre, producto.precio, producto_pedido.cantidad;
+$$;
+
+
+
+
+
+Select * FROM Pedidos_Ciente(5555);
+
+
+
+SELECT * from comercio;
+SELECT * from producto;
 SELECT * from repartidor;
 SELECT * from getcomercio();
 SELECT * from getpedido();
 
+SELECT * from cliente;
+
 CALL Asigna_Repartidor(123, 3);
+CALL Finaliza_Pedido(3);
 
 
 DELETE FROM distancias_repartidores;
