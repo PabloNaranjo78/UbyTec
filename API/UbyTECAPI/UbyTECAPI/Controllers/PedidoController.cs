@@ -84,7 +84,7 @@ namespace UbyTECAPI.Controllers
 
         // POST api/<PedidoController>
         [HttpPost]
-        public async Task<ActionResult<List<Pedido>>> Post(Pedido entity)
+        public async Task<ActionResult<Pedido>> Post(Pedido entity)
         {
             
             con.Open();
@@ -96,15 +96,11 @@ namespace UbyTECAPI.Controllers
 
             entity.idPedido = newIdPedido;
             entity.repartidor = null;
-            List<Pedido> pedidoList = new()
-            {
-                entity
-            };
 
             var result = entity.post(entity);  
 
 
-            return result ? Ok(pedidoList) : BadRequest($"No se ha logrado agregar a {entity.idPedido}");
+            return result ? Ok(entity) : BadRequest($"No se ha logrado agregar a {entity.idPedido}");
         }
 
         // PUT api/<PedidoController>/5
@@ -115,17 +111,25 @@ namespace UbyTECAPI.Controllers
             NpgsqlCommand command = new($"select idComercio from (producto_pedido " +
                 $"join producto on producto_pedido.producto = producto.nombre) where idComercio={entity.idPedido}");
             NpgsqlDataReader rd = command.ExecuteReader();
+            rd.Read();
             int idComercio = Convert.ToInt32(rd["idcomercio"]);
             rd.Read();
             con.Close();
             if (!(entity.finalizado == "Solicitado"))
             {
-
+                con.Open();
+                NpgsqlCommand command2 = new($"CALL Finaliza_Pedido({entity.idPedido})");
+                command2.ExecuteNonQuery();
+                con.Close();
                 //Finalizar pedido
-                return Ok("");
+                return Ok("Pedido finalizado");
             }
+            con.Open();
+            NpgsqlCommand command3 = new($"CALL Asigna_Repartidor({idComercio},{entity.idPedido})");
+            command.ExecuteNonQuery();
+            con.Close();
             //llama la de asignar
-            return Ok("");
+            return Ok("Pedido Asignado");
         }
 
         // DELETE api/<PedidoController>/5
