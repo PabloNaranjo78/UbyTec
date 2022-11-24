@@ -782,7 +782,14 @@ AS $$
 	(select idComercio,idPedido from (producto_pedido join producto on producto_pedido.producto = producto.nombre) where idComercio=idComercio_ AND pedido.idPedido = idPedido );
 $$;
 
-select idComercio,idPedido from (producto_pedido join producto on producto_pedido.producto = producto.nombre) where idComercio=123
+CREATE OR REPLACE FUNCTION GetPedidoByIDCliente(
+	idCliente_ int
+) RETURNS SETOF pedido
+LANGUAGE SQL
+AS $$
+	select idPedido,direccion,finalizado,repartidor,idCliente,comprobante 
+	from pedido where idCliente = idCliente_ AND finalizado = 'En Curso';
+$$;
 
 CREATE OR REPLACE PROCEDURE UpdatePedido(
 	idPedido_ int,
