@@ -62,16 +62,49 @@ namespace UbyTECAPI.Controllers
             }
         }
 
+        // GET api/<PedidoController>/5
+        [HttpGet("Cliente/{id}")]
+        public async Task<ActionResult<List<Pedido>>> GetByIDCliente(int id)
+        {
+            try
+            {
+                con.Open();
+                NpgsqlCommand command = new($"SELECT idPedido,direccion," +
+                    $"finalizado,repartidor,idCliente,comprobante FROM GetPedidoByIDCliente({id})", con);
+                NpgsqlDataReader rd = command.ExecuteReader();
+                List<Pedido> entityList = pedido.createEntityP(rd);
+
+                return Ok(entityList);
+            }
+            catch (Exception)
+            {
+                return BadRequest("No se logró conectar a la base de datos");
+            }
+        }
+
         // POST api/<PedidoController>
         [HttpPost]
         public async Task<ActionResult<List<Pedido>>> Post(Pedido entity)
         {
-            List<Pedido> entityList = new();
-            entityList.Add(entity);
+            
+            con.Open();
+            NpgsqlCommand command = new($"select getNewIDPedido from getNewIDPedido()",con);
+            NpgsqlDataReader rd = command.ExecuteReader();
+            rd.Read();
 
-            var result = entity.post(entity);
+            var newIdPedido = Convert.ToInt32(rd["getNewIDPedido"]);
 
-            return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.idPedido}");
+            entity.idPedido = newIdPedido;
+            entity.repartidor = null;
+            List<Pedido> pedidoList = new()
+            {
+                entity
+            };
+
+            var result = entity.post(entity);  
+
+
+            return result ? Ok(pedidoList) : BadRequest($"No se ha logrado agregar a {entity.idPedido}");
         }
 
         // PUT api/<PedidoController>/5
@@ -83,6 +116,7 @@ namespace UbyTECAPI.Controllers
                 $"join producto on producto_pedido.producto = producto.nombre) where idComercio={entity.idPedido}");
             NpgsqlDataReader rd = command.ExecuteReader();
             int idComercio = Convert.ToInt32(rd["idcomercio"]);
+            rd.Read();
             con.Close();
             if (!(entity.finalizado == "Solicitado"))
             {
