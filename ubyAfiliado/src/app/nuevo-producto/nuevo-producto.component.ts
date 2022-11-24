@@ -88,6 +88,7 @@ export class NuevoProductoComponent implements OnInit {
     this.fotosService.get(this.objeto.nombre).subscribe({
       next: (data) =>{
         console.log(data)
+        
         this.listaFotos = data
         this.downloading = false
       }
@@ -97,7 +98,7 @@ export class NuevoProductoComponent implements OnInit {
    * FUncion que guarda la foto
    */
   onAddFoto(){
-    if (this.objeto.nombre = "" ){
+    if (this.productoFoto.foto != undefined && this.productoFoto.fotoData != undefined){
       this.productoFoto.producto = this.objeto.nombre
       console.log(this.productoFoto)
       this.loading = true
@@ -123,7 +124,4 @@ export class NuevoProductoComponent implements OnInit {
   onDeleteFoto(foto:ProductoFotos){
 
   }
-
-
-
 }

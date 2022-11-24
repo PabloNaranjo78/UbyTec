@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Comercio } from '../interfaces/comercio';
 import { Pedido } from '../interfaces/pedido';
 import { ComerciosService } from '../services/comercios.service';
-import { PedidosService } from '../services/pedidos.service';
+import { PedidosRecientesService, PedidosService } from '../services/pedidos.service';
 
 @Component({
   selector: 'app-compras',
@@ -14,16 +14,16 @@ export class ComprasComponent implements OnInit {
   lista:Comercio[]=[]
   id!:number|string;
   
-  comprasRecientes:Pedido[]=[]
+  comprasRecientes:{comercio:string, total:number, feedback?:string}[]=[]
 
-  constructor(private rou:ActivatedRoute, private service: ComerciosService, private pedidosService:PedidosService) {
+  constructor(private rou:ActivatedRoute, private service: ComerciosService, private pedidosService:PedidosRecientesService) {
     this.id = this.rou.snapshot.params['id']
-    service.getList().subscribe({
+    service.get("Cercano", this.id).subscribe({
       next: (data) => {
         this.lista = data
       }
     })
-    pedidosService.getList().subscribe({
+    pedidosService.get(this.id).subscribe({
       next: (data) => {
         for (let i = 0; i<data.length; i++){
           if (this.comprasRecientes.length<11){

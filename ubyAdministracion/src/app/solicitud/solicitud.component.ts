@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdminComercio, AdminComercioInterface, Comercio } from '../interfaces/comercio';
 import { Telefono } from '../interfaces/genericas';
-import { ComerciosAdminService, ComerciosService } from '../services/comercios.service';
+import { ComerciosAdminService, ComerciosRechazadoService, ComerciosService } from '../services/comercios.service';
 
 @Component({
   selector: 'app-solicitud',
@@ -17,7 +17,7 @@ export class SolicitudComponent implements OnInit {
   telefonoNuevo:Telefono = new Telefono();
   adminComercio:AdminComercio = new AdminComercio();
 
-  constructor(private service:ComerciosService, private adminService: ComerciosAdminService,private route:Router, private rou:ActivatedRoute) {
+  constructor(private service:ComerciosService, private adminService: ComerciosAdminService,private route:Router,private comerciosRechazadosSservice:ComerciosRechazadoService, private rou:ActivatedRoute) { 
   }
 
   ngOnInit(): void {
@@ -104,10 +104,15 @@ export class SolicitudComponent implements OnInit {
     this.service.onActualizar(this.objeto,this.objeto.nombre)
     const input = document.getElementById('message') as HTMLInputElement | null;
     if (input != null) {
-      console.log(
-        {id: this.objeto.idComercio,
-        message: input.value}
-        );
+      this.comerciosRechazadosSservice.add({
+        idComercio:this.objeto.idComercio,
+        comentario:input.value
+      }).subscribe({
+        next: (data) =>{
+          console.log(data)
+          console.log("añadido")
+        }
+      })
     }
 
   }

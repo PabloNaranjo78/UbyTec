@@ -11,7 +11,7 @@
                         <div class="container gy-1">
                             {{objeto.tipo}}
                             <div class="row m t-1"><h2>{{objeto.nombre}}</h2></div>
-                            <button type="submit" [routerLink]="['',id,'comprar',objeto.idComercio]" class="btn btn-outline-primary"> Ver </button>
+                            <button type="submit" [routerLink]="['',id,'comprar',objeto.idComercio]" class="btn btn-outline-primary"> COMPRAR </button>
                         </div>
                     </div>
                 </ng-template>
@@ -34,9 +34,9 @@
                         <div class="col mb-4">
                             <div class="container3 left">
                                 <div class="row" style="margin-left: 4%;">
-                                    {{i+1}}. {{compra.idCliente}} <br>
-                                    Total: {{compra.idPedido}} <br>
-                                    Repartidor: {{compra.repartidor}}
+                                    {{i+1}}. {{compra.comercio}} <br>
+                                    Total: ₡{{compra.total}} <br>
+                                    Comentario: {{compra.feedback}}
                                 </div>
                             </div>
                         </div>

@@ -28,28 +28,35 @@
     <div class="col-3 ">
         <div class="container2">
             <div class="row">
-                <div class="col" style="margin-left: 4%; margin-top: 5%;">
+                <div class="col" style="margin-left: 4%; margin-top: 5%; margin-bottom: 5%;">
                     <h2>Carrito de compras</h2>
                     <ng-template ngFor let-producto let-i="index" [ngForOf] = "productos" >
                         <div class="col mb-4">
                             <div class="container3 left">
                                 <div class="row" style="margin-left: 4%;">
-                                    {{i+1}}. {{producto.producto}} <br>
-                                    Precio: {{producto.precio}} <br>
-                                    Cantidad: {{producto.cantidad}} <br>
-                                    Total: {{producto.cantidad * producto.precio}}
+                                    <div class="col">
+                                        <div class="row">Articulo: {{i+1}}</div>
+                                        <div class="row">Nombre: {{producto.producto}}</div>
+                                        <div class="row">
+                                            <div class="col">Cantidad: </div>
+                                            <div class="col"><input class = "text-cente" type = "number" min = 0 style="width: 40%;" [(ngModel)] = producto.cantidad></div>
+                                        </div>
+                                        <div class="row">Total: {{producto.cantidad * producto.precio}}</div>
+                                    </div>
+                                    <div class="col-3"><button type="button"(click) = onDeleteProducto(producto) style="height: 97%; margin-bottom: 5%;" class="btn btn-outline-primary"> D </button></div>
+                        
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
                     </ng-template>
                 </div>
             </div>
-            <div class="row" style="margin-left: 4%;">
+            <div *ngIf = "productos.length != 0" class="row" style="margin-left: 4%;">
                 <h2>Total: {{getTotal()}}</h2>
                 <button class="btn btn-primary" [disabled]="loading" (click) = onSolicitarPedido() style= "width: 70%" >
                     {{(loading) ? 'Cargando...' : 'Pagar'}}</button>
-
-                
             </div>
         </div>
          </div>

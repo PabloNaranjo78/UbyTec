@@ -44,3 +44,23 @@ export class PedidosService extends ConexionService<PedidoInterface> {
       super(httpClient, route);
     }
 }
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PedidosRecientesService extends ConexionService<{comercio:string, total:number, feedback?:string, idPedido:number}> {
+    id!:number
+    getResourceURL(): string {
+      return "/Pedido/Recientes"
+    }
+    getHomePage(): string {
+      return this.id + '/gestion/pedidos'
+    }
+    getNombre(): string {
+      return "Pedido"
+    }
+    constructor(protected override httpClient: HttpClient, protected override route:Router, private service:ClientesService) {
+      super(httpClient, route);
+    }
+}

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pedido } from '../interfaces/pedido';
 import { Producto, ProductoFotos, ProductoPedido } from '../interfaces/producto';
 import { PedidosService } from '../services/pedidos.service';
-import { ProductosFotosService, ProductosService } from '../services/productos.service';
+import { ProductosFotosService, ProductosPedidoService, ProductosService } from '../services/productos.service';
 
 @Component({
   selector: 'app-carrito',
@@ -21,7 +21,7 @@ export class CarritoComponent implements OnInit {
   productoFoto:ProductoFotos = new ProductoFotos()
   temporal:ProductoPedido = new ProductoPedido()
 
-  constructor(private service:ProductosService,private fotosService:ProductosFotosService,private pedidoService:PedidosService, private rou:ActivatedRoute) {
+  constructor(private router:Router,private service:ProductosService,private fotosService:ProductosFotosService,private pedidoService:PedidosService, private productosPedidoService:ProductosPedidoService,private rou:ActivatedRoute) {
     this.comercio = this.rou.snapshot.params['comercio']
     this.service.get("Comercio", this.comercio).subscribe({
       next: (data) =>{
@@ -29,9 +29,21 @@ export class CarritoComponent implements OnInit {
       }
     })
    }
-   /**
-    * Funcion que agrega un producto al carrito
-    */
+   onDeleteProducto(pro:ProductoPedido){
+    const indexOfObject = this.productos.findIndex((object) => {
+      return object.producto === pro.producto;
+    });
+    
+    console.log(indexOfObject); // 👉️ 1
+    
+    if (indexOfObject !== -1) {
+      this.productos.splice(indexOfObject, 1);
+    }
+    
+    // 👇️ [{id: 1}, {id: 8}]
+    console.log(this.productos);
+   }
+
    onAddProducto(){
     console.log(this.temporal)
     let pro = new ProductoPedido()
@@ -49,12 +61,20 @@ export class CarritoComponent implements OnInit {
     pedido.direccion = "carbiarla"
     pedido.comprobante = "solicitar"
     pedido.finalizado = "Solicitado"
-    pedido.idPedido = Math.floor(Math.random() * (30000 - 10000 + 1) ) + 10000;
+    pedido.idPedido = Math.floor(Math.random() * (30000 - 0 + 1) ) + 0;
     console.log(pedido)
     this.pedidoService.add(pedido).subscribe({
       next: (data) => {
-        console.log(data)
-      }
+        for (let i = 0; i< this.productos.length ; i++){
+          this.productos[i].idPedido = data.idPedido
+          this.productosPedidoService.add(this.productos[i]).subscribe({
+            next: (data) => {
+              console.log("Completado")
+            }
+          })
+        }
+        this.router.navigate([''+this.rou.snapshot.params['comercio'],"en-curso"])
+      } 
     })
     /**
      * Funcion que recibe el total de productos
