@@ -10,6 +10,11 @@ namespace UbyTECAPI.Controllers
     public class EmpleadoTelefonosController : ControllerBase
     {
         private EmpleadoTelefonos empleadoTelefonos = new();
+
+        /// <summary>
+        /// Get para telefonos de empleados
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<EmpleadoTelefonosController>
         [HttpGet]
         public async Task<ActionResult<List<EmpleadoTelefonos>>> Get()
@@ -25,6 +30,11 @@ namespace UbyTECAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get telefonos por id
+        /// </summary>
+        /// <param name="id">id del emplea</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<EmpleadoTelefonosController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<List<EmpleadoTelefonos>>> Get(int id)
@@ -39,7 +49,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Agrega un nuevo teléfono
+        /// </summary>
+        /// <param name="entity">Nuevo teléfono</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<EmpleadoTelefonosController>
         [HttpPost]
         public async Task<ActionResult<List<EmpleadoTelefonos>>> Post(EmpleadoTelefonos entity)
@@ -52,6 +66,12 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.telefono}");
         }
 
+        /// <summary>
+        /// Elimina un telefono del empleado
+        /// </summary>
+        /// <param name="idEmpleado">id del empleado</param>
+        /// <param name="telefono">telefono a eliminar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // DELETE api/<EmpleadoTelefonosController>/5
         [HttpDelete("{idEmpleado}/{telefono}")]
         public async Task<ActionResult<List<EmpleadoTelefonos>>> Delete(int idEmpleado, int telefono)

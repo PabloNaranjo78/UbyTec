@@ -5,6 +5,10 @@ namespace UbyTECAPI.Tools
 {
     public class PassGenerator
     {
+        /// <summary>
+        /// Función encargada de generar contraseñas de 18 caracteres
+        /// </summary>
+        /// <returns>Retorna un string con una new contraseña generada con caracteres aleatorios</returns>
         public static string generatePass()
         {
 

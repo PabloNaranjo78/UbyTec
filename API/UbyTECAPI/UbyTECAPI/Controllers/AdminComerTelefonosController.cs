@@ -10,6 +10,11 @@ namespace UbyTECAPI.Controllers
     public class AdminComerTelefonosController : ControllerBase
     {
         private AdminComerTelefonos adminComerTelefonos = new();
+
+        /// <summary>
+        /// Get para los telefonos de los administradores de comercios
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<AdminComerTelefonosController>
         [HttpGet]
         public async Task<ActionResult<List<AdminComerTelefonos>>> Get()
@@ -24,7 +29,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Get para comercio admin telefonos por id
+        /// </summary>
+        /// <param name="idAdmin">id a buscar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<AdminComerTelefonosController>/5
         [HttpGet("{idAdmin}")]
         public async Task<ActionResult<List<AdminComerTelefonos>>> Get(int idAdmin)
@@ -39,7 +48,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Método post para admin controller, agrega un nuevo telefono admin
+        /// </summary>
+        /// <param name="entity">entidad a agregar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<AdminComerTelefonosController>
         [HttpPost]
         public async Task<ActionResult<List<AdminComerTelefonos>>> Post(AdminComerTelefonos entity)
@@ -51,7 +64,12 @@ namespace UbyTECAPI.Controllers
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.telefono}");
         }
-
+        /// <summary>
+        /// Elimina un adminComerTelefonos
+        /// </summary>
+        /// <param name="idAdmin">id del admin</param>
+        /// <param name="telefono">telefono a eliminar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // PUT api/<AdminComerTelefonosController>/5
         [HttpDelete("{idAdmin}/{telefono}")]
         public async Task<ActionResult<List<AdminComerTelefonos>>> Delete(int idAdmin, int telefono)

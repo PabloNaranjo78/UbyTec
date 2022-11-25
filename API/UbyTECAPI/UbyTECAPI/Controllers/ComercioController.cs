@@ -15,6 +15,10 @@ namespace UbyTECAPI.Controllers
     {
         private NpgsqlConnection con = new(Connection.Connection.ConnectionString);
         private Comercio comercio = new();
+        /// <summary>
+        /// Get de todos los comercios
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<ComercioController>
         [HttpGet]
         public async Task<ActionResult<List<Comercio>>> Get()
@@ -29,7 +33,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Retorna los comercios que se han rechazado
+        /// </summary>
+        /// <param name="id">id del comercio rechazado</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<ComercioController>
         [HttpGet("Razon/{id}")]
         public async Task<ActionResult<List<ComercioRechazado>>> GetRechazados(int id)
@@ -43,7 +51,11 @@ namespace UbyTECAPI.Controllers
 
         }
 
-
+        /// <summary>
+        /// Agrega un comercio a la lista de rechazados
+        /// </summary>
+        /// <param name="comercioRechazado">comercio a rechazar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         [HttpPost("Razon")]
         public async Task<ActionResult<List<ComercioRechazado>>> PostRechazados(ComercioRechazado comercioRechazado)
         {
@@ -57,7 +69,10 @@ namespace UbyTECAPI.Controllers
         }
 
 
-
+        /// <summary>
+        /// Retorna las solicitudes de comercios
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         [HttpGet("solicitudes")]
         public async Task<ActionResult<List<Comercio>>> GetSolicitudes()
         {
@@ -75,7 +90,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Retorna comercio por id
+        /// </summary>
+        /// <param name="id">id del comercio</param>
+        /// <returns></returns>
         // GET api/<ComercioController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Comercio>>> Get(int id)
@@ -90,7 +109,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Retorna los comercios cercanos
+        /// </summary>
+        /// <param name="id">id del cliente</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<ComercioController>/5
         [HttpGet("Cercano/{id}")]
         public async Task<ActionResult<List<Comercio>>> GetCercanos(int id)
@@ -109,7 +132,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// agrega un nuevo comercio
+        /// </summary>
+        /// <param name="entity">comercio a agregar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<ComercioController>
         [HttpPost]
         public async Task<ActionResult<List<Comercio>>> Post(Comercio entity)
@@ -133,7 +160,11 @@ namespace UbyTECAPI.Controllers
             }
             return Ok(entity);
         }
-
+        /// <summary>
+        /// Modifica un comercio
+        /// </summary>
+        /// <param name="entity">Comercio acualizado</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // PUT api/<ComercioController>/5
         [HttpPut]
         public async Task<ActionResult<List<Comercio>>> Put(Comercio entity)
@@ -145,7 +176,11 @@ namespace UbyTECAPI.Controllers
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado actualizar a {entity.nombre}");
         }
-
+        /// <summary>
+        /// Elimina un comerio      
+        /// </summary>
+        /// <param name="id">id del comercio a eliminar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // DELETE api/<ComercioController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Comercio>>> Delete(int id)

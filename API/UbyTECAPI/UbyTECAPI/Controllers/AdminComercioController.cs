@@ -11,6 +11,11 @@ namespace UbyTECAPI.Controllers
     public class AdminComercioController : ControllerBase
     {
         private AdminComercio adminComercio = new();
+
+        /// <summary>
+        /// Punto de acceso para Get de AdminComercio
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<AdminComercioController>
         [HttpGet]
         public async Task<ActionResult<List<AdminComercio>>> Get()
@@ -25,7 +30,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Get por id de AdminComercio
+        /// </summary>
+        /// <param name="idComercio">id del comercio en forma de int</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<AdminComercioController>/5
         [HttpGet("{idComercio}")]
         public async Task<ActionResult<List<AdminComercio>>> Get(int idComercio)
@@ -40,7 +49,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Post para AdminComercio, agrega u nuevo admincomercio
+        /// </summary>
+        /// <param name="entity">entidad a agregar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<AdminComercioController>
         [HttpPost]
         public async Task<ActionResult<List<AdminComercio>>> Post(AdminComercio entity)
@@ -65,7 +78,11 @@ namespace UbyTECAPI.Controllers
 
             return Ok(entityList);
         }
-
+        /// <summary>
+        /// Put para Admin comercio, agrega un nuevo comercio
+        /// </summary>
+        /// <param name="entity">entidad a agregar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // PUT api/<AdminComercioController>/5
         [HttpPut]
         public async Task<ActionResult<List<AdminComercio>>> Put(AdminComercio entity)
@@ -78,6 +95,11 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado actualizar a {entity.nombre}");
         }
 
+        /// <summary>
+        /// Delete para adminComercio, elimina un comercio
+        /// </summary>
+        /// <param name="id">id del comercio a eliminar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // DELETE api/<AdminComercioController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<AdminComercio>>> Delete(int id)

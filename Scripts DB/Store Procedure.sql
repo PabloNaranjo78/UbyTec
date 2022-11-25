@@ -760,7 +760,7 @@ $$
 	select idPedido,direccion,finalizado,repartidor,idCliente,comprobante from pedido
 	where finalizado = 'En Curso' AND idCliente = idCliente_;
 $$;
-select * from GetPedidoEnCurso(333)
+
 CREATE OR REPLACE FUNCTION GetPedidoByID(
 	idPedido_ int
 )

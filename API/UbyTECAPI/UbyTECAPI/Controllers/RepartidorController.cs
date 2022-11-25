@@ -11,6 +11,11 @@ namespace UbyTECAPI.Controllers
     public class RepartidorController : ControllerBase
     {
         private Repartidor repartidor = new();
+
+        /// <summary>
+        /// Get de repartidor
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<RepartidorController>
         [HttpGet]
         public async Task<ActionResult<List<Repartidor>>> Get()
@@ -26,6 +31,11 @@ namespace UbyTECAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get de repartidor por usuario
+        /// </summary>
+        /// <param name="usuario">nombre de usuario</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<RepartidorController>/5
         [HttpGet("{usuario}")]
         public async Task<ActionResult<List<Repartidor>>> Get(string usuario)
@@ -41,6 +51,11 @@ namespace UbyTECAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Agrega un repartidor
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<RepartidorController>
         [HttpPost]
         public async Task<ActionResult<List<Repartidor>>> Post(Repartidor entity)
@@ -67,7 +82,11 @@ namespace UbyTECAPI.Controllers
             return Ok(entityList);
 
         }
-
+        /// <summary>
+        /// Modifica un repartidor
+        /// </summary>
+        /// <param name="entity">repartidor actualizado</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // PUT api/<RepartidorController>/5
         [HttpPut]
         public async Task<ActionResult<List<Repartidor>>> Put(Repartidor entity)
@@ -80,6 +99,11 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado actualizar a {entity.usuario}");
         }
 
+        /// <summary>
+        /// Elimina un repartidor
+        /// </summary>
+        /// <param name="usuario">nombre del repartidor</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // DELETE api/<RepartidorController>/5
         [HttpDelete("{usuario}")]
         public async Task<ActionResult<List<Repartidor>>> Delete(string usuario)

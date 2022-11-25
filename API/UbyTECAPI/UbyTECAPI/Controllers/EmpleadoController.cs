@@ -9,6 +9,10 @@ namespace UbyTECAPI.Controllers
     public class EmpleadoController : ControllerBase
     {
         private Empleado empleado = new();
+        /// <summary>
+        /// Get para empleados
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<EmpleadoController>
         [HttpGet]
         public async Task<ActionResult<List<Empleado>>> Get()
@@ -23,7 +27,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Get por id para empleados
+        /// </summary>
+        /// <param name="id">id del empleado</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<EmpleadoController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Empleado>>> Get(int id)
@@ -39,6 +47,11 @@ namespace UbyTECAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Agrega un nuevo empleao
+        /// </summary>
+        /// <param name="entity">nuevo empleado</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<EmpleadoController>
         [HttpPost]
         public async Task<ActionResult<List<Empleado>>> Post(Empleado entity)
@@ -51,6 +64,11 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.nombre}");
         }
 
+        /// <summary>
+        /// Modifica un empleado
+        /// </summary>
+        /// <param name="entity">empleado modificado</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // PUT api/<EmpleadoController>/5
         [HttpPut]
         public async Task<ActionResult<List<Empleado>>> Put(Empleado entity)
@@ -62,7 +80,11 @@ namespace UbyTECAPI.Controllers
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado actualizar a {entity.nombre}");
         }
-
+        /// <summary>
+        /// Elimina un empleado
+        /// </summary>
+        /// <param name="id">id del empleado</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // DELETE api/<EmpleadoController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Empleado>>> Delete(int id)

@@ -13,6 +13,10 @@ namespace UbyTECAPI.Controllers
     {
         private NpgsqlConnection con = new(Connection.Connection.ConnectionString);
         private Pedido pedido = new();
+        /// <summary>
+        /// Get de pedidos
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<PedidoController>
         [HttpGet]
         public async Task<ActionResult<List<Pedido>>> Get()
@@ -27,7 +31,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Get pedidos por id
+        /// </summary>
+        /// <param name="id">id del pedido</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<PedidoController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Pedido>>> Get(int id)
@@ -42,7 +50,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Get pedido por id del comercio
+        /// </summary>
+        /// <param name="id">id del comercio</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<PedidoController>/5
         [HttpGet("Comercio/{id}")]
         public async Task<ActionResult<List<Pedido>>> GetByIDComercio(int id)
@@ -62,7 +74,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Get de pedidos recientes
+        /// </summary>
+        /// <param name="id">id del cliente</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<PedidoController>/5
         [HttpGet("Recientes/{id}")]
         public async Task<ActionResult<List<PedidosCliente>>> GetPedidosRecientes(int id)
@@ -70,7 +86,7 @@ namespace UbyTECAPI.Controllers
             try
             {
                 con.Open();
-                NpgsqlCommand command = new($"Select comercio,total,idPedido from Pedidos_Ciente({id})", con);
+                NpgsqlCommand command = new ($"Select comercio,total,idPedido from Pedidos_Ciente({id})", con);
                 NpgsqlDataReader rd = command.ExecuteReader();
                 List<PedidosCliente> entityList = new();
 
@@ -97,6 +113,11 @@ namespace UbyTECAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Get de pedidos de un cliente
+        /// </summary>
+        /// <param name="id">id de cliente</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<PedidoController>/5
         [HttpGet("Cliente/{id}")]
         public async Task<ActionResult<List<Pedido>>> GetByIDCliente(int id)
@@ -116,7 +137,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Agrega un nuevo pedido
+        /// </summary>
+        /// <param name="entity">nuevo pedido</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<PedidoController>
         [HttpPost]
         public async Task<ActionResult<Pedido>> Post(Pedido entity)
@@ -137,7 +162,11 @@ namespace UbyTECAPI.Controllers
 
             return result ? Ok(entity) : BadRequest($"No se ha logrado agregar a {entity.idPedido}");
         }
-
+        /// <summary>
+        /// Agrega el feedback a un pedido
+        /// </summary>
+        /// <param name="entity">feedback del pedido</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<PedidoController>
         [HttpPost("Recientes")]
         public async Task<ActionResult<Pedido>> PostFeedBack(PedidosCliente entity)
@@ -154,7 +183,11 @@ namespace UbyTECAPI.Controllers
             }
             return Ok(entity);
         }
-
+        /// <summary>
+        /// Modifica un pedido
+        /// </summary>
+        /// <param name="entity">pedido modificado</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // PUT api/<PedidoController>/5
         [HttpPut]
         public async Task<ActionResult<List<Pedido>>> Put(Pedido entity)
@@ -164,7 +197,6 @@ namespace UbyTECAPI.Controllers
                 $"join producto on producto_pedido.producto = producto.nombre) where idPedido={entity.idPedido}", con);
             NpgsqlDataReader rd = command.ExecuteReader();
             rd.Read();
-            Console.Write("---------------");
             int idComercio;
             try
             {
@@ -202,7 +234,11 @@ namespace UbyTECAPI.Controllers
             return BadRequest("Esto no debería salir");
 
         }
-
+        /// <summary>
+        /// Elimina un pedido
+        /// </summary>
+        /// <param name="id">id del pedido a eliminar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // DELETE api/<PedidoController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<ProductosPedido>>> Delete(int id)

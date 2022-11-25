@@ -10,6 +10,11 @@ namespace UbyTECAPI.Controllers
     public class ComercioTelefonosController : ControllerBase
     {
         private ComercioTelefonos comercioTelefonos = new();
+
+        /// <summary>
+        /// Get para telefnos de comercio
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<ComercioTelefonosController>
         [HttpGet]
         public async Task<ActionResult<List<ComercioTelefonos>>> Get()
@@ -24,7 +29,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Retorna un telefono por id
+        /// </summary>
+        /// <param name="idComercio">id del comercio</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<ComercioTelefonosController>/5
         [HttpGet("{idComercio}")]
         public async Task<ActionResult<List<ComercioTelefonos>>> Get(int idComercio)
@@ -39,7 +48,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Agrega un nuevo telefono
+        /// </summary>
+        /// <param name="entity">Entidad con el nuevo telefono</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<ComercioTelefonosController>
         [HttpPost]
         public async Task<ActionResult<List<ComercioTelefonos>>> Post(ComercioTelefonos entity)
@@ -52,6 +65,12 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.telefono}");
         }
 
+        /// <summary>
+        /// Elimina un telefono
+        /// </summary>
+        /// <param name="idComercio">id del comrcio</param>
+        /// <param name="telefono">telefono a eliminar</param>
+        /// <returns></returns>
         // DELETE api/<ComercioTelefonosController>/5
         [HttpDelete("{idComercio}/{telefono}")]
         public async Task<ActionResult<List<RepartidorTelefonos>>> Delete(int idComercio, int telefono)

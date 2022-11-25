@@ -10,6 +10,10 @@ namespace UbyTECAPI.Controllers
     public class ReportesController : ControllerBase
     {
         private NpgsqlConnection con = new(Connection.Connection.ConnectionString);
+        /// <summary>
+        /// Genera el reporte de consolidado de ventas
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<ReportesController>
         [HttpGet("ConsolidadoVentas")]
         public async Task<ActionResult<List<ConsolidadoVentas>>> GetConsolidadoVentas()
@@ -41,6 +45,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar con la base de datos");
             }
         }
+
+        /// <summary>
+        /// Genera el reporte de ventas por afiliado
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<ReportesController>
         [HttpGet("VentasAfiliado")]
         public async Task<ActionResult<List<VentasAfiliado>>> GetVentasAfiliado()
@@ -70,7 +79,10 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar con la base de datos");
             }
         }
-
+        /// <summary>
+        /// Genera el reporte de solicitudes de los comercios
+        /// </summary>
+        /// <returns></returns>
         // GET: api/<ReportesController>
         [HttpGet("ComercioSolicitud")]
         public async Task<ActionResult<List<ComercioSolicitud>>> GetComercioSolicutud()
@@ -98,6 +110,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar con la base de datos");
             }
         }
+
+        /// <summary>
+        /// Genera el reporte de pedidos por comercio
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         [HttpGet("ComercioPedidos")]
         public async Task<ActionResult<List<ComercioPedidos>>> GetComercioPedidos()
         {

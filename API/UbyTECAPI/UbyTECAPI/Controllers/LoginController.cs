@@ -14,6 +14,12 @@ namespace UbyTECAPI.Controllers
         private Empleado empleado = new();
         private Comercio comercio = new();
         private Cliente cliente = new();
+        /// <summary>
+        /// Login para empleado
+        /// </summary>
+        /// <param name="id">id del admin</param>
+        /// <param name="pass">contraseña</param>
+        /// <returns>true si inicia, false si no</returns>
         // GET api/<LoginController>/5
         //EMPLADO
         [HttpGet("empleado/{id}/{pass}")]
@@ -26,7 +32,12 @@ namespace UbyTECAPI.Controllers
             var result = Convert.ToInt32(rd[0]);
             return result == 1 ? Ok(true) : BadRequest(false);
         }
-
+        /// <summary>
+        /// Login para comercio
+        /// </summary>
+        /// <param name="id">id del comercio</param>
+        /// <param name="pass">contraseña</param>
+        /// <returns>true si inicia, false si no</returns>
         // GET api/<LoginController>/5
         //COMERCIO
         [HttpGet("comercio/{id}/{pass}")]
@@ -40,7 +51,12 @@ namespace UbyTECAPI.Controllers
             return result == 1 ? Ok(true) : BadRequest(false);
 
         }
-
+        /// <summary>
+        /// Login para comercio
+        /// </summary>
+        /// <param name="id">id del comercio</param>
+        /// <param name="pass">contraseña</param>
+        /// <returns>true si inicia, false si no</returns>
         // GET api/<LoginController>/5
         //Cliente
         [HttpGet("cliente/{id}/{pass}")]

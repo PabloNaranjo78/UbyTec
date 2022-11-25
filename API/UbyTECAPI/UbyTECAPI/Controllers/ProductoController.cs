@@ -13,7 +13,10 @@ namespace UbyTECAPI.Controllers
     {
         private NpgsqlConnection con = new(Connection.Connection.ConnectionString);
         private Producto producto = new();
-        
+        /// <summary>
+        /// Get para producto
+        /// </summary>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET: api/<ProductoController>
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> Get()
@@ -28,7 +31,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Retorna una producto por su nombre
+        /// </summary>
+        /// <param name="nombre">nombre del producto</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<ProductoController>/5
         [HttpGet("{nombre}")]
         public async Task<ActionResult<List<Producto>>> Get(string nombre)
@@ -44,7 +51,11 @@ namespace UbyTECAPI.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Get pedido por el id del comercio
+        /// </summary>
+        /// <param name="id">id del pedido</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // GET api/<ProductoController>/5
         [HttpGet("Comercio/{id}")]
         public async Task<ActionResult<List<ProductoThumbnail>>> GetByComercio(int id)
@@ -74,7 +85,11 @@ namespace UbyTECAPI.Controllers
                 return BadRequest("No se logró conectar a la base de datos");
             }
         }
-
+        /// <summary>
+        /// Agrega un nuevo producto
+        /// </summary>
+        /// <param name="entity">nuevo producto</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // POST api/<ProductoController>
         [HttpPost]
         public async Task<ActionResult<List<Producto>>> Post(Producto entity)
@@ -87,6 +102,11 @@ namespace UbyTECAPI.Controllers
             return result ? Ok(entityList) : BadRequest($"No se ha logrado agregar a {entity.nombre}");
         }
 
+        /// <summary>
+        /// Modifica un producto
+        /// </summary>
+        /// <param name="entity">producto modifica</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // PUT api/<ProductoController>/5
         [HttpPut]
         public async Task<ActionResult<List<Producto>>> Put(Producto entity)
@@ -98,9 +118,15 @@ namespace UbyTECAPI.Controllers
 
             return result ? Ok(entityList) : BadRequest($"No se ha logrado actualizar a {entity.nombre}");
         }
+
+        /// <summary>
+        /// Elimina un producto
+        /// </summary>
+        /// <param name="nombre">nombre del producto a eliminar</param>
+        /// <returns>Ok si logra conectar con la base de datos, si no un BadRequest</returns>
         // DELETE api/<ProductoController>/5
         [HttpDelete("{nombre}")]
-        public async Task<ActionResult<List<Comercio>>> Delete(string nombre)
+        public async Task<ActionResult<List<Producto>>> Delete(string nombre)
         {
             List<Empleado> entityList = new();
 

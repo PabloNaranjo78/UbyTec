@@ -4,8 +4,19 @@ using System.Net.Mail;
 using UbyTECAPI.Connection;
 namespace UbyTECAPI.Tools
 {
+    /// <summary>
+    /// Clase encargada del manejo del envío de correos
+    /// </summary>
     public class EmailSender
     {
+        /// <summary>
+        /// Función que emvía un correo a un destinatario específico
+        /// </summary>
+        /// <param name="email">Dirección de correo a la cual se desea realizar el envío</param>
+        /// <param name="usuario">Nombre del usuario al que se le envía el correo</param>
+        /// <param name="pass">Contraseña que se envía al usuario</param>
+        /// <param name="tipo">Tipo de usuario</param>
+        /// <returns></returns>
         public static bool sendEmail(string email, string usuario, string pass, string tipo)
         {
             try
